@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on وبلاگ من</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://hr-abedini.github.io/posts/</link>
     <description>Recent content in Posts on وبلاگ من</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>fa</language>
     <lastBuildDate>Wed, 22 Oct 2025 14:36:28 +0330</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hr-abedini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>About Me</title>
-      <link>http://localhost:1313/posts/about-me/</link>
+      <title>درباره من</title>
+      <link>https://hr-abedini.github.io/posts/about-me/</link>
       <pubDate>Wed, 22 Oct 2025 14:36:28 +0330</pubDate>
-      <guid>http://localhost:1313/posts/about-me/</guid>
+      <guid>https://hr-abedini.github.io/posts/about-me/</guid>
       <description></description>
     </item>
   </channel>
