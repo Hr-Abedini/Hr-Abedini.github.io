@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on وبلاگ من</title>
-    <link>https://hr-abedini.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on وبلاگ من</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>fa</language>
-    <lastBuildDate>Wed, 22 Oct 2025 14:36:28 +0330</lastBuildDate>
-    <atom:link href="https://hr-abedini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Nov 2025 13:58:09 +0330</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>درباره من</title>
-      <link>https://hr-abedini.github.io/posts/about-me/</link>
-      <pubDate>Wed, 22 Oct 2025 14:36:28 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/posts/about-me/</guid>
-      <description></description>
+      <title>ایجاد Numeric Spinner (up-down) در Oracle APEX</title>
+      <link>http://localhost:1313/posts/numeric-spinner/</link>
+      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
+      <guid>http://localhost:1313/posts/numeric-spinner/</guid>
+      <description>تبدیل  number field</description>
     </item>
     <item>
       <title>DimDate-Persian</title>
-      <link>https://hr-abedini.github.io/posts/dim-date-persian/</link>
+      <link>http://localhost:1313/posts/dim-date-persian/</link>
       <pubDate>Sun, 19 Oct 2025 09:54:32 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/posts/dim-date-persian/</guid>
+      <guid>http://localhost:1313/posts/dim-date-persian/</guid>
       <description>&lt;p&gt;تاریخ: 1403/03/06 10:00&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
