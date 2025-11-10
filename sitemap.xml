@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://hr-abedini.github.io/posts/</loc>
     <lastmod>2025-11-10T12:53:13+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://hr-abedini.github.io/</loc>
     <lastmod>2025-11-10T12:53:13+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://hr-abedini.github.io/categories/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/items/</loc>
+    <loc>https://hr-abedini.github.io/tags/items/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/java-script/</loc>
+    <loc>https://hr-abedini.github.io/tags/java-script/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/oracle-apex/</loc>
+    <loc>https://hr-abedini.github.io/categories/oracle-apex/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/oracle-apex/</loc>
+    <loc>https://hr-abedini.github.io/tags/oracle-apex/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/programming/</loc>
+    <loc>https://hr-abedini.github.io/tags/programming/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://hr-abedini.github.io/tags/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/numeric-spinner/</loc>
+    <loc>https://hr-abedini.github.io/posts/numeric-spinner/</loc>
     <lastmod>2025-11-05T13:58:09+03:30</lastmod>
   </url>
 </urlset>
