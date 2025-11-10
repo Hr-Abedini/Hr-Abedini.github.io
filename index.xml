@@ -15,30 +15,5 @@
       <guid>http://localhost:1313/posts/numeric-spinner/</guid>
       <description>تبدیل  number field</description>
     </item>
-    <item>
-      <title>DimDate-Persian</title>
-      <link>http://localhost:1313/posts/dim-date-persian/</link>
-      <pubDate>Sun, 19 Oct 2025 09:54:32 +0330</pubDate>
-      <guid>http://localhost:1313/posts/dim-date-persian/</guid>
-      <description>&lt;p&gt;تاریخ: 1403/03/06 10:00&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;بازه زمانی از از تاریخ 1300/01/01 تا تاریخ 1500/12/29 (میلادی از 21-03-1921 تا  20-03-2122) می‌باشد.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;تعداد رکوردها: 73414&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;خروجی تاریخ با استفاده از متدهای مربوط به کلاس &lt;a href=&#34;https://learn.microsoft.com/en-us/dotnet/api/system.globalization.persiancalendar?view=net-9.0&#34;&gt;PersianCalendar&lt;/a&gt; در .NET ایجاد شده اند.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;درج در دیتابیس با استفاده از &lt;a href=&#34;https://learn.microsoft.com/en-us/sql/integration-services/sql-server-integration-services?view=sql-server-ver17&#34;&gt;SSIS&lt;/a&gt; و کلاس Zaman انجام شده است.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;لینک-اسکریپتها&#34;&gt;لینک اسکریپت‌ها&lt;/h3&gt;
-&lt;p&gt;SQL Server: &lt;a href=&#34;https://github.com/Hr-Abedini/SQL-SERVER/tree/main/DIM%20Persian%20Date&#34;&gt;DimPersianDate&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Oracle: &lt;a href=&#34;https://github.com/Hr-Abedini/Oracle-DB/tree/main/DIM%20Persian%20Date&#34;&gt;DIM_PERSIAN_DATE&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
   </channel>
 </rss>
