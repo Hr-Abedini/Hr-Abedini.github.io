@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on وبلاگ من</title>
-    <link>https://hr-abedini.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on وبلاگ من</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>fa</language>
-    <lastBuildDate>Wed, 05 Nov 2025 13:58:09 +0330</lastBuildDate>
-    <atom:link href="https://hr-abedini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Nov 2025 10:22:33 +0330</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ایجاد Numeric Spinner (up-down) در Oracle APEX</title>
-      <link>https://hr-abedini.github.io/posts/numeric-spinner/</link>
-      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/posts/numeric-spinner/</guid>
+      <link>http://localhost:1313/posts/numeric-spinner/</link>
+      <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
+      <guid>http://localhost:1313/posts/numeric-spinner/</guid>
       <description>تبدیل  number field</description>
     </item>
   </channel>

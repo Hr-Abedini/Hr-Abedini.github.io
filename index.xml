@@ -2,18 +2,112 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>وبلاگ من</title>
-    <link>https://hr-abedini.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on وبلاگ من</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>fa</language>
-    <lastBuildDate>Wed, 05 Nov 2025 13:58:09 +0330</lastBuildDate>
-    <atom:link href="https://hr-abedini.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Nov 2025 10:22:33 +0330</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ایجاد Numeric Spinner (up-down) در Oracle APEX</title>
-      <link>https://hr-abedini.github.io/posts/numeric-spinner/</link>
-      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/posts/numeric-spinner/</guid>
+      <link>http://localhost:1313/posts/numeric-spinner/</link>
+      <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
+      <guid>http://localhost:1313/posts/numeric-spinner/</guid>
       <description>تبدیل  number field</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;fa&#34;&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+    &lt;title&gt;درباره من&lt;/title&gt;
+    &lt;!-- فونت و آیکون‌ها --&gt;
+    &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css&#34;&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: row-reverse; /* عکس سمت راست */
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .text {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .text h1 {
+            margin-top: 0;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #0077b5; /* رنگ لینکدین */
+        }
+
+        .photo {
+            flex-shrink: 0;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media(max-width: 768px) {
+            .container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .photo {
+                margin-bottom: 20px;
+            }
+            .social-icons a {
+                margin-right: 10px;
+            }
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;text&#34;&gt;
+        &lt;h1&gt;حمیدرضا عابدینی&lt;/h1&gt;
+        &lt;p&gt;سلام! اینجا صفحه شخصی من است.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

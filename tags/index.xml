@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on وبلاگ من</title>
-    <link>https://hr-abedini.github.io/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on وبلاگ من</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>fa</language>
-    <lastBuildDate>Wed, 05 Nov 2025 13:58:09 +0330</lastBuildDate>
-    <atom:link href="https://hr-abedini.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Nov 2025 10:22:33 +0330</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Items</title>
-      <link>https://hr-abedini.github.io/tags/items/</link>
-      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/tags/items/</guid>
+      <link>http://localhost:1313/tags/items/</link>
+      <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
+      <guid>http://localhost:1313/tags/items/</guid>
       <description></description>
     </item>
     <item>
       <title>Java-Script</title>
-      <link>https://hr-abedini.github.io/tags/java-script/</link>
-      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/tags/java-script/</guid>
+      <link>http://localhost:1313/tags/java-script/</link>
+      <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
+      <guid>http://localhost:1313/tags/java-script/</guid>
       <description></description>
     </item>
     <item>
       <title>Oracle APEX</title>
-      <link>https://hr-abedini.github.io/tags/oracle-apex/</link>
-      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/tags/oracle-apex/</guid>
+      <link>http://localhost:1313/tags/oracle-apex/</link>
+      <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
+      <guid>http://localhost:1313/tags/oracle-apex/</guid>
       <description></description>
     </item>
     <item>
       <title>Programming</title>
-      <link>https://hr-abedini.github.io/tags/programming/</link>
-      <pubDate>Wed, 05 Nov 2025 13:58:09 +0330</pubDate>
-      <guid>https://hr-abedini.github.io/tags/programming/</guid>
+      <link>http://localhost:1313/tags/programming/</link>
+      <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
+      <guid>http://localhost:1313/tags/programming/</guid>
       <description></description>
     </item>
   </channel>
