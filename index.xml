@@ -2,26 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>وبلاگ من</title>
-    <link>http://localhost:1313/</link>
+    <link>https://hr-abedini.github.io/</link>
     <description>Recent content on وبلاگ من</description>
     <generator>Hugo -- 0.150.0</generator>
     <language>fa</language>
     <lastBuildDate>Tue, 11 Nov 2025 10:22:33 +0330</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hr-abedini.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ایجاد Numeric Spinner (up-down) در Oracle APEX</title>
-      <link>http://localhost:1313/posts/numeric-spinner/</link>
+      <link>https://hr-abedini.github.io/posts/numeric-spinner/</link>
       <pubDate>Tue, 11 Nov 2025 10:22:33 +0330</pubDate>
-      <guid>http://localhost:1313/posts/numeric-spinner/</guid>
+      <guid>https://hr-abedini.github.io/posts/numeric-spinner/</guid>
       <description>تبدیل  number field</description>
     </item>
     <item>
       <title></title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://hr-abedini.github.io/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://hr-abedini.github.io/about/</guid>
       <description>&lt;!DOCTYPE html&gt;
 &lt;html lang=&#34;fa&#34;&gt;
+
 &lt;head&gt;
     &lt;meta charset=&#34;UTF-8&#34;&gt;
     &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
@@ -34,28 +35,30 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            
         }
 
         .container {
             max-width: 900px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
             display: flex;
-            flex-direction: row-reverse; /* عکس سمت راست */
+            flex-direction: row-reverse;
+            /* عکس سمت راست */
             align-items: center;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px #67a7db;
         }
 
         .text {
             flex: 1;
             padding: 20px;
+            color: #333;
         }
 
         .text h1 {
             margin-top: 0;
+            color: black;
         }
 
         .social-icons {
@@ -71,13 +74,14 @@
         }
 
         .social-icons a:hover {
-            color: #0077b5; /* رنگ لینکدین */
+            color: #0077b5;
+            /* رنگ لینکدین */
         }
 
         .photo {
             flex-shrink: 0;
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             overflow: hidden;
         }
@@ -86,6 +90,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
         }
 
         @media(max-width: 768px) {
@@ -93,21 +98,40 @@
                 flex-direction: column-reverse;
                 text-align: center;
             }
+
             .photo {
                 margin-bottom: 20px;
             }
+
             .social-icons a {
                 margin-right: 10px;
             }
         }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #f8f8f8;
+        }
+
+        
     &lt;/style&gt;
 &lt;/head&gt;
+
 &lt;body&gt;
 
-&lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;text&#34;&gt;
-        &lt;h1&gt;حمیدرضا عابدینی&lt;/h1&gt;
-        &lt;p&gt;سلام! اینجا صفحه شخصی من است.&lt;/p&gt;</description>
+    &lt;div class=&#34;container&#34;&gt;
+        &lt;div class=&#34;text&#34;&gt;
+            &lt;h1&gt;حمیدرضا عابدینی&lt;/h1&gt;
+            &lt;p&gt;سلام! اینجا صفحه شخصی من هست.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

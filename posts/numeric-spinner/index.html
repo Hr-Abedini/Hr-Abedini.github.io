@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>ایجاد Numeric Spinner (up-down) در Oracle APEX | وبلاگ من</title>
 <meta name="keywords" content="Oracle APEX, Java-Script, Programming, Items">
 <meta name="description" content="تبدیل  number field">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/numeric-spinner/">
+<link rel="canonical" href="https://hr-abedini.github.io/posts/numeric-spinner/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.e6a909ef0cea6803cba94a9fea2f63e64abe9f8d5d703038e7e9a742bebc19fc.css" integrity="sha256-5qkJ7wzqaAPLqUqf6i9j5kq&#43;n41dcDA45&#43;mnQr68Gfw=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://hr-abedini.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hr-abedini.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hr-abedini.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="fa" href="http://localhost:1313/posts/numeric-spinner/">
+<link rel="alternate" hreflang="fa" href="https://hr-abedini.github.io/posts/numeric-spinner/">
 <noscript>
     <style>
         #theme-toggle,
@@ -55,7 +55,73 @@
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://hr-abedini.github.io/posts/numeric-spinner/">
+  <meta property="og:site_name" content="وبلاگ من">
+  <meta property="og:title" content="ایجاد Numeric Spinner (up-down) در Oracle APEX">
+  <meta property="og:description" content="تبدیل  number field">
+  <meta property="og:locale" content="fa">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-11T10:22:33+03:30">
+    <meta property="article:modified_time" content="2025-11-11T10:22:33+03:30">
+    <meta property="article:tag" content="Oracle APEX">
+    <meta property="article:tag" content="Java-Script">
+    <meta property="article:tag" content="Programming">
+    <meta property="article:tag" content="Items">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ایجاد Numeric Spinner (up-down) در Oracle APEX">
+<meta name="twitter:description" content="تبدیل  number field">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hr-abedini.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "ایجاد Numeric Spinner (up-down) در Oracle APEX",
+      "item": "https://hr-abedini.github.io/posts/numeric-spinner/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ایجاد Numeric Spinner (up-down) در Oracle APEX",
+  "name": "ایجاد Numeric Spinner (up-down) در Oracle APEX",
+  "description": "تبدیل  number field",
+  "keywords": [
+    "Oracle APEX", "Java-Script", "Programming", "Items"
+  ],
+  "articleBody": "🤔چطور می‌توانم یک آیتم از نوع Number Filed را تبدیل به Numeric Spinner کنم؟ نیازمندی‌ها دو دکمه در جلوی آیتم که روی هم قراربگیرند و برای کم و زیاد کردن مقدار استفاده شوند.\nبرای دکمه‌ها +/- مقدار پیش‌فرض مقدار یک باشد و توسط کاربر قابل تنظیم باشد.\nاگر آیتم دارای focus بود، با حرکت غلتک (scroll) ماوس، مقدار کم و زیاد شود.\nبرای غلتک، مقدار پیش‌فرض 10 باشد و توسط کاربر هم قابل تنظیم باشد.\nامکان منفی شدن مقدار، توسط کاربر مشخص شود. در حالت پیش‌فرض مقدار منفی مجاز نیست.\nاعداد ممکن است دارای جدا کننده (Grouping Separator) باشند.\n💡❌ به صورت پیش‌فرض برای این نوع آیتم type = text هست که می‌شود آن را به number تغییر داد تا دکمه‌های inc/dec نمایان شوند. اما من از این روش استفاده نمی‌کنم.\nپیاده‌سازی در Oracle APEX 24.1 ۱. بر روی آیتم مورد نظر (مثلا P7_ORDER_NO) کلیک کرده و برای Post Text آن، مقداری به دلخواه می‌نویسیم. من از * استفاده کردم. بدین ترتیب span این قسمت با کلاس «t-Form-itemText–post» فعال می‌شود. با استفاده از jQuery ، دکمه‌ها را در این قسمت قرار می‌دهیم.\nAdvanced | Post Text: *\nبرای قرارگرفتن کادر دور دکمه‌ها Display as Block مربوط به آیتم را انتخاب می‌کنیم. Appearance | Template Options | Item Post Text: Display as Block\nدر قسمت JavaScript صفحه در Execute when Page Loads از متد Item_NumericSpinner استفاده می‌کنیم. کد JS را می‌توانیم در قسمت Function and Global Variable Declaration بنویسیم. من از فایل در قسمت static fileها استفاده می‌کنم (لینک GitHub).\n/** * ایجاد حالت +/- کردن به فیلد عددی * ** type: number field ** برای قرارگرفتن دکمه \u003e post text = * * * * @param itemName \u003e نام آیتم * @param wheel_step \u003e مقداری که با چرخ موس باید اضافه/کم شود * @param ud_step \u003e up-down مقداری که باید اضافه/کم شود * @param negative \u003e باشد false جلوگیری از مقدار منفی اگر مقدار * @param groupingSymbol \u003e کاراکتر جداکننده ارقام */ function Item_NumericSpinner(itemName, wheel_step = 10, ud_step = 1, negative = false, groupingSymbol = ',') { let containter$ = $(\"#\" + itemName + \"_CONTAINER .t-Form-itemText--post\"); let css_btn = { background: \"none\", border: \"none\", cursor: \"pointer\" }; let css_div = { display: \"inline-flex\", \"flex-direction\": \"column\", \"vertical-align\": \"middle\" }; let div$ = $('').css(css_div); let btnUp$ = $('', { type: \"button\", text: '▲' }).css(css_btn); let btnDown$ = $('', { type: \"button\", text: '▼' }).css(css_btn); div$.append(btnUp$); div$.append(btnDown$); containter$.html(div$); //---------------------------------------------- let item$ = $(\"#\" + itemName); btnUp$.on(\"click\", inc.bind(null,ud_step)); btnDown$.on(\"click\", dec.bind(null,ud_step)); item$.on(\"wheel\", function (e) { e.preventDefault(); // آیا فوکوس دارد؟ if (document.activeElement.id !== itemName) return; let delta = e.originalEvent.deltaY; if (delta \u003c 0) { inc(wheel_step); } else { dec(wheel_step); } }); function inc(step) { let val = parseFloat(item$.val().replace(groupingSymbol, '')) || 0; item$.val(val + step); // apex.item(itemName).setValue(item$.val()); } function dec(step) { let val = parseFloat(item$.val().replace(groupingSymbol, '')) || 0; val = val - step if (negative == false \u0026 val \u003c 0) val = 0; item$.val(val); // apex.item(itemName).setValue(item$.val()); } } 🧐🧠خلاصه کارهایی که انجام دادم: آیا می‌شود در قسمت Post Text از کد HTML استفاده کرد؟ بله از ChatGPT خواستم کد این کار را برایم ایجاد کند … که در نهایت خروجی آن شامل سه قسمت شد: کد دکمه‌ها، CSS و کد JS. چرخه‌ی تست، رفع اشکال، بازبینی، ایده‌ی جدید و … برای اینکه بتوانم از این کد به دفعات استفاده کنم، آن را تبدیل به function کردم. برای اینکه کاربر مجبور به استفاده از کد CSS و کد دکمه‌ها نباشد، آن را در متد JS ادغام کردم. برای حذف تکرار، از nested function استفاده کردم (تابع تو در تو). چون این کد را برای Item استفاده کردم، برای دسته بندی بهتر، آن را در فایلی به نام site_Item.js نگهداری می‌کنم که در این فایل برای نام متدها از پیشوند Item استفاده کردم و خواهم کرد. 💡 تمام فایل‌های JS را در نهایت به فایل site.js تبدیل می‌کنم و در محیط production استفاده می‌کنم.\n",
+  "wordCount" : "637",
+  "inLanguage": "fa",
+  "datePublished": "2025-11-11T10:22:33+03:30",
+  "dateModified": "2025-11-11T10:22:33+03:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hr-abedini.github.io/posts/numeric-spinner/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "وبلاگ من",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hr-abedini.github.io/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -73,7 +139,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="وبلاگ من (Alt + H)">وبلاگ من</a>
+            <a href="https://hr-abedini.github.io/" accesskey="h" title="وبلاگ من (Alt + H)">وبلاگ من</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -99,12 +165,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="خانه">
+                <a href="https://hr-abedini.github.io/" title="خانه">
                     <span>خانه</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="درباره من">
+                <a href="https://hr-abedini.github.io/categories/" title="دسته‌بندی‌ها">
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/tags/" title="برچسب‌ها">
+                    <span>برچسب‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/about/" title="درباره من">
                     <span>درباره من</span>
                 </a>
             </li>
@@ -292,17 +368,17 @@
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/oracle-apex/">Oracle APEX</a></li>
-      <li><a href="http://localhost:1313/tags/java-script/">Java-Script</a></li>
-      <li><a href="http://localhost:1313/tags/programming/">Programming</a></li>
-      <li><a href="http://localhost:1313/tags/items/">Items</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/oracle-apex/">Oracle APEX</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/java-script/">Java-Script</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/programming/">Programming</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/items/">Items</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:1313/">وبلاگ من</a></span> · 
+        <span>&copy; 2025 <a href="https://hr-abedini.github.io/">وبلاگ من</a></span> · 
 
     <span>
         Powered by
