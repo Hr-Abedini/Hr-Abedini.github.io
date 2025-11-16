@@ -45,7 +45,8 @@ function getJalaliDateParts(dateString) {
     minute: mm,
     // رشتهٔ آماده
     formatted1: `${weekday} ${jd} ${monthName} ${jy} - ساعت ${hh}:${mm}`,
-    formatted2: `${jy}/${jm.toString().padStart(2, '0')}/${jd.toString().padStart(2, '0')}`
+    formatted2: `${jy}/${jm.toString().padStart(2, '0')}/${jd.toString().padStart(2, '0')}`,
+    formatted3: `${jy}/${jm.toString().padStart(2, '0')}/${jd.toString().padStart(2, '0')} - ${weekday}`
   };
 }
 
@@ -91,10 +92,9 @@ function convertTextToStandardDate(dateStr)
   return dateObj
 }
 
-// اعمال روی تمام عناصر با کلاس jdate
-document.addEventListener("DOMContentLoaded", () => {
-  // document.querySelectorAll(".jdate").forEach(el => {
 
+function changePostDate()
+{
     const meta = document.querySelector("div.post-meta");
     if (!meta) return;
     
@@ -111,6 +111,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!parts) return;
 
     oldSpan.textContent=parts.formatted1;
+}
+
+function changePostDate_List()
+{
+   let footers = document.querySelectorAll('footer.entry-footer');
+   footers.forEach(el => {
+          const span = el.querySelector("span[title]");
+          if (!span) return;
+
+          let postDate = span.getAttribute('title');
+          let dateObj= convertTextToStandardDate(postDate)
+          const parts = getJalaliDateParts(dateObj);
+          if (!parts) return;
+
+          span.textContent=parts.formatted3;
+      });
+}
+
+// اعمال روی تمام عناصر با کلاس jdate
+document.addEventListener("DOMContentLoaded", () => {
+  // document.querySelectorAll(".jdate").forEach(el => {
+  changePostDate();
+   changePostDate_List();
   // });
 });
 
