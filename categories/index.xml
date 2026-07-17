@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>دسته‌بندی‌ها on حمیدرضا عابدینی</title>
+    <link>https://hr-abedini.github.io/categories/</link>
+    <description>Recent content in دسته‌بندی‌ها on حمیدرضا عابدینی</description>
+    <generator>Hugo -- 0.163.1</generator>
+    <language>fa-IR</language>
+    <lastBuildDate>Thu, 16 Jul 2026 10:13:22 +0330</lastBuildDate>
+    <atom:link href="https://hr-abedini.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Database</title>
+      <link>https://hr-abedini.github.io/categories/database/</link>
+      <pubDate>Thu, 16 Jul 2026 10:13:22 +0330</pubDate>
+      <guid>https://hr-abedini.github.io/categories/database/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oracle APEX</title>
+      <link>https://hr-abedini.github.io/categories/oracle-apex/</link>
+      <pubDate>Tue, 24 Feb 2026 07:31:57 +0330</pubDate>
+      <guid>https://hr-abedini.github.io/categories/oracle-apex/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>https://hr-abedini.github.io/categories/hugo/</link>
+      <pubDate>Mon, 10 Nov 2025 08:42:15 +0330</pubDate>
+      <guid>https://hr-abedini.github.io/categories/hugo/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

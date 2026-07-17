@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Hugo on حمیدرضا عابدینی</title>
+    <link>https://hr-abedini.github.io/tags/hugo/</link>
+    <description>Recent content in Hugo on حمیدرضا عابدینی</description>
+    <generator>Hugo -- 0.163.1</generator>
+    <language>fa-IR</language>
+    <lastBuildDate>Mon, 10 Nov 2025 08:42:15 +0330</lastBuildDate>
+    <atom:link href="https://hr-abedini.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>تغییر فونت در Hugo</title>
+      <link>https://hr-abedini.github.io/posts/hugo/%D8%AA%D8%BA%DB%8C%DB%8C%D8%B1-%D9%81%D9%88%D9%86%D8%AA-%D8%AF%D8%B1-hugo/</link>
+      <pubDate>Mon, 10 Nov 2025 08:42:15 +0330</pubDate>
+      <guid>https://hr-abedini.github.io/posts/hugo/%D8%AA%D8%BA%DB%8C%DB%8C%D8%B1-%D9%81%D9%88%D9%86%D8%AA-%D8%AF%D8%B1-hugo/</guid>
+      <description>&lt;p&gt;می‌خواهیم &lt;a href=&#34;https://rastikerdar.github.io/vazirmatn/&#34; 
+target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt; &lt;i class=&#34;fa-solid fa-external-link fa-xs&#34; style=&#34;color:rgb(37, 153, 182)&#34;&gt;&lt;/i&gt; فونت وزیر&lt;/a&gt;
+ (vazirmatn) را جایگزین فونت پیش‌فرض سایت ساز &lt;a href=&#34;https://gohugo.io/&#34; 
+target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt; &lt;i class=&#34;fa-solid fa-external-link fa-xs&#34; style=&#34;color:rgb(37, 153, 182)&#34;&gt;&lt;/i&gt; Hugo&lt;/a&gt;
+ قرار بدهیم. همچنین می‌خواهیم این تغییرات وابسته به قالب سایت نباشد؛ یعنی با تغییر قالب، فونت ما همچنان vazirmatn بماند.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;فونت وزیر را از گیتهاب دانلود می‌کنیم: &lt;a href=&#34;https://rastikerdar.github.io/vazirmatn/&#34; 
+target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt; &lt;i class=&#34;fa-solid fa-external-link fa-xs&#34; style=&#34;color:rgb(37, 153, 182)&#34;&gt;&lt;/i&gt; GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img alt=&#34;پوشه وزیرمتن&#34; loading=&#34;lazy&#34; src=&#34;https://hr-abedini.github.io/posts/hugo/%D8%AA%D8%BA%DB%8C%DB%8C%D8%B1-%D9%81%D9%88%D9%86%D8%AA-%D8%AF%D8%B1-hugo/images/fonts-vazirmatn.png#center&#34;&gt;
+پوشه و فایل‌های مورد استفاده برای این کار:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;پوشه fonts&lt;/li&gt;
+&lt;li&gt;دو فایل font face
+&lt;ul&gt;
+&lt;li&gt;vazirmatn-variable-font-face.css&lt;/li&gt;
+&lt;li&gt;vazirmatn-font-face.css&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;انتقال فونت‌ها به مسیر static/fonts/vazirmatn&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img alt=&#34;static/fonts/vazirmatn&#34; loading=&#34;lazy&#34; src=&#34;https://hr-abedini.github.io/posts/hugo/%D8%AA%D8%BA%DB%8C%DB%8C%D8%B1-%D9%81%D9%88%D9%86%D8%AA-%D8%AF%D8%B1-hugo/images/static-fonts-vazirmatn.png#center&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>ایجاد جستجو برای Shuttle | حمیدرضا عابدینی</title>
+<meta name="keywords" content="oracle apex, shuttle, جستجو, Page Items">
+<meta name="description" content="Oracle APEX 24.1 / Page Items">
+<meta name="author" content="حمیدرضا عابدینی">
+<link rel="canonical" href="https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e4777004a048d8f19695d10e1f674a71da1e52af5d47219a8c9d517c98d611a1.css" integrity="sha256-5HdwBKBI2PGWldEOH2dKcdoeUq9dRyGajJ1RfJjWEaE=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hr-abedini.github.io/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://hr-abedini.github.io/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hr-abedini.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="fa" href="https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+
+
+
+                                    
+                                <meta property="og:url" content="https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/">
+  <meta property="og:site_name" content="حمیدرضا عابدینی">
+  <meta property="og:title" content="ایجاد جستجو برای Shuttle">
+  <meta property="og:description" content="Oracle APEX 24.1 / Page Items">
+  <meta property="og:locale" content="fa-IR">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-24T07:31:57+03:30">
+    <meta property="article:modified_time" content="2026-02-24T07:31:57+03:30">
+    <meta property="article:tag" content="Oracle APEX">
+    <meta property="article:tag" content="Page Items">
+    <meta property="article:tag" content="Shuttle">
+    <meta property="og:image" content="https://hr-abedini.github.io/images/cover-shuttle.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hr-abedini.github.io/images/cover-shuttle.png">
+<meta name="twitter:title" content="ایجاد جستجو برای Shuttle">
+<meta name="twitter:description" content="Oracle APEX 24.1 / Page Items">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "پست‌ها",
+      "item": "https://hr-abedini.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "ایجاد جستجو برای Shuttle",
+      "item": "https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ایجاد جستجو برای Shuttle",
+  "name": "ایجاد جستجو برای Shuttle",
+  "description": "Oracle APEX 24.1 / Page Items",
+  "keywords": [
+    "oracle apex", "shuttle", "جستجو", "Page Items"
+  ],
+  "articleBody": "مساله در برنامه‌ام به فرمی نیاز داشتم که بتوانم در آن، کاربران را به یک نقش تخصیص دهم. در این فرم ادمین باید بتواند:\nکاربر مورد نظر خود را جستجو کند بتواند چند کاربر را انتخاب و اضافه کند بتواند چند کاربر را انتخاب و حذف کند بتواند همه کاربران را انتخاب کند و حذف و اضافه انجام دهد 🔔 آیتم Select Many قابلیت چند انتخابی و جستجو را دارد، اما نیاز است که کاربر منو کشویی را باز کند و تک تک نفرات را انتخاب کند.\nShuttle گزینه خوبی برای انتخاب چندتایی است، ولی قابلیت جستجو ندارد.\nساختار shuttle shuttle از دو المنت select\rبرای نمایش مقادیر استفاده می‌کند. id ایجاد شده برای این دو المنت براساس نام آیتم و پسوندهای left و right است. 🔔 این دو select از پسوندهای left و right استفاده می‌کنند، که در حالت چپچین معنای درستی دارند ولی در حالت راستچین خیر. بنابراین در این مطلب من از ستون اول (شروع) و دوم (پایان) برای نام بردن از آن‌ها استفاده ‌می‌کنم؛ اما در کد، من هم از پسوند left و right استفاده می‌کنم.\nپیاده سازی ایجاد فیلتر در صفحه مورد نظرمان (مثلا صفحه 5) سه آیتم نیاز داریم:\nP5_USER_ID: آیتمی از نوع shuttle. به sort آن نیاز نداریم، بنابراین آن را حذف می‌کنیم: Settings | Show Controls: Moving Only P5_SEARCH_TEXT_L: آیتمی برای جستجو در ستون اول مقادیر (left) P5_SEARCH_TEXT_R آیتمی برای جستجو در ستون دوم مقادیر (right) دکمه پاک کردن جستجو برای پاک کردن مقادیر یک آیتم، از دستور زیر استفاده می‌کنیم:\napex.item('نام آیتم مورد نظر').setValue('') یا دستور کوتاهتر:\n$s('نام آیتم مورد نظر') در این دستور چون مقداری برای پارامتر دوم آن ننوشته‌ایم، مقدار خالی در نظر گرفته می‌شود.\nبرای امکان ایجاد حذف متن در باکس‌های جستجو، برای هرکدام از آیتم‌های جستجو تغییرات زیر را انجام می‌دهیم:\nAppearance | Template Options Advanced | Item Post Text: Display as Block Advanced | Post Text: \u003cspan onclick=\"$s('نام آیتم مورد نظر')\" style=\"cursor: pointer;\" class=\"fa fa-trash-o\" title=\"پاک کردن\" aria-label=\"پاک کردن جستجو\" aria-hidden=\"true\"\u003e \u003c/span\u003e Dynamic Action می‌خواهیم با تایپ کردن کاربر، فیلتر انجام شود. بنابراین از دو رویداد زیر استفاده می‌کنیم:\nChange: برای زمان تایپ کردن اصلا مناسب نیست و فعال نمی‌شود. اما زمانی که باکس focus را از دست می‌دهد و یا متن به صورت کامل پاک می‌شود فعال می‌شود. Key Release: این رویداد پس از رها کردن کلید فعال خواهد شد. بنابراین برای هر دو باکس مربوط به جستجو، این DAها را اضافه کرده و برای هرکدام یک action از نوع Execute JavaScript Code اضافه می‌کنیم: در داخل Execute JavaScript Code از دو متد با امضا زیر استفاده می‌کنیم:\nپارامتر اول: نام آیتم جستجو پارامتر دوم: نام آیتم شاتل برای ستون اول (filter left side)\nitem_Shuttle_FilterLeftSide( \"P5_SEARCH_TEXT_L\", \"P5_USER_ID\" ); برای ستون دوم (filter right side)\nitem_Shuttle_FilterRightSide( \"P5_SEARCH_TEXT_R\", \"P5_USER_ID\" ); متدهای فیلتر در Attribute صفحه کدهای زیر را می‌نویسیم Page | JavaScript | Function and Global Variable Declaration\rدر دو متد ابتدایی، پسوند _LEFT یا _RIGHT به نام آیتم وصل می‌شوند تا به id این ستون‌ها برسیم. سپس متد اصلی یعنی item_Shuttle_Filter را فراخوانی می‌کنیم.\n/** * فیلتر کردن مقادیر ستون چپ (اول) * * @param {string} searchItemName \u003e نام آیتم جستجو * @param {string} shuttleName \u003e نام شاتل */ function item_Shuttle_FilterLeftSide(searchItemName, shuttleName) { let leftSide = shuttleName + '_LEFT'; item_Shuttle_Filter(searchItemName, leftSide); } /** * فیلتر کردن مقادیر ستون راست (دوم) * * @param {string} searchItemName \u003e نام آیتم جستجو * @param {string} shuttleName \u003e نام شاتل */ function item_Shuttle_FilterRightSide(searchItemName, shuttleName) { let rightSide = shuttleName + '_RIGHT'; item_Shuttle_Filter(searchItemName, rightSide); } item_Shuttle_Filter: وظیفه این متد مخفی کردن گزینه‌های موجود در لیست هست. با استفاده از حلقه، تمام گزینه‌ها بررسی می‌شوند و موارد غیرمشابه مخفی می‌شوند.\n/** * جستجو در شاتل چپ یا راست * توسط متدهای دیگر فراخوانی می‌شود * * @param {string} searchItemName \u003e نام آیتم جستجو * @param {string} shuttleSideName \u003e نام ستون شاتل (_LEFT, _RIGHT) */ function item_Shuttle_Filter(searchItemName, shuttleSideName) { const searchText = apex.item(searchItemName).getValue().toLowerCase(); const selectEl = document.getElementById(shuttleSideName); const options = selectEl.options; for (let i = 0; i \u003c options.length; i++) { const optionText = options[i].text.toLowerCase(); options[i].hidden = !optionText.includes(searchText); // options[i].style.display = optionText.includes(searchText) ? \"\" : \"none\"; } } 💡 برای این کار می‌توان از دو روش استفاده کرد:\nhidden\r\u003coption value=\"305\" hidden=\"\"\u003eکاربر 305\u003c/option\u003e display none\r\u003coption value=\"21\" style=\"display: none;\"\u003eکاربر 21\u003c/option\u003e بازنویسی رویداد دکمه‌ها مشکل بعدی این هست که دکمه‌های Move All و Remove All هم گزینه‌های مخفی و هم غیر مخفی را انتقال می‌دهند. پس آن‌ها را بازنویسی می‌کنیم.\nشناسه دکمه‌ها id مورد استفاده برای دکمه‌ها، نام آیتم شاتل + پسوند _MOVE_ALL یا _REMOVE_ALL است. متدها در خصوصیات صفحه:\nPage | JavaScript | Function and Global Variable Declaration\ritem_Shuttle_MoveAllButton: بازنویسی رویداد دکمه Move All item_Shuttle_RemoveAllButton: بازنویسی رویداد دکمه Remove All /** * فعال کردن انتقال از لیست یک به دو * move all بازنویسی دکمه * @param {string} shuttleName */ function item_Shuttle_MoveLeftToRight(shuttleName) { //ltr: left to right item_Shuttle_MoveAll(shuttleName, 'ltr'); } /** * فعال کردن انتقال از لیست دو به یک * remove all بازنویسی دکمه * @param {string} shuttleName */ function item_Shuttle_MoveRightToLeft(shuttleName) { //rtl: right to left item_Shuttle_MoveAll(shuttleName, 'rtl'); } item_Shuttle_MoveAll: در این متد، رویداد کلیک بر روی این دکمه‌ها را بازنویسی می‌کنیم. پارامتر moveType جهت انتقال و نوع دکمه را مشخص می‌کند؛ از لیست چپ به راست، یا راست به چپ.\nبدین ترتیب source و target را مشخص می‌کنیم (ایجاد id) و در نهایت با استفاده از یک حلقه موارد hidden را نادیده گرفته و انتقال انجام می‌شود.\n/** * در زمان فیلتر کردن ستون چپ یا راست move all, remove all بازنویسی دکمه * در این حالت مقادیری که فیلتر شده‌اند نباید به ستون کناری منتقل شوند * @param {string} shuttleName \u003e نام شاتل * @param {string} moveType \u003e سمت حرکت (ltr, rtl) */ function item_Shuttle_MoveAll(shuttleName, moveType) { //ltr: left to right //rtl: right to left const moveAllBtn = document.getElementById(shuttleName + (moveType == 'ltr' ? '_MOVE_ALL' : '_REMOVE_ALL')); moveAllBtn.addEventListener(\"click\", function (e) { e.preventDefault(); e.stopImmediatePropagation(); const source = document.getElementById(shuttleName + (moveType == 'ltr' ? '_LEFT' : '_RIGHT')); const target = document.getElementById(shuttleName + (moveType == 'ltr' ? '_RIGHT' : '_LEFT')); for (let i = source.options.length - 1; i \u003e= 0; i--) { const option = source.options[i]; if (!option.hidden) { target.add(option); } } }, true); // capture phase } فراخوانی در صفحه و در صفحه این متدها را فراخوانی می‌کنیم: Page | JavaScript | Execute when Page Loads\rبدین ترتیب با load شدن صفحه، رویداد دکمه‌ها را بازنویسی می‌کنیم.\nlet shuttleId = 'P5_USER_ID'; item_Shuttle_MoveAllButton(shuttleId); item_Shuttle_RemoveAllButton(shuttleId); 💡\rنامگذاری متدهای من\rمن از پیشوند item برای این متدها استفاده می‌کنم و بعد نام آیتم (در اینجا shuttle) و در نهایت کاری که می‌خواهم انجام دهم.\nاین کار برای دسته بندی فایل‌های JS من هست. در نهایت تمام فایل‌های JS را در site.js ادغام می‌کنم و داخل محیط production استفاده می‌کنم.\nsite_item.js\r",
+  "wordCount" : "1105",
+  "inLanguage": "fa",
+  "image":"https://hr-abedini.github.io/images/cover-shuttle.png","datePublished": "2026-02-24T07:31:57+03:30",
+  "dateModified": "2026-02-24T07:31:57+03:30",
+  "author":{
+    "@type": "Person",
+    "name": "حمیدرضا عابدینی"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "حمیدرضا عابدینی",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hr-abedini.github.io/favicon/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hr-abedini.github.io/" accesskey="h" title="حمیدرضا عابدینی (Alt + H)">حمیدرضا عابدینی</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hr-abedini.github.io/" title="خانه">
+                    <span>خانه</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/categories/" title="دسته‌بندی‌ها">
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/tags/" title="برچسب‌ها">
+                    <span>برچسب‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/search/" title="جستجو (Alt &#43; /)" accesskey=/>
+                    <span>جستجو</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/archives/" title="بایگانی">
+                    <span>بایگانی</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/about/" title="درباره‌ی من">
+                    <span>درباره‌ی من</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hr-abedini.github.io/">خانه</a>&nbsp;»&nbsp;<a href="https://hr-abedini.github.io/posts/">پست‌ها</a></div>
+    <h1 class="post-title entry-hint-parent">
+      ایجاد جستجو برای Shuttle
+    </h1>
+    <div class="post-description">
+      Oracle APEX 24.1 / Page Items
+    </div>
+    
+    <div class="post-meta">
+
+      <hr style=" border: none; border-top: 1px dotted ;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-footer">📅 <span class='post-date' title='2026-02-24 07:31:57 +0330 +0330'>فوریهٔ 24, 2026</span>&nbsp;·&nbsp;<span class="reading-time"> 📖 6 دقیقه</span>&nbsp;·&nbsp;<span class="word-count"> 📊 1105 واژه</span>&nbsp;·&nbsp;حمیدرضا عابدینی</div>
+
+
+
+<hr style=" border: none; border-top: 1px dotted ;">
+
+<div class="post-tags">
+  
+  <a class="cat" href="/categories/oracle-apex"><i class="fa-solid fa-layer-group"></i> Oracle APEX</a>
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </header> 
+<figure class="entry-cover">
+            <img loading="eager"
+                srcset='https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/cover-shuttle_hu_9f2fe382186d86c7.png 360w,https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/cover-shuttle_hu_7a44503cd89d833a.png 480w,https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/cover-shuttle_hu_e95adde42dd0693a.png 720w,https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/cover-shuttle.png 793w'
+                src="https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/cover-shuttle.png"
+                sizes="(min-width: 768px) 720px, 100vw"
+                width="793" height="423"
+                alt="">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">فهرست مطالب</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d9%85%d8%b3%d8%a7%d9%84%d9%87" aria-label="مساله">مساله</a></li>
+                <li>
+                    <a href="#%d8%b3%d8%a7%d8%ae%d8%aa%d8%a7%d8%b1-shuttle" aria-label="ساختار shuttle">ساختار shuttle</a></li>
+                <li>
+                    <a href="#%d9%be%db%8c%d8%a7%d8%af%d9%87-%d8%b3%d8%a7%d8%b2%db%8c" aria-label="پیاده سازی">پیاده سازی</a><ul>
+                        
+                <li>
+                    <a href="#%d8%a7%db%8c%d8%ac%d8%a7%d8%af-%d9%81%db%8c%d9%84%d8%aa%d8%b1" aria-label="ایجاد فیلتر">ایجاد فیلتر</a><ul>
+                        
+                <li>
+                    <a href="#%d8%af%da%a9%d9%85%d9%87-%d9%be%d8%a7%da%a9-%da%a9%d8%b1%d8%af%d9%86-%d8%ac%d8%b3%d8%aa%d8%ac%d9%88" aria-label="دکمه پاک کردن جستجو">دکمه پاک کردن جستجو</a></li>
+                <li>
+                    <a href="#dynamic-action" aria-label="Dynamic Action">Dynamic Action</a></li>
+                <li>
+                    <a href="#%d9%85%d8%aa%d8%af%d9%87%d8%a7%db%8c-%d9%81%db%8c%d9%84%d8%aa%d8%b1" aria-label="متدهای فیلتر">متدهای فیلتر</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%a8%d8%a7%d8%b2%d9%86%d9%88%db%8c%d8%b3%db%8c-%d8%b1%d9%88%db%8c%d8%af%d8%a7%d8%af-%d8%af%da%a9%d9%85%d9%87%d9%87%d8%a7" aria-label="بازنویسی رویداد دکمه‌ها">بازنویسی رویداد دکمه‌ها</a><ul>
+                        
+                <li>
+                    <a href="#%d8%b4%d9%86%d8%a7%d8%b3%d9%87-%d8%af%da%a9%d9%85%d9%87%d9%87%d8%a7" aria-label="شناسه دکمه‌ها">شناسه دکمه‌ها</a></li>
+                <li>
+                    <a href="#%d9%85%d8%aa%d8%af%d9%87%d8%a7" aria-label="متدها">متدها</a></li>
+                <li>
+                    <a href="#%d9%81%d8%b1%d8%a7%d8%ae%d9%88%d8%a7%d9%86%db%8c-%d8%af%d8%b1-%d8%b5%d9%81%d8%ad%d9%87" aria-label="فراخوانی در صفحه">فراخوانی در صفحه</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="مساله">مساله<a hidden class="anchor" aria-hidden="true" href="#مساله">#</a></h2>
+<p>در برنامه‌ام به فرمی نیاز داشتم که بتوانم در آن، کاربران را به یک نقش تخصیص دهم. در این فرم ادمین باید بتواند:</p>
+<ul>
+<li>کاربر مورد نظر خود را جستجو کند</li>
+<li>بتواند چند کاربر را انتخاب و اضافه کند</li>
+<li>بتواند چند کاربر را انتخاب  و حذف کند</li>
+<li>بتواند همه کاربران را انتخاب کند و حذف و اضافه انجام دهد</li>
+</ul>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> آیتم Select Many قابلیت چند انتخابی و جستجو را دارد،
+اما نیاز است که کاربر منو کشویی را باز کند و تک تک نفرات را انتخاب کند.</p>
+<p>Shuttle گزینه خوبی برای انتخاب چندتایی است، ولی قابلیت جستجو ندارد.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<hr>
+<h2 id="ساختار-shuttle">ساختار shuttle<a hidden class="anchor" aria-hidden="true" href="#ساختار-shuttle">#</a></h2>
+<ul>
+<li>shuttle  از دو المنت <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> select</a>
+ برای نمایش مقادیر استفاده می‌کند.</li>
+<li>id ایجاد شده برای این دو المنت براساس نام آیتم و پسوندهای left و right است.</li>
+</ul>
+<p><img loading="lazy" src="/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/shuttle-structure.png#center"></p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> این دو select از پسوندهای left و  right استفاده می‌کنند، که در حالت چپچین معنای درستی دارند ولی در حالت راستچین خیر.
+بنابراین در این مطلب من از ستون اول (شروع) و دوم (پایان) برای نام بردن از آن‌ها استفاده ‌می‌کنم؛ اما در کد، من هم از پسوند left و right استفاده می‌کنم.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<hr>
+<h2 id="پیاده-سازی">پیاده سازی<a hidden class="anchor" aria-hidden="true" href="#پیاده-سازی">#</a></h2>
+<u>
+<h3 id="ایجاد-فیلتر">ایجاد فیلتر<a hidden class="anchor" aria-hidden="true" href="#ایجاد-فیلتر">#</a></h3>
+</u>
+<p><img loading="lazy" src="/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/shuttle1.png#center">
+در صفحه مورد نظرمان (مثلا صفحه  5) سه آیتم نیاز داریم:</p>
+<ol>
+<li>P5_USER_ID: آیتمی از نوع shuttle. به sort آن نیاز نداریم، بنابراین آن را حذف می‌کنیم:</li>
+</ol>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Settings | Show Controls: Moving Only</li>
+</ul>
+
+  
+</div>
+
+<ol start="2">
+<li>P5_SEARCH_TEXT_L: آیتمی برای جستجو در ستون اول مقادیر (left)</li>
+<li>P5_SEARCH_TEXT_R آیتمی برای جستجو در ستون دوم مقادیر (right)</li>
+</ol>
+<u>
+<h4 id="دکمه-پاک-کردن-جستجو">دکمه پاک کردن جستجو<a hidden class="anchor" aria-hidden="true" href="#دکمه-پاک-کردن-جستجو">#</a></h4>
+</u>
+<p>برای پاک کردن مقادیر یک آیتم، از دستور زیر استفاده می‌کنیم:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">apex</span>.<span style="color:#a6e22e">item</span>(<span style="color:#e6db74">&#39;نام آیتم مورد نظر&#39;</span>).<span style="color:#a6e22e">setValue</span>(<span style="color:#e6db74">&#39;&#39;</span>)
+</span></span></code></pre></div><p>یا دستور کوتاهتر:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">$s</span>(<span style="color:#e6db74">&#39;نام آیتم مورد نظر&#39;</span>)
+</span></span></code></pre></div><p>در این دستور چون مقداری برای پارامتر دوم آن ننوشته‌ایم، مقدار خالی در نظر گرفته می‌شود.</p>
+<p>برای امکان ایجاد حذف متن در باکس‌های جستجو، برای هرکدام از آیتم‌های جستجو تغییرات زیر را انجام می‌دهیم:</p>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Appearance | Template Options
+<ul>
+<li>Advanced | Item Post Text: Display as Block</li>
+</ul>
+</li>
+<li>Advanced | Post Text:</li>
+</ul>
+
+  
+</div>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">span</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$s(&#39;نام آیتم مورد نظر&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cursor: pointer;&#34;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fa fa-trash-o&#34;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;پاک کردن&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aria-label</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;پاک کردن جستجو&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aria-hidden</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;true&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span></code></pre></div><u>
+<h4 id="dynamic-action">Dynamic Action<a hidden class="anchor" aria-hidden="true" href="#dynamic-action">#</a></h4>
+</u>
+<p>می‌خواهیم با تایپ کردن کاربر، فیلتر انجام شود. بنابراین از دو رویداد زیر استفاده می‌کنیم:</p>
+<ul>
+<li>Change: برای زمان تایپ کردن اصلا مناسب نیست و <u>فعال نمی‌شود</u>. اما زمانی که باکس focus را از دست می‌دهد و یا متن به صورت کامل پاک می‌شود فعال می‌شود.</li>
+<li>Key Release: این رویداد پس از رها کردن کلید فعال خواهد شد.</li>
+</ul>
+<p>بنابراین برای هر دو باکس مربوط به جستجو، این DAها را اضافه کرده و برای هرکدام یک <code>action</code> از نوع <code>Execute JavaScript Code</code> اضافه می‌کنیم:
+<img loading="lazy" src="/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/shuttle-da.png#center"></p>
+<p>در داخل <code>Execute JavaScript Code</code> از دو متد با امضا زیر استفاده می‌کنیم:</p>
+<ul>
+<li>پارامتر اول: نام آیتم جستجو</li>
+<li>پارامتر دوم: نام آیتم شاتل</li>
+</ul>
+<p>برای ستون اول (filter left side)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">item_Shuttle_FilterLeftSide</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;P5_SEARCH_TEXT_L&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;P5_USER_ID&#34;</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>برای ستون دوم (filter right side)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">item_Shuttle_FilterRightSide</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;P5_SEARCH_TEXT_R&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;P5_USER_ID&#34;</span>
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><u>
+<h4 id="متدهای-فیلتر">متدهای فیلتر<a hidden class="anchor" aria-hidden="true" href="#متدهای-فیلتر">#</a></h4>
+</u>
+<p>در Attribute صفحه کدهای زیر را می‌نویسیم
+
+
+
+
+
+
+<div dir="ltr">
+  
+    Page | JavaScript | Function and Global Variable Declaration
+  
+</div>
+</p>
+<p>در دو متد ابتدایی، پسوند <code>_LEFT</code> یا <code>_RIGHT</code> به نام آیتم وصل می‌شوند تا به id این ستون‌ها برسیم. سپس متد اصلی یعنی <code>item_Shuttle_Filter</code> را فراخوانی می‌کنیم.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * فیلتر کردن مقادیر ستون چپ (اول)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} searchItemName   &gt; نام آیتم جستجو    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} shuttleName      &gt; نام شاتل        
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">item_Shuttle_FilterLeftSide</span>(<span style="color:#a6e22e">searchItemName</span>, <span style="color:#a6e22e">shuttleName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">leftSide</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">shuttleName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;_LEFT&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">item_Shuttle_Filter</span>(<span style="color:#a6e22e">searchItemName</span>, <span style="color:#a6e22e">leftSide</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * فیلتر کردن مقادیر ستون راست (دوم)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} searchItemName   &gt; نام آیتم جستجو    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} shuttleName      &gt; نام شاتل        
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">item_Shuttle_FilterRightSide</span>(<span style="color:#a6e22e">searchItemName</span>, <span style="color:#a6e22e">shuttleName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">rightSide</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">shuttleName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;_RIGHT&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">item_Shuttle_Filter</span>(<span style="color:#a6e22e">searchItemName</span>, <span style="color:#a6e22e">rightSide</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>item_Shuttle_Filter: وظیفه این متد مخفی کردن گزینه‌های موجود در لیست هست. با استفاده از حلقه، تمام گزینه‌ها بررسی می‌شوند و موارد غیرمشابه مخفی می‌شوند.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * جستجو در شاتل چپ یا راست
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * توسط متدهای دیگر فراخوانی می‌شود
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} searchItemName   &gt; نام آیتم جستجو    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} shuttleSideName  &gt; نام ستون شاتل (_LEFT, _RIGHT)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">item_Shuttle_Filter</span>(<span style="color:#a6e22e">searchItemName</span>, <span style="color:#a6e22e">shuttleSideName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">searchText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">apex</span>.<span style="color:#a6e22e">item</span>(<span style="color:#a6e22e">searchItemName</span>).<span style="color:#a6e22e">getValue</span>().<span style="color:#a6e22e">toLowerCase</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">selectEl</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#a6e22e">shuttleSideName</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">options</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">selectEl</span>.<span style="color:#a6e22e">options</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">optionText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">options</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">toLowerCase</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">options</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">hidden</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">optionText</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">searchText</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// options[i].style.display = optionText.includes(searchText) ? &#34;&#34; : &#34;none&#34;;
+</span></span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-tip">
+
+  <p><span class="alert-icon">💡</span> برای این کار می‌توان از دو روش استفاده کرد:</p>
+<ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/hidden" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> hidden</a>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;305&#34;</span> <span style="color:#a6e22e">hidden</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;کاربر 305&lt;/<span style="color:#f92672">option</span>&gt;
+</span></span></code></pre></div><ol start="2">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/display" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> display none</a>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;21&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;کاربر 21&lt;/<span style="color:#f92672">option</span>&gt;
+</span></span></code></pre></div>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<hr>
+<h3 id="بازنویسی-رویداد-دکمهها">بازنویسی رویداد دکمه‌ها<a hidden class="anchor" aria-hidden="true" href="#بازنویسی-رویداد-دکمهها">#</a></h3>
+<p>مشکل بعدی این هست که دکمه‌های Move All و Remove All هم گزینه‌های مخفی و هم غیر مخفی را انتقال می‌دهند. پس آن‌ها را بازنویسی می‌کنیم.</p>
+<u>
+<h4 id="شناسه-دکمهها">شناسه دکمه‌ها<a hidden class="anchor" aria-hidden="true" href="#شناسه-دکمهها">#</a></h4>
+</u>
+<p>id مورد استفاده برای دکمه‌ها، نام آیتم شاتل + پسوند <code>_MOVE_ALL</code> یا <code>_REMOVE_ALL</code> است.
+<img alt="move all button" loading="lazy" src="/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/shuttle-moveall.png#center">
+<img alt="remove all button" loading="lazy" src="/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/images/shuttle-removeall.png#center"></p>
+<u>
+<h4 id="متدها">متدها<a hidden class="anchor" aria-hidden="true" href="#متدها">#</a></h4>
+</u>
+<p>در خصوصیات صفحه:</p>
+<p>
+
+
+
+
+
+<div dir="ltr">
+  
+    Page | JavaScript | Function and Global Variable Declaration
+  
+</div>
+
+<br></p>
+<ul>
+<li>item_Shuttle_MoveAllButton: بازنویسی رویداد دکمه <code>Move All</code></li>
+<li>item_Shuttle_RemoveAllButton: بازنویسی رویداد دکمه <code>Remove All</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * فعال کردن انتقال از لیست یک به دو
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * move all بازنویسی دکمه
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} shuttleName 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">item_Shuttle_MoveLeftToRight</span>(<span style="color:#a6e22e">shuttleName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//ltr: left to right
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">item_Shuttle_MoveAll</span>(<span style="color:#a6e22e">shuttleName</span>, <span style="color:#e6db74">&#39;ltr&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * فعال کردن انتقال از لیست دو به یک
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * remove all بازنویسی دکمه
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} shuttleName 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">item_Shuttle_MoveRightToLeft</span>(<span style="color:#a6e22e">shuttleName</span>) {  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//rtl: right to left
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">item_Shuttle_MoveAll</span>(<span style="color:#a6e22e">shuttleName</span>, <span style="color:#e6db74">&#39;rtl&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>item_Shuttle_MoveAll: در این متد، رویداد کلیک بر روی این دکمه‌ها را بازنویسی می‌کنیم.
+پارامتر <code>moveType</code> جهت انتقال و نوع دکمه را مشخص می‌کند؛ از لیست چپ به راست، یا راست به چپ.<br>
+بدین ترتیب <code>source</code> و <code>target</code> را مشخص می‌کنیم (ایجاد id) و در نهایت با استفاده از یک حلقه موارد hidden را نادیده گرفته و انتقال انجام  می‌شود.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * در زمان فیلتر کردن ستون چپ یا راست move all, remove all بازنویسی دکمه 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * در این حالت مقادیری که فیلتر شده‌اند نباید به ستون کناری منتقل شوند
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} shuttleName  &gt; نام شاتل      
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param {string} moveType     &gt; سمت حرکت (ltr, rtl)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">item_Shuttle_MoveAll</span>(<span style="color:#a6e22e">shuttleName</span>, <span style="color:#a6e22e">moveType</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//ltr: left to right
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">//rtl: right to left
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">moveAllBtn</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#a6e22e">shuttleName</span> <span style="color:#f92672">+</span> (<span style="color:#a6e22e">moveType</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;ltr&#39;</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;_MOVE_ALL&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;_REMOVE_ALL&#39;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">moveAllBtn</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;click&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">preventDefault</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">stopImmediatePropagation</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#a6e22e">shuttleName</span> <span style="color:#f92672">+</span> (<span style="color:#a6e22e">moveType</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;ltr&#39;</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;_LEFT&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;_RIGHT&#39;</span>));
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">target</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#a6e22e">shuttleName</span> <span style="color:#f92672">+</span> (<span style="color:#a6e22e">moveType</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;ltr&#39;</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;_RIGHT&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;_LEFT&#39;</span>));
+</span></span><span style="display:flex;"><span>              
+</span></span><span style="display:flex;"><span>           
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">option</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">source</span>.<span style="color:#a6e22e">options</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">option</span>.<span style="color:#a6e22e">hidden</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">option</span>);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">true</span>); <span style="color:#75715e">// capture phase
+</span></span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><br>
+<u>
+<h4 id="فراخوانی-در-صفحه">فراخوانی در صفحه<a hidden class="anchor" aria-hidden="true" href="#فراخوانی-در-صفحه">#</a></h4>
+</u>
+<p>و در صفحه این متدها را فراخوانی می‌کنیم:
+
+
+
+
+
+
+<div dir="ltr">
+  
+    Page | JavaScript | Execute when Page Loads
+  
+</div>
+
+بدین ترتیب با load شدن صفحه، رویداد دکمه‌ها را بازنویسی می‌کنیم.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">shuttleId</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;P5_USER_ID&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">item_Shuttle_MoveAllButton</span>(<span style="color:#a6e22e">shuttleId</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">item_Shuttle_RemoveAllButton</span>(<span style="color:#a6e22e">shuttleId</span>);
+</span></span></code></pre></div><br>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-tip">
+
+   
+    <p class="alert-heading"> 
+      💡
+      نامگذاری متدهای من
+    </p>
+    
+    <p>من از پیشوند item برای این متدها استفاده می‌کنم و بعد نام آیتم (در اینجا shuttle) و در نهایت کاری که می‌خواهم انجام دهم.</p>
+<p>این کار برای دسته بندی فایل‌های JS من هست.
+در نهایت تمام فایل‌های JS را در site.js ادغام می‌کنم و داخل محیط production استفاده می‌کنم.</p>
+<p><a href="https://github.com/Hr-Abedini/Oracle-APEX/blob/main/Java%20Scripts/site_Item.js" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> site_item.js</a>
+</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+
+  
+
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hr-abedini.github.io/tags/oracle-apex/">Oracle APEX</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/page-items/">Page Items</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/shuttle/">Shuttle</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/">
+    <span class="title">« صفحه قبلی</span>
+    <br>
+    <span>چرا در دیتابیس null = null نیست؟</span>
+  </a>
+  <a class="next" href="https://hr-abedini.github.io/posts/oracle-apex/%D9%86%D9%85%D8%A7%DB%8C%D8%B4-%D9%BE%D8%B3%D9%88%D8%B1%D8%AF-%D8%AF%D8%B1-oracle-apex-24-2/">
+    <span class="title">صفحه بعدی »</span>
+    <br>
+    <span>نمایش پسورد در Oracle APEX 24.2</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ایجاد جستجو برای Shuttle on x"
+            href="https://x.com/intent/tweet/?text=%d8%a7%db%8c%d8%ac%d8%a7%d8%af%20%d8%ac%d8%b3%d8%aa%d8%ac%d9%88%20%d8%a8%d8%b1%d8%a7%db%8c%20Shuttle&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f%25D8%25A7%25DB%258C%25D8%25AC%25D8%25A7%25D8%25AF-%25D8%25AC%25D8%25B3%25D8%25AA%25D8%25AC%25D9%2588-%25D8%25A8%25D8%25B1%25D8%25A7%25DB%258C-shuttle%2f&amp;hashtags=OracleAPEX%2cPageItems%2cShuttle">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ایجاد جستجو برای Shuttle on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f%25D8%25A7%25DB%258C%25D8%25AC%25D8%25A7%25D8%25AF-%25D8%25AC%25D8%25B3%25D8%25AA%25D8%25AC%25D9%2588-%25D8%25A8%25D8%25B1%25D8%25A7%25DB%258C-shuttle%2f&amp;title=%d8%a7%db%8c%d8%ac%d8%a7%d8%af%20%d8%ac%d8%b3%d8%aa%d8%ac%d9%88%20%d8%a8%d8%b1%d8%a7%db%8c%20Shuttle&amp;summary=%d8%a7%db%8c%d8%ac%d8%a7%d8%af%20%d8%ac%d8%b3%d8%aa%d8%ac%d9%88%20%d8%a8%d8%b1%d8%a7%db%8c%20Shuttle&amp;source=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f%25D8%25A7%25DB%258C%25D8%25AC%25D8%25A7%25D8%25AF-%25D8%25AC%25D8%25B3%25D8%25AA%25D8%25AC%25D9%2588-%25D8%25A8%25D8%25B1%25D8%25A7%25DB%258C-shuttle%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ایجاد جستجو برای Shuttle on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f%25D8%25A7%25DB%258C%25D8%25AC%25D8%25A7%25D8%25AF-%25D8%25AC%25D8%25B3%25D8%25AA%25D8%25AC%25D9%2588-%25D8%25A8%25D8%25B1%25D8%25A7%25DB%258C-shuttle%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ایجاد جستجو برای Shuttle on whatsapp"
+            href="https://api.whatsapp.com/send?text=%d8%a7%db%8c%d8%ac%d8%a7%d8%af%20%d8%ac%d8%b3%d8%aa%d8%ac%d9%88%20%d8%a8%d8%b1%d8%a7%db%8c%20Shuttle%20-%20https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f%25D8%25A7%25DB%258C%25D8%25AC%25D8%25A7%25D8%25AF-%25D8%25AC%25D8%25B3%25D8%25AA%25D8%25AC%25D9%2588-%25D8%25A8%25D8%25B1%25D8%25A7%25DB%258C-shuttle%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ایجاد جستجو برای Shuttle on telegram"
+            href="https://telegram.me/share/url?text=%d8%a7%db%8c%d8%ac%d8%a7%d8%af%20%d8%ac%d8%b3%d8%aa%d8%ac%d9%88%20%d8%a8%d8%b1%d8%a7%db%8c%20Shuttle&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f%25D8%25A7%25DB%258C%25D8%25AC%25D8%25A7%25D8%25AF-%25D8%25AC%25D8%25B3%25D8%25AA%25D8%25AC%25D9%2588-%25D8%25A8%25D8%25B1%25D8%25A7%25DB%258C-shuttle%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+
+        
+
+
+<section class="related-posts">
+    <h3>مطالب مرتبط</h3>
+    <ul>
+    
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%86%D9%85%D8%A7%DB%8C%D8%B4-%D9%BE%D8%B3%D9%88%D8%B1%D8%AF-%D8%AF%D8%B1-oracle-apex-24-2/">نمایش پسورد در Oracle APEX 24.2</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%86%D9%85%D8%A7%DB%8C%D8%B4-%D9%BE%D8%B3%D9%88%D8%B1%D8%AF-%D8%A8%D9%87-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1/">نمایش Password به کاربر</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%BE%D8%B1-%D8%B4%D8%AF%D9%86-%D8%AE%D9%88%D8%AF%DA%A9%D8%A7%D8%B1-username-%D9%88-password-%D8%AF%D8%B1-%D8%B2%D9%85%D8%A7%D9%86-%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF/">پر شدن ناخواسته‌ی username و password در زمان ایجاد!!</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%86%D9%85%D8%A7%DB%8C%D8%B4-%D8%AA%D8%B5%D9%88%DB%8C%D8%B1-%D8%AB%D8%A8%D8%AA-%D8%B4%D8%AF%D9%87-%D8%AF%D8%B1-form/">نمایش تصویر ثبت شده در Form</a> </li>
+        
+    
+    </ul>
+</section>
+<script src="https://giscus.app/client.js"
+        data-repo="Hr-Abedini/site-comments"
+        data-repo-id="R_kgDOQwO4wA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQwO4wM4C0UmL"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="fa"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://hr-abedini.github.io/">حمیدرضا عابدینی</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script src="/js/jdate.js"></script>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'کپی';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'کپی شد!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'کپی';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
