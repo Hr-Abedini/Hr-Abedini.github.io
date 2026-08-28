@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://hr-abedini.github.io/tags/function/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/tags/mssql/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/categories/sql-server/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/tags/sql-server/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/tags/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/posts/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
+    <loc>https://hr-abedini.github.io/categories/</loc>
+    <lastmod>2026-08-28T10:37:15+03:30</lastmod>
+  </url><url>
     <loc>https://hr-abedini.github.io/posts/terms/geek-%D9%88-nerd-%D8%A7%D8%B2-%DB%8C%DA%A9-%D8%A8%D8%B1%DA%86%D8%B3%D8%A8-%D8%AA%D8%AD%D9%82%DB%8C%D8%B1%D8%A2%D9%85%DB%8C%D8%B2-%D8%AA%D8%A7-%D9%86%D8%B4%D8%A7%D9%86-%D8%A7%D9%81%D8%AA%D8%AE%D8%A7%D8%B1/</loc>
     <lastmod>2026-08-01T17:48:41+03:30</lastmod>
   </url><url>
@@ -17,25 +44,10 @@
     <loc>https://hr-abedini.github.io/tags/%D8%A7%D8%B5%D8%B7%D9%84%D8%A7%D8%AD%D8%A7%D8%AA/</loc>
     <lastmod>2026-08-01T17:48:41+03:30</lastmod>
   </url><url>
-    <loc>https://hr-abedini.github.io/tags/</loc>
-    <lastmod>2026-08-01T17:48:41+03:30</lastmod>
-  </url><url>
-    <loc>https://hr-abedini.github.io/posts/</loc>
-    <lastmod>2026-08-01T17:48:41+03:30</lastmod>
-  </url><url>
-    <loc>https://hr-abedini.github.io/</loc>
-    <lastmod>2026-08-01T17:48:41+03:30</lastmod>
-  </url><url>
-    <loc>https://hr-abedini.github.io/categories/</loc>
-    <lastmod>2026-08-01T17:48:41+03:30</lastmod>
-  </url><url>
     <loc>https://hr-abedini.github.io/categories/database/</loc>
     <lastmod>2026-07-16T10:13:22+03:30</lastmod>
   </url><url>
     <loc>https://hr-abedini.github.io/tags/database/</loc>
-    <lastmod>2026-07-16T10:13:22+03:30</lastmod>
-  </url><url>
-    <loc>https://hr-abedini.github.io/tags/mssql/</loc>
     <lastmod>2026-07-16T10:13:22+03:30</lastmod>
   </url><url>
     <loc>https://hr-abedini.github.io/tags/oracle-db/</loc>

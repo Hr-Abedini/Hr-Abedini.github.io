@@ -1,0 +1,42 @@
+https://gohugo.io/content-management/shortcodes/
+
+---------------------------------
+details
+-------------------------------
+https://gohugo.io/shortcodes/details/
+
+{{< details summary="See the details" >}}
+This is a **bold** word.
+{{< /details >}}
+
+
+---------------------------------------------------------------
+Figure shortcode
+-------------------------------------------------------------
+https://gohugo.io/shortcodes/figure/
+
+{{< figure
+  src="images/examples/zion-national-park.jpg"
+  alt="A photograph of Zion National Park"
+  link="https://www.nps.gov/zion/index.htm"
+  caption="Zion National Park"
+  class="ma0 w-75"
+>}}
+
+{{< figure 
+    src="images/three-valued logic.png"
+    alt="truth table - منطق سه ارزشی"
+    caption="truth table"  
+    align=center
+>}}
+
+
+------------------------------------------------------
+{{< ltr >}}
+Order.OrderID → Customer.CustomerID
+{{< /ltr >}}
+
+
+```html {class="wrap"}
+There are 10 types of people in the world: those who understand binary, and those who don't.
+```

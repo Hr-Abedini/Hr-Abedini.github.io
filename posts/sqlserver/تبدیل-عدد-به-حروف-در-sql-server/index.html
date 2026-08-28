@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>تبدیل عدد به حروف فارسی در SQL Server | حمیدرضا عابدینی</title>
+<meta name="keywords" content="bigint, charindex, Crystal Report, len, null, PATINDEX, sql, sql server, Stimulsoft, table, Table Variable, ارزش مکانی, حروف, عدد">
+<meta name="description" content="چگونه یک رشته عدد را به حروف تبدیل کنیم">
+<meta name="author" content="حمیدرضا عابدینی">
+<link rel="canonical" href="https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.2406b1a6aa37318d28892afde556c98cd70739515c2c77a4e4557184ddce30e9.css" integrity="sha256-JAaxpqo3MY0oiSr95VbJjNcHOVFcLHek5FVxhN3OMOk=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hr-abedini.github.io/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://hr-abedini.github.io/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hr-abedini.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="fa" href="https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+
+
+
+                                    
+                                <meta property="og:url" content="https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/">
+  <meta property="og:site_name" content="حمیدرضا عابدینی">
+  <meta property="og:title" content="تبدیل عدد به حروف فارسی در SQL Server">
+  <meta property="og:description" content="چگونه یک رشته عدد را به حروف تبدیل کنیم">
+  <meta property="og:locale" content="fa-IR">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-08-28T10:37:15+03:30">
+    <meta property="article:modified_time" content="2026-08-28T10:37:15+03:30">
+    <meta property="article:tag" content="MSSQL">
+    <meta property="article:tag" content="SQL Server">
+    <meta property="article:tag" content="Function">
+    <meta property="og:image" content="https://hr-abedini.github.io/images/...">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hr-abedini.github.io/images/...">
+<meta name="twitter:title" content="تبدیل عدد به حروف فارسی در SQL Server">
+<meta name="twitter:description" content="چگونه یک رشته عدد را به حروف تبدیل کنیم">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "پست‌ها",
+      "item": "https://hr-abedini.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "تبدیل عدد به حروف فارسی در SQL Server",
+      "item": "https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "تبدیل عدد به حروف فارسی در SQL Server",
+  "name": "تبدیل عدد به حروف فارسی در SQL Server",
+  "description": "چگونه یک رشته عدد را به حروف تبدیل کنیم",
+  "keywords": [
+    "bigint", "charindex", "Crystal Report", "len", "null", "PATINDEX", "sql", "sql server", "Stimulsoft", "table", "Table Variable", "ارزش مکانی", "حروف", "عدد"
+  ],
+  "articleBody": "از کجا شروع شد؟ این function را در پاییز سال 1392 نوشتم و در سایت dntips.ir\rمنتشرش کردم.\nداستانش چی بود؟ زمانی که داشتم برنامه‌ای برای محاسبه شارژ ساختمان می‌نوشتم، دوست داشتم مبلغ شارژ علاوه بر عدد به صورت حروف هم روی برگه به ازای هر واحد چاپ بشود. برای چاپ از crystal report\rاستفاده می‌کردم که این امکان را نداشت. Stimulsoft این متد را به صورت توکار (built-in) داشت( toWord\r)، ولی خب آن زمان من تجربه‌ی کار با آن را نداشتم. بنابراین یا باید این متد را در C# می‌ساختم و روی خروجی سوار می‌کردم و یا در SQL Server و در زمان واکشی دیتا. من SQL Server را انتخاب کردم ببینم می‌توانم یا نه! … چالش جدید برای من 😁\nبعد از این همه سال، پس از کمی بازبینی و اصلاحات در سایت خودم گذاشتم.\nاگر حوصله جزییات را ندارید، و می‌خواهید سورس را ببیند به قسمت « کد کامل\r» مراجعه کنید!\nروش کار دریافت پارامتر ورودی به صورت رشته برای نامحدود بودن ارقام جدا کردن قسمت صحیح از اعشاری جداکردن سه رقم، سه رقم اعداد و ثبت در حافظه Join مجموعه بدست آمده با جداول عناوین اعداد و ارزش مکانی در صورت وجود اعشار، فراخوانی همین تابع (بازگشتی) و دریافت خروجی و در نهایت اتصال دو رشته به دست آمده و ارسال به خروجی شرح Query و مراحل تبدیل ورودی و خروجی برای اینکه محدودیت کمتری در تعداد ارقام داشته باشم، پارامتر ورودی را از نوع رشته گرفتم.\nدر اینجا پارامتر ورودی 100 کاراکتر خروجی 2000 کاراکتر CREATE FUNCTION dbo.fnNumberToWords_Persian(@pNumber AS VARCHAR(100)) RETURNS NVARCHAR(2000) 🔔 در SQL Server نوع BIGINT\rحداکثر ۱۹ رقم دارد.\n🔔\rدر SQL Server برای رشته‌های Unicode از پیشوند N استفاده می‌شود. از آنجا که متن این تابع فارسی است، رشته‌های فارسی باید به‌صورت N'...' نوشته شوند؛ مانند N'صفر'.\rبررسی رشته ورودی رشته null (بدون مقدار)، خالی (طول صفر) و یا فقط space است؟ مقدار null برگردان IF LEN(ISNULL(@pNumber, '')) = 0 RETURN NULL اعلام خطا رشته وارد شده عدد، ممیز و یا منفی نیست تعداد علامت منفی بیش از یک مورد است تعداد علامت ممیز (.) بیش از یک مورد است علامت منفی وجود دارد اما در شروع رشته نیست در رشته ورودی عدد نیست IF PATINDEX('%[^0-9.-]%', @pNumber) \u003e 0 RETURN N'فقط اعداد، ممیز (.) و علامت منفی (-) مجاز هستند'; IF LEN(@pNumber) - LEN(REPLACE(@pNumber, '-', '')) \u003e 1 RETURN N'تعداد علامت منفی بیشتر از یک است'; IF LEN(@pNumber) - LEN(REPLACE(@pNumber, '.', '')) \u003e 1 RETURN N'تعداد ممیز بیشتر از یک است'; IF CHARINDEX('-', @pNumber) \u003e 1 RETURN N'علامت منفی باید در ابتدای عدد باشد'; -- حداقل یک رقم باید وجود داشته باشد IF PATINDEX('%[0-9]%', @pNumber) = 0 RETURN N'ورودی فاقد رقم است'; 🔔\rرفتار len با space\rselect len(' ') [5char], len('Hamid ') [9char] خروجی برای 5 کاراکتر space صفر است و برای 9 کاراکتر برابر با 5 خواهد بود، زیرا تابع len کاراکترهای space آخر رشته را در نظر نمی‌گیرد.\n🔔 دستور PatIndex\rبرای یافتن یک الگو در یک متن استفاده می‌شود.\nPATINDEX ( '%pattern%' , expression ) پارامتر اول الگو و پارامتر دوم عبارتی که می‌خواهیم الگو را در آن پیدا کنیم. اگر الگو را پیدا کند شماره شروع آن در عبارت را برمی‌گرداند و در غیر این صورت عدد صفر برگشت داده می‌شود. در patern می‌توان از wildcard\rها استفاده کرد.\n🔔 دستور CharIndex\rبرای پیدا کردن یک متن مشخص در متنی دیگر استفاده می‌شود.\nCHARINDEX ( expressionToFind , expressionToSearch [ , start_location ] ) یک عبارت کاراکتری را درون یک عبارت کاراکتری دیگر جستجو می‌کند و در صورت یافتن، موقعیت شروع عبارت اول را برمی‌گرداند. اگر پیدا نکند مقدار صفر را برمی‌گرداند.\nاز wildcard\rها نمی‌توان در آن استفاده کرد.\nآیا مقدار وارد شده صفر است؟ مقدار صفر است، با هر تعدادی مقدار صفر است، با ممیز یا بدون ممیز صفر است حتی با علامت منفی -- 0, 00, 000, 000...n -- .0, 0.000, -.0 IF PATINDEX('%[^0.-]%', @pNumber) = 0 RETURN N'صفر' عدد وارد شده منفی است؟ منفی را به یاد داشته باش (@negative) و علامت آن را از رشته حذف کن -- -123 -\u003e 123 DECLARE @Negative AS NVARCHAR(5) = ''; IF LEFT(@pNumber, 1) = '-' BEGIN SET @pNumber = SUBSTRING(@pNumber, 2, LEN(@pNumber)) -- 5 char SET @Negative = N'منفی ' END رشته با ممیز (.) شروع شده است؟ به اول آن یک صفر اضافه کن. -- .123 =\u003e 0.123 IF (CHARINDEX('.', @pNumber) = 1) SET @pNumber='0' + @pNumber نام اعداد من برای نگهداری آن‌ها از Table Variable\rاستفاده کردم.\nجدول NumberTitle دارای 37 رکورد ستون val برای نگهداری مقدار عدد ستون title برای نگهداری عنوان مقدار صفر را پیش از این بررسی کرده‌ایم، پس نیازی به آن نداریم. DECLARE @NumberTitle TABLE (val INT,Title NVARCHAR(100));\tINSERT INTO @NumberTitle (val,Title) VALUES(0, '') ,(1, N'یک'), (2, N'دو'), (3, N'سه'), (4, N'چهار') ,(5, N'پنج'), (6, N'شش'), (7, N'هفت'), (8, N'هشت') ,(9, N'نه'), (10, N'ده'), (11, N'یازده'), (12, N'دوازده') ,(13, N'سیزده'), (14, N'چهارده'), (15, N'پانزده'), (16, N'شانزده') ,(17, N'هفده'), (18, N'هجده'), (19, N'نوزده'), (20, N'بیست') ,(30, N'سی'), (40, N'چهل'), (50, N'پنجاه'), (60, N'شصت') ,(70, N'هفتاد'), (80, N'هشتاد'), (90, N'نود'), (100, N'صد') ,(200, N'دویست'), (300, N'سیصد'), (400, N'چهارصد'), (500, N'پانصد') ,(600, N'ششصد'), (700, N'هفتصد'), (800, N'هشتصد'), (900, N'نهصد') ارزش مکانی اعداد صحیح و اعشاری در اینجا هم از Table Variable\rاستفاده می‌کنیم (جدول‌های PositionTitle, DecimalTitle)\nجدول PositionTitle: برای اعداد صحیح و دارای 20 رکورد ستون id: در زمان join از این ستون استفاده خواهم کرد. رکورد اول ارزش ندارد بنابراین مقدار آن را خالی قرار داده‌ام. مانند عدد 999 که در این جدول ارزش مکانی ندارد. --نام ارزش مکانی اعداد صحیح DECLARE @PositionTitle TABLE (id INT,Title NVARCHAR(100));\tINSERT INTO @PositionTitle (id,title) VALUES (1, N'')\t,(2, N'هزار'),(3, N'میلیون'),(4, N'میلیارد'),(5, N'تریلیون') ,(6, N'کوادریلیون'),(7, N'کوینتیلیون'),(8, N'سیکستیلون'),(9, N'سپتیلیون') ,(10, N'اکتیلیون'),(11, N'نونیلیون'),(12, N'دسیلیون') ,(13, N'آندسیلیون'),(14, N'دودسیلیون'),(15, N'تریدسیلیون') ,(16, N'کواتردسیلیون'),(17, N'کویندسیلیون'),(18, N'سیکسدسیلیون') ,(19, N'سپتندسیلیون'),(20, N'اکتودسیلیون'),(21, N'نومدسیلیون')\tکلیک: مشاهده جدول ارزش مکانی (فارسی/انگلیسی) ترتیب فارسی انگلیسی توان ۱۰ 1 هزار Thousand 10³ 2 میلیون Million 10⁶ 3 میلیارد Billion 10⁹ 4 تریلیون Trillion 10¹² 5 کوادریلیون Quadrillion 10¹⁵ 6 کوینتیلیون Quintillion 10¹⁸ 7 سکستیلیون Sextillion 10²¹ 8 سپتیلیون Septillion 10²⁴ 9 اکتیلیون Octillion 10²⁷ 10 نونیلیون Nonillion 10³⁰ 11 دسیلیون Decillion 10³³ 12 آندسیلیون Undecillion 10³⁶ 13 دودسیلیون Duodecillion 10³⁹ 14 تریدسیلیون Tredecillion 10⁴² 15 کواتردسیلیون Quattuordecillion 10⁴⁵ 16 کویندسیلیون Quindecillion 10⁴⁸ 17 سکستدسیلیون Sexdecillion 10⁵¹ 18 سپتندسیلیون Septendecillion 10⁵⁴ 19 اکتودسیلیون Octodecillion 10⁵⁷ 20 نومدسیلیون Novemdecillion 10⁶⁰ جدول DecimalTitle: برای اعداد اعشاری و دارای 10 رکورد بنابراین حداکثر تعداد اعشار 10 رقم می‌باشد، مگر اینکه به رکوردهای این جدول اضافه شود -- نام ارزش مکانی اعداد ممیزی DECLARE @DecimalTitle TABLE (id INT,Title NVARCHAR(100));\tINSERT INTO @DecimalTitle (id,Title) VALUES (1 ,N'دهم' ),(2 , N'صدم'),(3 , N'هزارم') ,(4 , N'ده‌هزارم'),(5 , N'صدهزارم'),(6 , N'میلیونم') ,(7 , N'ده‌میلیونم'),(8 , N'صدمیلیونم'),(9 , N'میلیاردُم') ,(10 , N'ده‌میلیاردم') جداسازی قسمت صحیح از اعشاری در ابتدا بررسی می‌کنیم که ممیز وجود دارد یا خیر؟ اگر ممیز وجود نداشت، موقعیت آن را یک واحد بعد از آخرین کاراکتر (یعنی طول رشته) در نظر می‌گیریم تا بتوانیم عدد صحیح را کامل بدست آوریم.\n-- بدست آوردن قسمت صحیح و اعشاری\tDECLARE @IntegerText NVARCHAR(100), @DecimalText NVARCHAR(100), -- اگر ممیز ندارد آن را برابر طول رشته +1 قرار بده\t@PointPosition INT= CASE CHARINDEX('.', @pNumber) WHEN 0 THEN LEN(@pNumber) +1 ELSE CHARINDEX('.', @pNumber) END سپس مقدار صحیح و اعشار را بدست میاوریم.\n-- از اعشار به قبل SET @IntegerText= LEFT(@pNumber, @PointPosition - 1) -- از اعشار به بعد SET @DecimalText= SUBSTRING(@pNumber, @PointPosition + 1, LEN(@pNumber)) می‌دانیم صفرهای سمت راست اعشار بی‌ارزش هستند مثل 1.2000 بنابراین پس از بدست آوردن مقدار اعشاری، برای حذف این صفرها:\nتمام صفرها را با space جایگزین می‌کنیم. با rtrim فضاهای خالی سمت راست را حذف می‌کنیم. سپس فضاهای خالی دیگر را با صفر جایگزین می‌کنیم. -- حذف صفرهای بی ارزش ممیز SET @DecimalText= REPLACE(RTRIM(REPLACE(@DecimalText,'0',' ')),' ','0'); 🔔 در روش قبلی من مقدار اعشاری را معکوس می‌کردم تا صفرها در ابتدا بیایند و سپس اولین عدد غیر صفر را پیدا می‌کردم و با substring یا left مقدار اعشار بدون صفر اضافه را بدست میاوردم؛ که با نظر یکی از کاربران سایت دات ﻧﺖ ﺗﯿﭙﺲ\rبه روش replace که روش بهتری بود تغییر کرد.\nLEFT( @DecimalNumber, LEN(@DecimalNumber) - PATINDEX('%[^0]%', REVERSE(@DecimalNumber)) + 1 )\tبه مقدار @IntegerText در انتهای متد نیاز داریم، بنابراین مقدار آن را به @pNumber می‌دهیم.\nSET @pNumber= @IntegerText تفکیک یکان، دهگان و صدگان با استفاده از یک حلقه عدد صحیح را سه رقم سه رقم جدا می‌کنیم\nاستفاده از تابع right تا زمانی که طول عدد صحیح کمتر از 3 شود جدول @MyNumbers برای نگهداری رقم‌ها براساس ارزش مکانی\n143464565464600004000\r↓\r143 | 464 | 565 | 464 | 600 | 004 | 000 DECLARE @Number AS INT DECLARE @MyNumbers TABLE ( id INT IDENTITY(1, 1), Val1 INT, Val2 INT, Val3 INT ) WHILE (@pNumber) \u003c\u003e '0' BEGIN -- استخراج سه رقم انتهایی SET @Number= CAST(RIGHT(@pNumber, 3) AS INT)\t-- تفکیک صدگان، دهگان و یکان INSERT INTO @MyNumbers (Val1, Val2, Val3) SELECT --@Number / 100 * 100, @Number - (@Number % 100), CASE WHEN @Number BETWEEN 10 AND 19 THEN @Number ELSE (@Number % 100) - (@Number % 10) --ELSE @Number / 10 * 10 END, CASE WHEN @Number BETWEEN 10 AND 19 THEN 0 ELSE (@Number % 10) END -- طول عدد بیشتر از دو است\tIF LEN(@pNumber) \u003e 2 -- حذف سه رقم پردازش‌ شده از انتهای رشته SET @pNumber = LEFT(@pNumber, LEN(@pNumber) -3) ELSE SET @pNumber = '0' END به عنوان نمونه برای عدد 0001200955015 خروجی زیر را خواهیم داشت. از id این جدول برای join به جدول PositionTitle استفاده خواهیم کرد و سطر اول ارزش مکانی ندارد، برای همین در جدول PositionTitle شناسه 1 بدون مقدار است. @MyNumbers - خروجی جدول\nهمانطور که در Query مشخص است برای اعداد 10 تا 19 عملیات جداسازی دهگان و یکان را انجام نمی‌دهیم و فقط باید val2 مقدار داشته باشد و برای val3 مقدار صفر شود. زیرا این‌ها اعدادی هستند که واژه‌های خاص خود را دارند.\n🔔 در SQL تقسیم دو عدد صحیح خروجی صحیح خواهد داشت 155 / 100 = 1\rبنابراین از روش که در کوئری کامنت کردم هم می‌توان استفاده کرد.\nبدست آوردن عنوان‌ها با join در این قسمت اعداد بدست آمده را با جدول‌های ارزش مکانی و عنوان اعداد ترکیب می‌کنیم:\nبا استفاده از شرط سطرهایی را خواهیم داشت که جمع آن بیش از صفر باشد. join با جدول @PositionTitle براساس ID. برای val1, val2, val3 با جدول @NumberTitle و فیلد val آن join می‌زنیم. مرتب‌سازی براساس id Replace بیرونی: جایگزین کردن “دو فاصله‌ی خالی” با “یک فاصله‌ی خالی” Replace داخلی: جایگزینی فاصله‌های خالی با «و» DECLARE @Str AS NVARCHAR(2000) = ''; SELECT @Str += REPLACE(REPLACE( TRIM(nt1.Title + ' ' + nt2.Title + ' ' + nt3.title) ,' ', N' و '),' ',' ') + ' ' + pt.title + N' و ' FROM @MyNumbers AS mn INNER JOIN @PositionTitle pt ON pt.id = mn.id INNER JOIN @NumberTitle nt1 ON nt1.val = mn.Val1 INNER JOIN @NumberTitle nt2 ON nt2.val = mn.Val2 INNER JOIN @NumberTitle nt3 ON nt3.val = mn.Val3 WHERE (mn.val1 + mn.val2 + mn.val3 \u003e 0) ORDER BY pt.id DESC کامل کردن قسمت صحیح تا این قسمت می‌دانیم که عدد ورودی صفر نیست، اما ممکن است قسمت صحیح صفر باشد و مقدار اعشاری داشته باشیم. مانند 0.355 آنگاه جمله‌ی ما باید با منفی یا صفر شروع شود. اگر هم با صفر شروع نشود، « و » اضافی انتهای رشته را حذف می‌کنیم. در مثال زیر بعد از شصت «و» اضافه است که باید حذف شود: شصت و ممیز چهار و صدم\nIF @IntegerText='0' SET @Str = @Negative + N'صفر'\tELSE -- در صورت حذف نشدن =\u003e مثلا: شصت و و ممیز چهار و صدم SET @Str = @Negative + LEFT (@Str, LEN(@Str) -2) بدست آوردن اعشار در این قسمت، ارزش مکانی مقدار اعشاری را براساس تعداد ارقام عدد و به کمک جدول DecimalTitle مشخص می‌کنیم. مثلا هزارم\nDECLARE @PTitle NVARCHAR(100)= ISNULL( (SELECT Title FROM @DecimalTitle WHERE id = LEN(@DecimalText) ), '') و در انتها اگر قسمت اعشاری وجود داشت، آن را به همین تابع ارسال می‌کنیم تا عناوین عددی آن مشخص شود. سپس با ارزش مکانی اعشار ترکیب می‌کنیم. مقدار بدست آمده را با عناوین قسمت صحیح ترکیب و به عنوان خروجی ارسال می‌کنیم.\nIF LEN(@DecimalText) \u003e 0 BEGIN SET @Str += N' ممیز ' + dbo.fnNumberToWords_Persian(@DecimalText) + N' ' + @PTitle; END RETURN @str خروجی برای\nselect dbo.fnNumberToWords_Persian('000143464565464600004000.34357000000') صد و چهل و سه کوینتیلیون و چهارصد و شصت و چهار کوادریلیون و پانصد و شصت و پنج تریلیون و چهارصد و شصت و چهار میلیارد و ششصد میلیون و چهار هزار ممیز سی و چهار هزار و سیصد و پنجاه و هفت صدهزارم\nکد کامل SET ANSI_NULLS ON GO SET QUOTED_IDENTIFIER ON GO -- ============================================= -- Author:\tHamidreza Abedini -- Create date: 1392-08-01 -- Last updated: 1405-06-06 -- ============================================= CREATE or alter FUNCTION dbo.fnNumberToWords_Persian(@pNumber AS VARCHAR(100)) RETURNS NVARCHAR(2000) AS BEGIN --------------------------------------------------------------------- -- است null خالی یا IF LEN(ISNULL(@pNumber, '')) = 0 RETURN NULL --------------------------------------------------------------------- IF PATINDEX('%[^0-9.-]%', @pNumber) \u003e 0 RETURN N'فقط اعداد، ممیز (.) و علامت منفی (-) مجاز هستند'; IF LEN(@pNumber) - LEN(REPLACE(@pNumber, '-', '')) \u003e 1 RETURN N'تعداد علامت منفی بیشتر از یک است'; IF LEN(@pNumber) - LEN(REPLACE(@pNumber, '.', '')) \u003e 1 RETURN N'تعداد ممیز بیشتر از یک است'; IF CHARINDEX('-', @pNumber) \u003e 1 RETURN N'علامت منفی باید در ابتدای عدد باشد'; -- حداقل یک رقم باید وجود داشته باشد IF PATINDEX('%[0-9]%', @pNumber) = 0 RETURN N'ورودی فاقد رقم است'; --------------------------------------------------------------------- -- رشته صفر است IF PATINDEX('%[^0.-]%', @pNumber) = 0 RETURN N'صفر'\t--------------------------------------------------------------------- -- بررسی منفی بودن عدد DECLARE @Negative AS NVARCHAR(5) = ''; IF LEFT(@pNumber, 1) = '-' BEGIN SET @pNumber = SUBSTRING(@pNumber, 2, LEN(@pNumber)) SET @Negative = N'منفی ' -- 5 char END --------------------------------------------------------------------- -- رشته با ممیز شروع شده است\t-- صفر به اول رشته اضافه کن IF (CHARINDEX('.', @pNumber) = 1) SET @pNumber='0' + @pNumber --------------------------------------------------------------------- -- نام اعداد - 37 رکورد DECLARE @NumberTitle TABLE (val INT,Title NVARCHAR(100));\tINSERT INTO @NumberTitle (val,Title) VALUES(0, '') ,(1, N'یک'), (2, N'دو'), (3, N'سه'), (4, N'چهار') ,(5, N'پنج'), (6, N'شش'), (7, N'هفت'), (8, N'هشت') ,(9, N'نه'), (10, N'ده'), (11, N'یازده'), (12, N'دوازده') ,(13, N'سیزده'), (14, N'چهارده'), (15, N'پانزده'), (16, N'شانزده') ,(17, N'هفده'), (18, N'هجده'), (19, N'نوزده'), (20, N'بیست') ,(30, N'سی'), (40, N'چهل'), (50, N'پنجاه'), (60, N'شصت') ,(70, N'هفتاد'), (80, N'هشتاد'), (90, N'نود'), (100, N'صد') ,(200, N'دویست'), (300, N'سیصد'), (400, N'چهارصد'), (500, N'پانصد') ,(600, N'ششصد'), (700, N'هفتصد'), (800, N'هشتصد'), (900, N'نهصد') -- نام ارزش مکانی اعداد صحیح DECLARE @PositionTitle TABLE (id INT,Title NVARCHAR(100));\tINSERT INTO @PositionTitle (id,title) VALUES (1, N'')\t,(2, N'هزار'),(3, N'میلیون'),(4, N'میلیارد'),(5, N'تریلیون') ,(6, N'کوادریلیون'),(7, N'کوینتیلیون'),(8, N'سیکستیلون'),(9, N'سپتیلیون') ,(10, N'اکتیلیون'),(11, N'نونیلیون'),(12, N'دسیلیون') ,(13, N'آندسیلیون'),(14, N'دودسیلیون'),(15, N'تریدسیلیون') ,(16, N'کواتردسیلیون'),(17, N'کویندسیلیون'),(18, N'سیکسدسیلیون') ,(19, N'سپتندسیلیون'),(20, N'اکتودسیلیون'),(21, N'نومدسیلیون')\t-- نام ارزش مکانی اعداد ممیزی DECLARE @DecimalTitle TABLE (id INT,Title NVARCHAR(100));\tINSERT INTO @DecimalTitle (id,Title) VALUES (1 ,N'دهم' ),(2 , N'صدم'),(3 , N'هزارم') ,(4 , N'ده‌هزارم'),(5 , N'صدهزارم'),(6 , N'میلیونم') ,(7 , N'ده‌میلیونم'),(8 , N'صدمیلیونم'),(9 , N'میلیاردُم') ,(10 , N'ده‌میلیاردم') --------------------------------------------------------------------- -- بدست آوردن قسمت صحیح و اعشاری DECLARE @IntegerText NVARCHAR(100), @DecimalText NVARCHAR(100), -- اگر ممیز وجود نداشت، موقعیت آن را یک واحد بعد از آخرین کاراکتر در نظر می‌گیریم -- 15 → PointPosition = 3 -- 15. → PointPosition = 3 @PointPosition INT= CASE CHARINDEX('.', @pNumber) WHEN 0 THEN LEN(@pNumber) +1 ELSE CHARINDEX('.', @pNumber) END -- از اعشار به قبل SET @IntegerText= LEFT(@pNumber, @PointPosition - 1) -- از اعشار به بعد SET @DecimalText= SUBSTRING(@pNumber, @PointPosition + 1, LEN(@pNumber)) -- حذف صفرهای بی ارزش ممیز SET @DecimalText= REPLACE(RTRIM(REPLACE(@DecimalText,'0',' ')),' ','0'); -- در انتها به مقدار عدد صحیح نیاز خواهیم داشت SET @pNumber= @IntegerText --------------------------------------------------------------------- DECLARE @Number AS INT DECLARE @MyNumbers TABLE ( id INT IDENTITY(1, 1), Val1 INT, Val2 INT, Val3 INT ) WHILE (@pNumber) \u003c\u003e '0' BEGIN -- جدا کردن سه رقم از سمت راست SET @Number= CAST(RIGHT(@pNumber, 3) AS INT)\t-- تفکیک صدگان، دهگان و یکان INSERT INTO @MyNumbers(Val1, Val2, Val3) SELECT --@Number / 100 * 100, @Number - (@Number % 100), CASE WHEN @Number BETWEEN 10 AND 19 THEN @Number ELSE (@Number % 100)-(@Number % 10) --ELSE @Number / 10 * 10 END, CASE WHEN @Number % 100 BETWEEN 10 AND 19 THEN 0 ELSE @Number % 10 END -- طول عدد بیشتر از دو است\tIF LEN(@pNumber) \u003e 2 -- حذف سه رقم پردازش‌ شده از انتهای رشته SET @pNumber = LEFT(@pNumber, LEN(@pNumber) -3) ELSE SET @pNumber = '0' END ---------------------------------------------------------------------\tDECLARE @Str AS NVARCHAR(2000) = ''; SELECT @Str += REPLACE(REPLACE( TRIM(nt1.Title + ' ' + nt2.Title + ' ' + nt3.title) ,' ', N' و '),' ',' ') + ' ' + pt.title + N' و ' FROM @MyNumbers AS mn INNER JOIN @PositionTitle pt ON pt.id = mn.id INNER JOIN @NumberTitle nt1 ON nt1.val = mn.Val1 INNER JOIN @NumberTitle nt2 ON nt2.val = mn.Val2 INNER JOIN @NumberTitle nt3 ON nt3.val = mn.Val3 WHERE (mn.val1 + mn.val2 + mn.val3 \u003e 0) ORDER BY pt.id DESC ------------------------------------------------------ -- صفر بودن قسمت صحیح؛ علامت منفی فقط برای عدد اعشاری غیرصفر حفظ می‌شود IF @IntegerText='0' SET @Str = @Negative + N'صفر'\tELSE -- افزودن علامت منفی و حذف « و » اضافی انتهای عدد صحیح -- در صورت حذف نشدن =\u003e مثلا: شصت و و ممیز چهار و صدم SET @Str = @Negative + LEFT (@Str, LEN(@Str) -2) ------------------------------------------------------\t-- تعیین عنوان جایگاه اعشار بر اساس تعداد ارقام بخش اعشاری DECLARE @PTitle NVARCHAR(100)= ISNULL( (SELECT Title FROM @DecimalTitle WHERE id = LEN(@DecimalText) ), '') -- تبدیل بخش اعشاری به حروف و افزودن عنوان جایگاه اعشار -- افزودن بخش اعشاری به عبارت نهایی IF LEN(@DecimalText) \u003e 0 BEGIN SET @Str += N' ممیز ' + dbo.fnNumberToWords_Persian(@DecimalText) + N' ' + @PTitle; END RETURN @str END ",
+  "wordCount" : "2890",
+  "inLanguage": "fa",
+  "image":"https://hr-abedini.github.io/images/...","datePublished": "2026-08-28T10:37:15+03:30",
+  "dateModified": "2026-08-28T10:37:15+03:30",
+  "author":{
+    "@type": "Person",
+    "name": "حمیدرضا عابدینی"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "حمیدرضا عابدینی",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hr-abedini.github.io/favicon/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hr-abedini.github.io/" accesskey="h" title="حمیدرضا عابدینی (Alt + H)">حمیدرضا عابدینی</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hr-abedini.github.io/" title="خانه">
+                    <span>خانه</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/categories/" title="دسته‌بندی‌ها">
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/search/" title="جستجو (Alt &#43; /)" accesskey=/>
+                    <span>جستجو</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/archives/" title="بایگانی">
+                    <span>بایگانی</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/about/" title="درباره‌ی من">
+                    <span>درباره‌ی من</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hr-abedini.github.io/">خانه</a>&nbsp;»&nbsp;<a href="https://hr-abedini.github.io/posts/">پست‌ها</a></div>
+    <h1 class="post-title entry-hint-parent">
+      تبدیل عدد به حروف فارسی در SQL Server
+    </h1>
+    <div class="post-description">
+      چگونه یک رشته عدد را به حروف تبدیل کنیم
+    </div>
+    
+    <div class="post-meta">
+
+      <hr style=" border: none; border-top: 1px dotted ;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-footer">📅 <span class='post-date' title='2026-08-28 10:37:15 +0330 +0330'>اوت 28, 2026</span>&nbsp;·&nbsp;<span class="reading-time"> 📖 14 دقیقه</span>&nbsp;·&nbsp;<span class="word-count"> 📊 2890 واژه</span>&nbsp;·&nbsp;حمیدرضا عابدینی</div>
+
+
+
+<hr style=" border: none; border-top: 1px dotted ;">
+
+<div class="post-tags">
+  
+  <a class="cat" href="/categories/sql-server"><i class="fa-solid fa-layer-group"></i> SQL Server</a>
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="https://hr-abedini.github.io/images/..." alt="">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">فهرست مطالب</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d8%a7%d8%b2-%da%a9%d8%ac%d8%a7-%d8%b4%d8%b1%d9%88%d8%b9-%d8%b4%d8%af" aria-label="از کجا شروع شد؟">از کجا شروع شد؟</a></li>
+                <li>
+                    <a href="#%d8%b1%d9%88%d8%b4-%da%a9%d8%a7%d8%b1" aria-label="روش کار">روش کار</a></li>
+                <li>
+                    <a href="#%d8%b4%d8%b1%d8%ad-query-%d9%88-%d9%85%d8%b1%d8%a7%d8%ad%d9%84-%d8%aa%d8%a8%d8%af%db%8c%d9%84" aria-label="شرح Query و مراحل تبدیل">شرح Query و مراحل تبدیل</a><ul>
+                        
+                <li>
+                    <a href="#%d9%88%d8%b1%d9%88%d8%af%db%8c-%d9%88-%d8%ae%d8%b1%d9%88%d8%ac%db%8c" aria-label="ورودی و خروجی">ورودی و خروجی</a></li>
+                <li>
+                    <a href="#%d8%a8%d8%b1%d8%b1%d8%b3%db%8c-%d8%b1%d8%b4%d8%aa%d9%87-%d9%88%d8%b1%d9%88%d8%af%db%8c" aria-label="بررسی رشته ورودی">بررسی رشته ورودی</a></li>
+                <li>
+                    <a href="#%d9%86%d8%a7%d9%85-%d8%a7%d8%b9%d8%af%d8%a7%d8%af" aria-label="نام اعداد">نام اعداد</a></li>
+                <li>
+                    <a href="#%d8%a7%d8%b1%d8%b2%d8%b4-%d9%85%da%a9%d8%a7%d9%86%db%8c-%d8%a7%d8%b9%d8%af%d8%a7%d8%af-%d8%b5%d8%ad%db%8c%d8%ad-%d9%88-%d8%a7%d8%b9%d8%b4%d8%a7%d8%b1%db%8c" aria-label="ارزش مکانی اعداد صحیح و اعشاری">ارزش مکانی اعداد صحیح و اعشاری</a></li>
+                <li>
+                    <a href="#%d8%ac%d8%af%d8%a7%d8%b3%d8%a7%d8%b2%db%8c-%d9%82%d8%b3%d9%85%d8%aa-%d8%b5%d8%ad%db%8c%d8%ad-%d8%a7%d8%b2-%d8%a7%d8%b9%d8%b4%d8%a7%d8%b1%db%8c" aria-label="جداسازی قسمت صحیح از اعشاری">جداسازی قسمت صحیح از اعشاری</a></li>
+                <li>
+                    <a href="#%d8%aa%d9%81%da%a9%db%8c%da%a9-%db%8c%da%a9%d8%a7%d9%86-%d8%af%d9%87%da%af%d8%a7%d9%86-%d9%88-%d8%b5%d8%af%da%af%d8%a7%d9%86" aria-label="تفکیک یکان، دهگان و صدگان">تفکیک یکان، دهگان و صدگان</a></li>
+                <li>
+                    <a href="#%d8%a8%d8%af%d8%b3%d8%aa-%d8%a2%d9%88%d8%b1%d8%af%d9%86-%d8%b9%d9%86%d9%88%d8%a7%d9%86%d9%87%d8%a7-%d8%a8%d8%a7-join" aria-label="بدست آوردن عنوان‌ها با join">بدست آوردن عنوان‌ها با join</a></li>
+                <li>
+                    <a href="#%da%a9%d8%a7%d9%85%d9%84-%da%a9%d8%b1%d8%af%d9%86-%d9%82%d8%b3%d9%85%d8%aa-%d8%b5%d8%ad%db%8c%d8%ad" aria-label="کامل کردن قسمت صحیح">کامل کردن قسمت صحیح</a></li>
+                <li>
+                    <a href="#%d8%a8%d8%af%d8%b3%d8%aa-%d8%a2%d9%88%d8%b1%d8%af%d9%86-%d8%a7%d8%b9%d8%b4%d8%a7%d8%b1" aria-label="بدست آوردن اعشار">بدست آوردن اعشار</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%da%a9%d8%af-%da%a9%d8%a7%d9%85%d9%84" aria-label="کد کامل">کد کامل</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="از-کجا-شروع-شد">از کجا شروع شد؟<a hidden class="anchor" aria-hidden="true" href="#از-کجا-شروع-شد">#</a></h2>
+<p>این function را در پاییز سال 1392 نوشتم و در سایت <a href="https://www.dntips.ir/post/1532" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> dntips.ir</a>
+ منتشرش کردم.</p>
+<p>داستانش چی بود؟
+زمانی که داشتم برنامه‌ای برای محاسبه شارژ ساختمان می‌نوشتم، دوست داشتم مبلغ شارژ علاوه بر عدد به صورت حروف هم روی برگه به ازای هر واحد چاپ بشود. برای چاپ از <a href="https://www.sap.com/products/data-cloud/crystal-reports.html" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> crystal report</a>
+ استفاده می‌کردم که این امکان را نداشت. Stimulsoft این متد را به صورت توکار (built-in) داشت(<a href="https://www.stimulsoft.com/documentation/en/user-manual/index.html?report_internals_functions.htm" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> toWord</a>
+)، ولی خب آن زمان من تجربه‌ی کار با آن را نداشتم.
+بنابراین یا باید این متد را در C# می‌ساختم و روی خروجی سوار می‌کردم و یا در SQL Server و در زمان واکشی دیتا. من SQL Server را انتخاب کردم ببینم می‌توانم یا نه!
+&hellip; چالش جدید برای من 😁</p>
+<p>بعد از این همه سال، پس از کمی بازبینی و اصلاحات در سایت خودم گذاشتم.</p>
+<p>اگر حوصله جزییات را ندارید، و می‌خواهید سورس را ببیند به قسمت «<a href="#کد-کامل"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> کد کامل</a>
+» مراجعه کنید!</p>
+<h2 id="روش-کار">روش کار<a hidden class="anchor" aria-hidden="true" href="#روش-کار">#</a></h2>
+<ul>
+<li>دریافت پارامتر ورودی به صورت رشته برای نامحدود بودن ارقام</li>
+<li>جدا کردن قسمت صحیح از اعشاری</li>
+<li>جداکردن سه رقم، سه رقم اعداد و ثبت در حافظه</li>
+<li>Join مجموعه بدست آمده با جداول عناوین اعداد و ارزش مکانی</li>
+<li>در صورت وجود اعشار، فراخوانی همین تابع (بازگشتی) و دریافت خروجی</li>
+<li>و در نهایت اتصال دو رشته به دست آمده و ارسال به خروجی</li>
+</ul>
+<h2 id="شرح-query-و-مراحل-تبدیل">شرح Query و مراحل تبدیل<a hidden class="anchor" aria-hidden="true" href="#شرح-query-و-مراحل-تبدیل">#</a></h2>
+<h3 id="ورودی-و-خروجی">ورودی و خروجی<a hidden class="anchor" aria-hidden="true" href="#ورودی-و-خروجی">#</a></h3>
+<p>برای اینکه محدودیت کمتری در تعداد ارقام داشته باشم، پارامتر ورودی را از نوع رشته گرفتم.</p>
+<ul>
+<li>در اینجا پارامتر ورودی 100 کاراکتر</li>
+<li>خروجی 2000 کاراکتر</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">FUNCTION</span> dbo.fnNumberToWords_Persian(<span style="color:#f92672">@</span>pNumber <span style="color:#66d9ef">AS</span> VARCHAR(<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">RETURNS</span> NVARCHAR(<span style="color:#ae81ff">2000</span>)
+</span></span></code></pre></div> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> در SQL Server نوع <a href="https://learn.microsoft.com/en-us/sql/t-sql/data-types/int-bigint-smallint-and-tinyint-transact-sql?view=sql-server-ver17" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> BIGINT</a>
+ حداکثر ۱۹ رقم دارد.</p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+<blockquote class="alert alert-note">
+
+   
+    <p class=""> 
+      🔔
+      در SQL Server برای رشته‌های Unicode از پیشوند N استفاده می‌شود. از آنجا که متن این تابع فارسی است، رشته‌های فارسی باید به‌صورت <code>N'...'</code> نوشته شوند؛ مانند <code>N'صفر'</code>.
+    </p>
+    
+    
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h3 id="بررسی-رشته-ورودی">بررسی رشته ورودی<a hidden class="anchor" aria-hidden="true" href="#بررسی-رشته-ورودی">#</a></h3>
+<ul>
+<li>رشته null (بدون مقدار)، خالی (طول صفر) و یا فقط space است؟ مقدار null برگردان</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">IF</span> LEN(<span style="color:#66d9ef">ISNULL</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#e6db74">&#39;&#39;</span>)) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>  
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">NULL</span>
+</span></span></code></pre></div><ul>
+<li>اعلام خطا
+<ul>
+<li>رشته وارد شده عدد، ممیز و یا منفی نیست</li>
+<li>تعداد علامت منفی بیش از یک مورد است</li>
+<li>تعداد علامت ممیز (.) بیش از یک مورد است</li>
+<li>علامت منفی وجود دارد اما در شروع رشته نیست</li>
+<li>در رشته ورودی عدد نیست</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> PATINDEX(<span style="color:#e6db74">&#39;%[^0-9.-]%&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;فقط اعداد، ممیز (.) و علامت منفی (-) مجاز هستند&#39;</span>; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">-</span> LEN(<span style="color:#66d9ef">REPLACE</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#e6db74">&#39;-&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;تعداد علامت منفی بیشتر از یک است&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">-</span> LEN(<span style="color:#66d9ef">REPLACE</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;تعداد ممیز بیشتر از یک است&#39;</span>;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> CHARINDEX(<span style="color:#e6db74">&#39;-&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;علامت منفی باید در ابتدای عدد باشد&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- حداقل یک رقم باید وجود داشته باشد
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> PATINDEX(<span style="color:#e6db74">&#39;%[0-9]%&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;ورودی فاقد رقم است&#39;</span>;
+</span></span></code></pre></div> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+   
+    <p class="alert-heading"> 
+      🔔
+      رفتار len با space
+    </p>
+    
+    <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> len(<span style="color:#e6db74">&#39;     &#39;</span>) [<span style="color:#ae81ff">5</span>char],
+</span></span><span style="display:flex;"><span>       len(<span style="color:#e6db74">&#39;Hamid    &#39;</span>) [<span style="color:#ae81ff">9</span>char]
+</span></span></code></pre></div><p>خروجی برای 5 کاراکتر space صفر است و برای 9 کاراکتر برابر با 5 خواهد بود، زیرا تابع len کاراکترهای space آخر رشته را در نظر نمی‌گیرد.</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> دستور <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/patindex-transact-sql?view=sql-server-ver17" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> PatIndex</a>
+
+برای یافتن یک  <strong>الگو</strong> در یک متن استفاده می‌شود.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>PATINDEX ( <span style="color:#e6db74">&#39;%pattern%&#39;</span> , expression )
+</span></span></code></pre></div><p>پارامتر اول الگو و پارامتر دوم عبارتی که می‌خواهیم الگو را در آن پیدا کنیم. اگر الگو را پیدا کند شماره شروع آن در عبارت را برمی‌گرداند و در غیر این صورت عدد صفر برگشت داده می‌شود. <br>در patern می‌توان از <a href="https://learn.microsoft.com/en-us/sql/t-sql/language-elements/percent-character-wildcard-character-s-to-match-transact-sql?view=sql-server-ver17" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> wildcard</a>
+ها استفاده کرد.</p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> دستور <a href=""> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> CharIndex</a>
+
+برای پیدا کردن یک <strong>متن مشخص</strong> در متنی دیگر استفاده می‌شود.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>CHARINDEX ( expressionToFind , expressionToSearch [ , start_location ] )
+</span></span></code></pre></div><p>یک عبارت کاراکتری را درون یک عبارت کاراکتری دیگر جستجو می‌کند و در صورت یافتن، موقعیت شروع عبارت اول را برمی‌گرداند. اگر پیدا نکند مقدار صفر را برمی‌گرداند.<br> از <a href="https://learn.microsoft.com/en-us/sql/t-sql/language-elements/percent-character-wildcard-character-s-to-match-transact-sql?view=sql-server-ver17" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> wildcard</a>
+ها نمی‌توان در آن استفاده کرد.</p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<ul>
+<li>آیا مقدار وارد شده صفر است؟
+<ul>
+<li>مقدار صفر است، با هر تعدادی</li>
+<li>مقدار صفر است، با ممیز یا بدون ممیز</li>
+<li>صفر است حتی با علامت منفی</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 0, 00, 000, 000...n
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- .0, 0.000, -.0
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">IF</span> PATINDEX(<span style="color:#e6db74">&#39;%[^0.-]%&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>  
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;صفر&#39;</span>
+</span></span></code></pre></div><ul>
+<li>عدد وارد شده منفی است؟ <strong>منفی</strong> را به یاد داشته باش (@negative) و علامت آن را از رشته حذف کن</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- -123 -&gt; 123
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>Negative  <span style="color:#66d9ef">AS</span> NVARCHAR(<span style="color:#ae81ff">5</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">LEFT</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;-&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber <span style="color:#f92672">=</span> <span style="color:#66d9ef">SUBSTRING</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#ae81ff">2</span>, LEN(<span style="color:#f92672">@</span>pNumber))
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">-- 5 char
+</span></span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Negative  <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;منفی &#39;</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">END</span>
+</span></span></code></pre></div><ul>
+<li>رشته با ممیز (.) شروع شده است؟ به اول آن یک صفر اضافه کن.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- .123 =&gt; 0.123
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">IF</span> (CHARINDEX(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#f92672">+</span> <span style="color:#f92672">@</span>pNumber
+</span></span></code></pre></div><h3 id="نام-اعداد">نام اعداد<a hidden class="anchor" aria-hidden="true" href="#نام-اعداد">#</a></h3>
+<p>من برای نگهداری آن‌ها از <a href="https://learn.microsoft.com/en-us/sql/t-sql/data-types/table-transact-sql?view=sql-server-ver17" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Table Variable</a>
+ استفاده کردم.</p>
+<ul>
+<li>جدول NumberTitle دارای 37 رکورد</li>
+<li>ستون val برای نگهداری مقدار عدد</li>
+<li>ستون title برای نگهداری عنوان</li>
+<li>مقدار صفر را پیش از این بررسی کرده‌ایم، پس نیازی به آن نداریم.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>NumberTitle <span style="color:#66d9ef">TABLE</span> (val  INT,Title NVARCHAR(<span style="color:#ae81ff">100</span>));	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>NumberTitle (val,Title)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">VALUES</span>(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">1</span>, N<span style="color:#e6db74">&#39;یک&#39;</span>), (<span style="color:#ae81ff">2</span>, N<span style="color:#e6db74">&#39;دو&#39;</span>), (<span style="color:#ae81ff">3</span>, N<span style="color:#e6db74">&#39;سه&#39;</span>), (<span style="color:#ae81ff">4</span>, N<span style="color:#e6db74">&#39;چهار&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">5</span>, N<span style="color:#e6db74">&#39;پنج&#39;</span>), (<span style="color:#ae81ff">6</span>, N<span style="color:#e6db74">&#39;شش&#39;</span>), (<span style="color:#ae81ff">7</span>, N<span style="color:#e6db74">&#39;هفت&#39;</span>), (<span style="color:#ae81ff">8</span>, N<span style="color:#e6db74">&#39;هشت&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">9</span>, N<span style="color:#e6db74">&#39;نه&#39;</span>), (<span style="color:#ae81ff">10</span>, N<span style="color:#e6db74">&#39;ده&#39;</span>), (<span style="color:#ae81ff">11</span>, N<span style="color:#e6db74">&#39;یازده&#39;</span>), (<span style="color:#ae81ff">12</span>, N<span style="color:#e6db74">&#39;دوازده&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">13</span>, N<span style="color:#e6db74">&#39;سیزده&#39;</span>), (<span style="color:#ae81ff">14</span>, N<span style="color:#e6db74">&#39;چهارده&#39;</span>), (<span style="color:#ae81ff">15</span>, N<span style="color:#e6db74">&#39;پانزده&#39;</span>), (<span style="color:#ae81ff">16</span>, N<span style="color:#e6db74">&#39;شانزده&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">17</span>, N<span style="color:#e6db74">&#39;هفده&#39;</span>), (<span style="color:#ae81ff">18</span>, N<span style="color:#e6db74">&#39;هجده&#39;</span>), (<span style="color:#ae81ff">19</span>, N<span style="color:#e6db74">&#39;نوزده&#39;</span>), (<span style="color:#ae81ff">20</span>, N<span style="color:#e6db74">&#39;بیست&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">30</span>, N<span style="color:#e6db74">&#39;سی&#39;</span>), (<span style="color:#ae81ff">40</span>, N<span style="color:#e6db74">&#39;چهل&#39;</span>), (<span style="color:#ae81ff">50</span>, N<span style="color:#e6db74">&#39;پنجاه&#39;</span>), (<span style="color:#ae81ff">60</span>, N<span style="color:#e6db74">&#39;شصت&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">70</span>, N<span style="color:#e6db74">&#39;هفتاد&#39;</span>), (<span style="color:#ae81ff">80</span>, N<span style="color:#e6db74">&#39;هشتاد&#39;</span>), (<span style="color:#ae81ff">90</span>, N<span style="color:#e6db74">&#39;نود&#39;</span>), (<span style="color:#ae81ff">100</span>, N<span style="color:#e6db74">&#39;صد&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">200</span>, N<span style="color:#e6db74">&#39;دویست&#39;</span>), (<span style="color:#ae81ff">300</span>, N<span style="color:#e6db74">&#39;سیصد&#39;</span>), (<span style="color:#ae81ff">400</span>, N<span style="color:#e6db74">&#39;چهارصد&#39;</span>), (<span style="color:#ae81ff">500</span>, N<span style="color:#e6db74">&#39;پانصد&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">600</span>, N<span style="color:#e6db74">&#39;ششصد&#39;</span>), (<span style="color:#ae81ff">700</span>, N<span style="color:#e6db74">&#39;هفتصد&#39;</span>), (<span style="color:#ae81ff">800</span>, N<span style="color:#e6db74">&#39;هشتصد&#39;</span>), (<span style="color:#ae81ff">900</span>, N<span style="color:#e6db74">&#39;نهصد&#39;</span>)
+</span></span></code></pre></div><h3 id="ارزش-مکانی-اعداد-صحیح-و-اعشاری">ارزش مکانی اعداد صحیح و اعشاری<a hidden class="anchor" aria-hidden="true" href="#ارزش-مکانی-اعداد-صحیح-و-اعشاری">#</a></h3>
+<p>در اینجا هم از <a href="https://learn.microsoft.com/en-us/sql/t-sql/data-types/table-transact-sql?view=sql-server-ver17" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Table Variable</a>
+ استفاده می‌کنیم (جدول‌های PositionTitle, DecimalTitle)</p>
+<ul>
+<li>جدول PositionTitle: برای اعداد صحیح و دارای 20 رکورد</li>
+<li>ستون id: در زمان join از این ستون استفاده خواهم کرد. رکورد اول ارزش ندارد بنابراین مقدار آن را خالی قرار داده‌ام. مانند عدد 999 که در این جدول ارزش مکانی ندارد.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">--نام ارزش مکانی اعداد صحیح
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>PositionTitle <span style="color:#66d9ef">TABLE</span> (id  INT,Title NVARCHAR(<span style="color:#ae81ff">100</span>));			
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>PositionTitle (id,title)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span>, N<span style="color:#e6db74">&#39;&#39;</span>)	,(<span style="color:#ae81ff">2</span>, N<span style="color:#e6db74">&#39;هزار&#39;</span>),(<span style="color:#ae81ff">3</span>, N<span style="color:#e6db74">&#39;میلیون&#39;</span>),(<span style="color:#ae81ff">4</span>, N<span style="color:#e6db74">&#39;میلیارد&#39;</span>),(<span style="color:#ae81ff">5</span>, N<span style="color:#e6db74">&#39;تریلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">6</span>, N<span style="color:#e6db74">&#39;کوادریلیون&#39;</span>),(<span style="color:#ae81ff">7</span>, N<span style="color:#e6db74">&#39;کوینتیلیون&#39;</span>),(<span style="color:#ae81ff">8</span>, N<span style="color:#e6db74">&#39;سیکستیلون&#39;</span>),(<span style="color:#ae81ff">9</span>, N<span style="color:#e6db74">&#39;سپتیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">10</span>, N<span style="color:#e6db74">&#39;اکتیلیون&#39;</span>),(<span style="color:#ae81ff">11</span>, N<span style="color:#e6db74">&#39;نونیلیون&#39;</span>),(<span style="color:#ae81ff">12</span>, N<span style="color:#e6db74">&#39;دسیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">13</span>, N<span style="color:#e6db74">&#39;آندسیلیون&#39;</span>),(<span style="color:#ae81ff">14</span>, N<span style="color:#e6db74">&#39;دودسیلیون&#39;</span>),(<span style="color:#ae81ff">15</span>, N<span style="color:#e6db74">&#39;تریدسیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">16</span>, N<span style="color:#e6db74">&#39;کواتردسیلیون&#39;</span>),(<span style="color:#ae81ff">17</span>, N<span style="color:#e6db74">&#39;کویندسیلیون&#39;</span>),(<span style="color:#ae81ff">18</span>, N<span style="color:#e6db74">&#39;سیکسدسیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">19</span>, N<span style="color:#e6db74">&#39;سپتندسیلیون&#39;</span>),(<span style="color:#ae81ff">20</span>, N<span style="color:#e6db74">&#39;اکتودسیلیون&#39;</span>),(<span style="color:#ae81ff">21</span>, N<span style="color:#e6db74">&#39;نومدسیلیون&#39;</span>)		
+</span></span><span style="display:flex;"><span>	
+</span></span></code></pre></div>
+<details>
+	<summary>کلیک: مشاهده جدول ارزش مکانی (فارسی/انگلیسی)</summary>
+	<table>
+	<thead>
+			<tr>
+					<th style="text-align: right">ترتیب</th>
+					<th>فارسی</th>
+					<th>انگلیسی</th>
+					<th style="text-align: right">توان ۱۰</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: right">1</td>
+					<td>هزار</td>
+					<td>Thousand</td>
+					<td style="text-align: right">10³</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">2</td>
+					<td>میلیون</td>
+					<td>Million</td>
+					<td style="text-align: right">10⁶</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">3</td>
+					<td>میلیارد</td>
+					<td>Billion</td>
+					<td style="text-align: right">10⁹</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">4</td>
+					<td>تریلیون</td>
+					<td>Trillion</td>
+					<td style="text-align: right">10¹²</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">5</td>
+					<td>کوادریلیون</td>
+					<td>Quadrillion</td>
+					<td style="text-align: right">10¹⁵</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">6</td>
+					<td>کوینتیلیون</td>
+					<td>Quintillion</td>
+					<td style="text-align: right">10¹⁸</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">7</td>
+					<td>سکستیلیون</td>
+					<td>Sextillion</td>
+					<td style="text-align: right">10²¹</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">8</td>
+					<td>سپتیلیون</td>
+					<td>Septillion</td>
+					<td style="text-align: right">10²⁴</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">9</td>
+					<td>اکتیلیون</td>
+					<td>Octillion</td>
+					<td style="text-align: right">10²⁷</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">10</td>
+					<td>نونیلیون</td>
+					<td>Nonillion</td>
+					<td style="text-align: right">10³⁰</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">11</td>
+					<td>دسیلیون</td>
+					<td>Decillion</td>
+					<td style="text-align: right">10³³</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">12</td>
+					<td>آندسیلیون</td>
+					<td>Undecillion</td>
+					<td style="text-align: right">10³⁶</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">13</td>
+					<td>دودسیلیون</td>
+					<td>Duodecillion</td>
+					<td style="text-align: right">10³⁹</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">14</td>
+					<td>تریدسیلیون</td>
+					<td>Tredecillion</td>
+					<td style="text-align: right">10⁴²</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">15</td>
+					<td>کواتردسیلیون</td>
+					<td>Quattuordecillion</td>
+					<td style="text-align: right">10⁴⁵</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">16</td>
+					<td>کویندسیلیون</td>
+					<td>Quindecillion</td>
+					<td style="text-align: right">10⁴⁸</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">17</td>
+					<td>سکستدسیلیون</td>
+					<td>Sexdecillion</td>
+					<td style="text-align: right">10⁵¹</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">18</td>
+					<td>سپتندسیلیون</td>
+					<td>Septendecillion</td>
+					<td style="text-align: right">10⁵⁴</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">19</td>
+					<td>اکتودسیلیون</td>
+					<td>Octodecillion</td>
+					<td style="text-align: right">10⁵⁷</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">20</td>
+					<td>نومدسیلیون</td>
+					<td>Novemdecillion</td>
+					<td style="text-align: right">10⁶⁰</td>
+			</tr>
+	</tbody>
+</table>
+</details>
+
+<ul>
+<li>جدول DecimalTitle: برای اعداد اعشاری و دارای 10 رکورد</li>
+<li>بنابراین حداکثر تعداد اعشار 10 رقم می‌باشد، مگر اینکه به رکوردهای این جدول اضافه شود</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- نام ارزش مکانی اعداد ممیزی
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>DecimalTitle <span style="color:#66d9ef">TABLE</span> (id  INT,Title NVARCHAR(<span style="color:#ae81ff">100</span>));		
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>DecimalTitle (id,Title)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span> ,N<span style="color:#e6db74">&#39;دهم&#39;</span> ),(<span style="color:#ae81ff">2</span> , N<span style="color:#e6db74">&#39;صدم&#39;</span>),(<span style="color:#ae81ff">3</span> , N<span style="color:#e6db74">&#39;هزارم&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">4</span> , N<span style="color:#e6db74">&#39;ده‌هزارم&#39;</span>),(<span style="color:#ae81ff">5</span> , N<span style="color:#e6db74">&#39;صدهزارم&#39;</span>),(<span style="color:#ae81ff">6</span> , N<span style="color:#e6db74">&#39;میلیونم&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">7</span> , N<span style="color:#e6db74">&#39;ده‌میلیونم&#39;</span>),(<span style="color:#ae81ff">8</span> , N<span style="color:#e6db74">&#39;صدمیلیونم&#39;</span>),(<span style="color:#ae81ff">9</span> , N<span style="color:#e6db74">&#39;میلیاردُم&#39;</span>)
+</span></span><span style="display:flex;"><span>        ,(<span style="color:#ae81ff">10</span> , N<span style="color:#e6db74">&#39;ده‌میلیاردم&#39;</span>)
+</span></span></code></pre></div><h3 id="جداسازی-قسمت-صحیح-از-اعشاری">جداسازی قسمت صحیح از اعشاری<a hidden class="anchor" aria-hidden="true" href="#جداسازی-قسمت-صحیح-از-اعشاری">#</a></h3>
+<p>در ابتدا بررسی می‌کنیم که ممیز وجود دارد یا خیر؟
+اگر ممیز وجود نداشت، موقعیت آن را یک واحد بعد از آخرین کاراکتر (یعنی طول رشته) در نظر می‌گیریم تا بتوانیم عدد صحیح را کامل بدست آوریم.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- بدست آوردن قسمت صحیح و اعشاری	
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>IntegerText NVARCHAR(<span style="color:#ae81ff">100</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">@</span>DecimalText NVARCHAR(<span style="color:#ae81ff">100</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">-- اگر ممیز ندارد آن را برابر طول رشته +1 قرار بده		
+</span></span></span><span style="display:flex;"><span>		<span style="color:#f92672">@</span>PointPosition INT<span style="color:#f92672">=</span> <span style="color:#66d9ef">CASE</span> CHARINDEX(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#f92672">@</span>pNumber) 		
+</span></span><span style="display:flex;"><span>								<span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>								<span style="color:#66d9ef">ELSE</span> CHARINDEX(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#f92672">@</span>pNumber) 
+</span></span><span style="display:flex;"><span>							<span style="color:#66d9ef">END</span>
+</span></span></code></pre></div><p>سپس مقدار صحیح و اعشار را بدست میاوریم.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- از اعشار به قبل
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>IntegerText<span style="color:#f92672">=</span> <span style="color:#66d9ef">LEFT</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#f92672">@</span>PointPosition <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- از اعشار به بعد
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>DecimalText<span style="color:#f92672">=</span>  <span style="color:#66d9ef">SUBSTRING</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#f92672">@</span>PointPosition <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, LEN(<span style="color:#f92672">@</span>pNumber))
+</span></span></code></pre></div><p>می‌دانیم صفرهای سمت راست اعشار بی‌ارزش هستند مثل 1.2000
+بنابراین پس از بدست آوردن مقدار اعشاری، برای حذف این صفرها:</p>
+<ul>
+<li>تمام صفرها را با space جایگزین می‌کنیم.</li>
+<li>با rtrim فضاهای خالی سمت راست را حذف می‌کنیم.</li>
+<li>سپس فضاهای خالی دیگر را با صفر جایگزین می‌کنیم.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- حذف صفرهای بی ارزش ممیز
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>DecimalText<span style="color:#f92672">=</span>  <span style="color:#66d9ef">REPLACE</span>(RTRIM(<span style="color:#66d9ef">REPLACE</span>(<span style="color:#f92672">@</span>DecimalText,<span style="color:#e6db74">&#39;0&#39;</span>,<span style="color:#e6db74">&#39; &#39;</span>)),<span style="color:#e6db74">&#39; &#39;</span>,<span style="color:#e6db74">&#39;0&#39;</span>);
+</span></span></code></pre></div> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> در روش قبلی من مقدار اعشاری را معکوس می‌کردم تا صفرها در ابتدا بیایند و سپس اولین عدد غیر صفر را پیدا می‌کردم و با substring یا left مقدار اعشار بدون صفر اضافه را بدست میاوردم؛ که با نظر یکی از کاربران سایت <a href="https://www.dntips.ir/post/1532#comment-8806" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> دات ﻧﺖ ﺗﯿﭙﺲ</a>
+
+به روش  replace که روش بهتری بود تغییر کرد.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">LEFT</span>(
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">@</span>DecimalNumber,
+</span></span><span style="display:flex;"><span>   LEN(<span style="color:#f92672">@</span>DecimalNumber) <span style="color:#f92672">-</span> PATINDEX(<span style="color:#e6db74">&#39;%[^0]%&#39;</span>, REVERSE(<span style="color:#f92672">@</span>DecimalNumber)) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>)			
+</span></span></code></pre></div>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>به مقدار @IntegerText در انتهای متد نیاز داریم، بنابراین مقدار آن را به @pNumber می‌دهیم.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber<span style="color:#f92672">=</span> <span style="color:#f92672">@</span>IntegerText
+</span></span></code></pre></div><h3 id="تفکیک-یکان-دهگان-و-صدگان">تفکیک یکان، دهگان و صدگان<a hidden class="anchor" aria-hidden="true" href="#تفکیک-یکان-دهگان-و-صدگان">#</a></h3>
+<ul>
+<li>
+<p>با استفاده از یک حلقه عدد صحیح را سه رقم سه رقم جدا می‌کنیم</p>
+<ul>
+<li>استفاده از تابع right</li>
+<li>تا زمانی که طول عدد صحیح کمتر از 3 شود</li>
+</ul>
+</li>
+<li>
+<p>جدول @MyNumbers برای نگهداری رقم‌ها براساس ارزش مکانی</p>
+</li>
+</ul>
+<pre tabindex="0"><code>143464565464600004000
+↓
+143 | 464 | 565 | 464 | 600 | 004 | 000
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>Number <span style="color:#66d9ef">AS</span> INT
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>MyNumbers <span style="color:#66d9ef">TABLE</span>
+</span></span><span style="display:flex;"><span>	(
+</span></span><span style="display:flex;"><span>		id   INT <span style="color:#66d9ef">IDENTITY</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>		Val1 INT,
+</span></span><span style="display:flex;"><span>		Val2 INT,
+</span></span><span style="display:flex;"><span>		Val3 INT
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>WHILE (<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&lt;&gt;</span> <span style="color:#e6db74">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- استخراج سه رقم انتهایی
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Number<span style="color:#f92672">=</span> <span style="color:#66d9ef">CAST</span>(<span style="color:#66d9ef">RIGHT</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">AS</span> INT)	
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- تفکیک صدگان، دهگان و یکان
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>MyNumbers (Val1, Val2, Val3)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SELECT</span> 
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">--@Number / 100 * 100,
+</span></span></span><span style="display:flex;"><span>		<span style="color:#f92672">@</span>Number <span style="color:#f92672">-</span> (<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span>), 
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">CASE</span> 
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">WHEN</span> <span style="color:#f92672">@</span>Number <span style="color:#66d9ef">BETWEEN</span> <span style="color:#ae81ff">10</span> <span style="color:#66d9ef">AND</span> <span style="color:#ae81ff">19</span> <span style="color:#66d9ef">THEN</span> <span style="color:#f92672">@</span>Number
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">ELSE</span> (<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span>) <span style="color:#f92672">-</span> (<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span>) 
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">--ELSE @Number / 10 * 10
+</span></span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">END</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">CASE</span> 
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">WHEN</span> <span style="color:#f92672">@</span>Number <span style="color:#66d9ef">BETWEEN</span> <span style="color:#ae81ff">10</span> <span style="color:#66d9ef">AND</span> <span style="color:#ae81ff">19</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">ELSE</span> (<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- طول عدد بیشتر از دو است	
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">-- حذف سه رقم پردازش‌ شده از انتهای رشته
+</span></span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber <span style="color:#f92672">=</span> <span style="color:#66d9ef">LEFT</span>(<span style="color:#f92672">@</span>pNumber, LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">ELSE</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>
+</span></span></code></pre></div><p>به عنوان نمونه برای عدد <strong>0001200955015</strong> خروجی زیر را خواهیم داشت.
+از id این جدول برای join به جدول PositionTitle استفاده خواهیم کرد و سطر اول ارزش مکانی ندارد، برای همین در جدول PositionTitle شناسه 1 بدون مقدار است.
+<figure class="align-center ">
+    <img loading="lazy" src="images/split-number.png#center"
+         alt="@MyNumbers - خروجی جدول"/> <figcaption>
+            <p>@MyNumbers - خروجی جدول</p>
+        </figcaption>
+</figure>
+</p>
+<p>همانطور که در Query مشخص است
+برای اعداد 10 تا 19 عملیات جداسازی دهگان و یکان را انجام نمی‌دهیم
+و فقط باید val2 مقدار داشته باشد  و برای val3 مقدار صفر شود.
+زیرا این‌ها اعدادی هستند که واژه‌های خاص خود را دارند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> در SQL تقسیم دو عدد صحیح خروجی صحیح خواهد داشت <br>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    155 / 100  = 1
+  
+</div>
+
+بنابراین از روش که در کوئری کامنت کردم هم می‌توان استفاده کرد.</p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h3 id="بدست-آوردن-عنوانها-با-join">بدست آوردن عنوان‌ها با join<a hidden class="anchor" aria-hidden="true" href="#بدست-آوردن-عنوانها-با-join">#</a></h3>
+<p>در این قسمت اعداد بدست آمده را با جدول‌های ارزش مکانی و عنوان اعداد ترکیب می‌کنیم:</p>
+<ul>
+<li>با استفاده از شرط سطرهایی را خواهیم داشت که جمع آن بیش از صفر باشد.</li>
+<li>join با جدول @PositionTitle براساس ID.</li>
+<li>برای val1, val2, val3  با جدول @NumberTitle و فیلد val آن join می‌زنیم.</li>
+<li>مرتب‌سازی براساس id</li>
+<li>Replace بیرونی: جایگزین کردن &ldquo;دو فاصله‌ی خالی&rdquo; با &ldquo;یک فاصله‌ی خالی&rdquo;</li>
+<li>Replace داخلی: جایگزینی فاصله‌های خالی با «و»</li>
+</ul>
+<div class="highlight wrap1"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>Str <span style="color:#66d9ef">AS</span> NVARCHAR(<span style="color:#ae81ff">2000</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">+=</span> <span style="color:#66d9ef">REPLACE</span>(<span style="color:#66d9ef">REPLACE</span>(
+</span></span><span style="display:flex;"><span>							<span style="color:#66d9ef">TRIM</span>(nt1.Title <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> nt2.Title <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> nt3.title)
+</span></span><span style="display:flex;"><span>							,<span style="color:#e6db74">&#39; &#39;</span>, N<span style="color:#e6db74">&#39; و &#39;</span>),<span style="color:#e6db74">&#39;  &#39;</span>,<span style="color:#e6db74">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>	       <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> pt.title <span style="color:#f92672">+</span> N<span style="color:#e6db74">&#39; و &#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">FROM</span>   <span style="color:#f92672">@</span>MyNumbers  <span style="color:#66d9ef">AS</span> mn
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>PositionTitle pt
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  pt.id <span style="color:#f92672">=</span> mn.id
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>NumberTitle nt1
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  nt1.val <span style="color:#f92672">=</span> mn.Val1
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>NumberTitle nt2
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  nt2.val <span style="color:#f92672">=</span> mn.Val2
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>NumberTitle nt3
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  nt3.val <span style="color:#f92672">=</span> mn.Val3
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">WHERE</span>  (mn.val1 <span style="color:#f92672">+</span> mn.val2 <span style="color:#f92672">+</span> mn.val3 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> pt.id <span style="color:#66d9ef">DESC</span>
+</span></span><span style="display:flex;"><span>	
+</span></span></code></pre></div><h3 id="کامل-کردن-قسمت-صحیح">کامل کردن قسمت صحیح<a hidden class="anchor" aria-hidden="true" href="#کامل-کردن-قسمت-صحیح">#</a></h3>
+<p>تا این قسمت می‌دانیم که عدد ورودی صفر نیست، اما ممکن است قسمت صحیح صفر باشد و مقدار اعشاری داشته  باشیم. مانند 0.355 <br>
+آنگاه جمله‌ی ما باید با منفی یا صفر شروع شود.
+اگر هم با صفر شروع نشود، « و » اضافی انتهای رشته را حذف می‌کنیم.
+در مثال زیر بعد از شصت «و» اضافه است که باید حذف شود: <br>
+شصت  و  ممیز چهار  و  صدم</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">IF</span> <span style="color:#f92672">@</span>IntegerText<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0&#39;</span>  
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">=</span>  <span style="color:#f92672">@</span>Negative <span style="color:#f92672">+</span>  N<span style="color:#e6db74">&#39;صفر&#39;</span>		
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ELSE</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- در صورت حذف نشدن =&gt; مثلا: شصت و  و  ممیز چهار و صدم
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">=</span> <span style="color:#f92672">@</span>Negative  <span style="color:#f92672">+</span> <span style="color:#66d9ef">LEFT</span> (<span style="color:#f92672">@</span>Str, LEN(<span style="color:#f92672">@</span>Str) <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
+</span></span></code></pre></div><h3 id="بدست-آوردن-اعشار">بدست آوردن اعشار<a hidden class="anchor" aria-hidden="true" href="#بدست-آوردن-اعشار">#</a></h3>
+<p>در این قسمت، ارزش مکانی مقدار اعشاری را براساس تعداد ارقام عدد و به کمک جدول DecimalTitle  مشخص می‌کنیم. مثلا هزارم</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span> <span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>PTitle NVARCHAR(<span style="color:#ae81ff">100</span>)<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">ISNULL</span>(
+</span></span><span style="display:flex;"><span>					(<span style="color:#66d9ef">SELECT</span> Title 
+</span></span><span style="display:flex;"><span>					 <span style="color:#66d9ef">FROM</span> <span style="color:#f92672">@</span>DecimalTitle 
+</span></span><span style="display:flex;"><span>					 <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> LEN(<span style="color:#f92672">@</span>DecimalText)
+</span></span><span style="display:flex;"><span>					),
+</span></span><span style="display:flex;"><span>				<span style="color:#e6db74">&#39;&#39;</span>)
+</span></span></code></pre></div><p>و در انتها اگر قسمت اعشاری وجود داشت، آن را به همین تابع ارسال می‌کنیم تا عناوین عددی آن مشخص شود. سپس با ارزش مکانی اعشار ترکیب می‌کنیم. مقدار بدست آمده را با عناوین قسمت صحیح ترکیب و به عنوان خروجی ارسال می‌کنیم.</p>
+<div class="highlight wrap"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>DecimalText) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">+=</span>
+</span></span><span style="display:flex;"><span>		N<span style="color:#e6db74">&#39; ممیز &#39;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>		dbo.fnNumberToWords_Persian(<span style="color:#f92672">@</span>DecimalText) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>		N<span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> <span style="color:#f92672">@</span>PTitle;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">RETURN</span> <span style="color:#f92672">@</span>str
+</span></span></code></pre></div><p>خروجی برای</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> dbo.fnNumberToWords_Persian(<span style="color:#e6db74">&#39;000143464565464600004000.34357000000&#39;</span>)
+</span></span></code></pre></div><p>صد و چهل و سه کوینتیلیون و چهارصد و شصت و چهار کوادریلیون و پانصد و شصت و پنج تریلیون و چهارصد و شصت و چهار میلیارد و ششصد میلیون و چهار هزار ممیز سی و چهار هزار و سیصد و پنجاه و هفت  صدهزارم</p>
+<h2 id="کد-کامل">کد کامل<a hidden class="anchor" aria-hidden="true" href="#کد-کامل">#</a></h2>
+<div class="highlight wrap"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> ANSI_NULLS <span style="color:#66d9ef">ON</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GO</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> QUOTED_IDENTIFIER <span style="color:#66d9ef">ON</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GO</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- =============================================
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- Author:		 Hamidreza Abedini
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- Create date:  1392-08-01
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- Last updated: 1405-06-06
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- =============================================
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">or</span> <span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">FUNCTION</span> dbo.fnNumberToWords_Persian(<span style="color:#f92672">@</span>pNumber <span style="color:#66d9ef">AS</span> VARCHAR(<span style="color:#ae81ff">100</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">RETURNS</span> NVARCHAR(<span style="color:#ae81ff">2000</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">-- است null خالی یا
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#66d9ef">ISNULL</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#e6db74">&#39;&#39;</span>)) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>  
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> <span style="color:#66d9ef">NULL</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> PATINDEX(<span style="color:#e6db74">&#39;%[^0-9.-]%&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;فقط اعداد، ممیز (.) و علامت منفی (-) مجاز هستند&#39;</span>; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">-</span> LEN(<span style="color:#66d9ef">REPLACE</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#e6db74">&#39;-&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;تعداد علامت منفی بیشتر از یک است&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">-</span> LEN(<span style="color:#66d9ef">REPLACE</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;تعداد ممیز بیشتر از یک است&#39;</span>;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> CHARINDEX(<span style="color:#e6db74">&#39;-&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;علامت منفی باید در ابتدای عدد باشد&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- حداقل یک رقم باید وجود داشته باشد
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> PATINDEX(<span style="color:#e6db74">&#39;%[0-9]%&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;ورودی فاقد رقم است&#39;</span>;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- رشته صفر است
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> PATINDEX(<span style="color:#e6db74">&#39;%[^0.-]%&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>  
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">RETURN</span> N<span style="color:#e6db74">&#39;صفر&#39;</span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- بررسی منفی بودن عدد
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>Negative  <span style="color:#66d9ef">AS</span> NVARCHAR(<span style="color:#ae81ff">5</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">LEFT</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;-&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber <span style="color:#f92672">=</span> <span style="color:#66d9ef">SUBSTRING</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#ae81ff">2</span>, LEN(<span style="color:#f92672">@</span>pNumber))
+</span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Negative  <span style="color:#f92672">=</span> N<span style="color:#e6db74">&#39;منفی &#39;</span> <span style="color:#75715e">-- 5 char
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- رشته با ممیز شروع شده است	
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- صفر به اول رشته اضافه کن
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> (CHARINDEX(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#f92672">+</span> <span style="color:#f92672">@</span>pNumber
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- نام اعداد - 37 رکورد
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>NumberTitle <span style="color:#66d9ef">TABLE</span> (val  INT,Title NVARCHAR(<span style="color:#ae81ff">100</span>));	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>NumberTitle (val,Title)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">VALUES</span>(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">1</span>, N<span style="color:#e6db74">&#39;یک&#39;</span>), (<span style="color:#ae81ff">2</span>, N<span style="color:#e6db74">&#39;دو&#39;</span>), (<span style="color:#ae81ff">3</span>, N<span style="color:#e6db74">&#39;سه&#39;</span>), (<span style="color:#ae81ff">4</span>, N<span style="color:#e6db74">&#39;چهار&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">5</span>, N<span style="color:#e6db74">&#39;پنج&#39;</span>), (<span style="color:#ae81ff">6</span>, N<span style="color:#e6db74">&#39;شش&#39;</span>), (<span style="color:#ae81ff">7</span>, N<span style="color:#e6db74">&#39;هفت&#39;</span>), (<span style="color:#ae81ff">8</span>, N<span style="color:#e6db74">&#39;هشت&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">9</span>, N<span style="color:#e6db74">&#39;نه&#39;</span>), (<span style="color:#ae81ff">10</span>, N<span style="color:#e6db74">&#39;ده&#39;</span>), (<span style="color:#ae81ff">11</span>, N<span style="color:#e6db74">&#39;یازده&#39;</span>), (<span style="color:#ae81ff">12</span>, N<span style="color:#e6db74">&#39;دوازده&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">13</span>, N<span style="color:#e6db74">&#39;سیزده&#39;</span>), (<span style="color:#ae81ff">14</span>, N<span style="color:#e6db74">&#39;چهارده&#39;</span>), (<span style="color:#ae81ff">15</span>, N<span style="color:#e6db74">&#39;پانزده&#39;</span>), (<span style="color:#ae81ff">16</span>, N<span style="color:#e6db74">&#39;شانزده&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">17</span>, N<span style="color:#e6db74">&#39;هفده&#39;</span>), (<span style="color:#ae81ff">18</span>, N<span style="color:#e6db74">&#39;هجده&#39;</span>), (<span style="color:#ae81ff">19</span>, N<span style="color:#e6db74">&#39;نوزده&#39;</span>), (<span style="color:#ae81ff">20</span>, N<span style="color:#e6db74">&#39;بیست&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">30</span>, N<span style="color:#e6db74">&#39;سی&#39;</span>), (<span style="color:#ae81ff">40</span>, N<span style="color:#e6db74">&#39;چهل&#39;</span>), (<span style="color:#ae81ff">50</span>, N<span style="color:#e6db74">&#39;پنجاه&#39;</span>), (<span style="color:#ae81ff">60</span>, N<span style="color:#e6db74">&#39;شصت&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">70</span>, N<span style="color:#e6db74">&#39;هفتاد&#39;</span>), (<span style="color:#ae81ff">80</span>, N<span style="color:#e6db74">&#39;هشتاد&#39;</span>), (<span style="color:#ae81ff">90</span>, N<span style="color:#e6db74">&#39;نود&#39;</span>), (<span style="color:#ae81ff">100</span>, N<span style="color:#e6db74">&#39;صد&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">200</span>, N<span style="color:#e6db74">&#39;دویست&#39;</span>), (<span style="color:#ae81ff">300</span>, N<span style="color:#e6db74">&#39;سیصد&#39;</span>), (<span style="color:#ae81ff">400</span>, N<span style="color:#e6db74">&#39;چهارصد&#39;</span>), (<span style="color:#ae81ff">500</span>, N<span style="color:#e6db74">&#39;پانصد&#39;</span>)
+</span></span><span style="display:flex;"><span>		 ,(<span style="color:#ae81ff">600</span>, N<span style="color:#e6db74">&#39;ششصد&#39;</span>), (<span style="color:#ae81ff">700</span>, N<span style="color:#e6db74">&#39;هفتصد&#39;</span>), (<span style="color:#ae81ff">800</span>, N<span style="color:#e6db74">&#39;هشتصد&#39;</span>), (<span style="color:#ae81ff">900</span>, N<span style="color:#e6db74">&#39;نهصد&#39;</span>)
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- نام ارزش مکانی اعداد صحیح 
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>PositionTitle <span style="color:#66d9ef">TABLE</span> (id  INT,Title NVARCHAR(<span style="color:#ae81ff">100</span>));			
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>PositionTitle (id,title)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span>, N<span style="color:#e6db74">&#39;&#39;</span>)	,(<span style="color:#ae81ff">2</span>, N<span style="color:#e6db74">&#39;هزار&#39;</span>),(<span style="color:#ae81ff">3</span>, N<span style="color:#e6db74">&#39;میلیون&#39;</span>),(<span style="color:#ae81ff">4</span>, N<span style="color:#e6db74">&#39;میلیارد&#39;</span>),(<span style="color:#ae81ff">5</span>, N<span style="color:#e6db74">&#39;تریلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">6</span>, N<span style="color:#e6db74">&#39;کوادریلیون&#39;</span>),(<span style="color:#ae81ff">7</span>, N<span style="color:#e6db74">&#39;کوینتیلیون&#39;</span>),(<span style="color:#ae81ff">8</span>, N<span style="color:#e6db74">&#39;سیکستیلون&#39;</span>),(<span style="color:#ae81ff">9</span>, N<span style="color:#e6db74">&#39;سپتیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">10</span>, N<span style="color:#e6db74">&#39;اکتیلیون&#39;</span>),(<span style="color:#ae81ff">11</span>, N<span style="color:#e6db74">&#39;نونیلیون&#39;</span>),(<span style="color:#ae81ff">12</span>, N<span style="color:#e6db74">&#39;دسیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">13</span>, N<span style="color:#e6db74">&#39;آندسیلیون&#39;</span>),(<span style="color:#ae81ff">14</span>, N<span style="color:#e6db74">&#39;دودسیلیون&#39;</span>),(<span style="color:#ae81ff">15</span>, N<span style="color:#e6db74">&#39;تریدسیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">16</span>, N<span style="color:#e6db74">&#39;کواتردسیلیون&#39;</span>),(<span style="color:#ae81ff">17</span>, N<span style="color:#e6db74">&#39;کویندسیلیون&#39;</span>),(<span style="color:#ae81ff">18</span>, N<span style="color:#e6db74">&#39;سیکسدسیلیون&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">19</span>, N<span style="color:#e6db74">&#39;سپتندسیلیون&#39;</span>),(<span style="color:#ae81ff">20</span>, N<span style="color:#e6db74">&#39;اکتودسیلیون&#39;</span>),(<span style="color:#ae81ff">21</span>, N<span style="color:#e6db74">&#39;نومدسیلیون&#39;</span>)		
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- نام ارزش مکانی اعداد ممیزی
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>DecimalTitle <span style="color:#66d9ef">TABLE</span> (id  INT,Title NVARCHAR(<span style="color:#ae81ff">100</span>));		
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>DecimalTitle (id,Title)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">VALUES</span> (<span style="color:#ae81ff">1</span> ,N<span style="color:#e6db74">&#39;دهم&#39;</span> ),(<span style="color:#ae81ff">2</span> , N<span style="color:#e6db74">&#39;صدم&#39;</span>),(<span style="color:#ae81ff">3</span> , N<span style="color:#e6db74">&#39;هزارم&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">4</span> , N<span style="color:#e6db74">&#39;ده‌هزارم&#39;</span>),(<span style="color:#ae81ff">5</span> , N<span style="color:#e6db74">&#39;صدهزارم&#39;</span>),(<span style="color:#ae81ff">6</span> , N<span style="color:#e6db74">&#39;میلیونم&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">7</span> , N<span style="color:#e6db74">&#39;ده‌میلیونم&#39;</span>),(<span style="color:#ae81ff">8</span> , N<span style="color:#e6db74">&#39;صدمیلیونم&#39;</span>),(<span style="color:#ae81ff">9</span> , N<span style="color:#e6db74">&#39;میلیاردُم&#39;</span>)
+</span></span><span style="display:flex;"><span>		  ,(<span style="color:#ae81ff">10</span> , N<span style="color:#e6db74">&#39;ده‌میلیاردم&#39;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- بدست آوردن قسمت صحیح و اعشاری
+</span></span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>IntegerText NVARCHAR(<span style="color:#ae81ff">100</span>),
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">@</span>DecimalText NVARCHAR(<span style="color:#ae81ff">100</span>),
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">-- اگر ممیز وجود نداشت، موقعیت آن را یک واحد بعد از آخرین کاراکتر در نظر می‌گیریم
+</span></span></span><span style="display:flex;"><span>			<span style="color:#75715e">-- 15  → PointPosition = 3
+</span></span></span><span style="display:flex;"><span>			<span style="color:#75715e">-- 15. → PointPosition = 3
+</span></span></span><span style="display:flex;"><span>			<span style="color:#f92672">@</span>PointPosition INT<span style="color:#f92672">=</span> <span style="color:#66d9ef">CASE</span> CHARINDEX(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#f92672">@</span>pNumber) 		
+</span></span><span style="display:flex;"><span>									<span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>									<span style="color:#66d9ef">ELSE</span> CHARINDEX(<span style="color:#e6db74">&#39;.&#39;</span>, <span style="color:#f92672">@</span>pNumber) 
+</span></span><span style="display:flex;"><span>			                    <span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span>			
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- از اعشار به قبل
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>IntegerText<span style="color:#f92672">=</span> <span style="color:#66d9ef">LEFT</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#f92672">@</span>PointPosition <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) 
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- از اعشار به بعد
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>DecimalText<span style="color:#f92672">=</span>  <span style="color:#66d9ef">SUBSTRING</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#f92672">@</span>PointPosition <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, LEN(<span style="color:#f92672">@</span>pNumber))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- حذف صفرهای بی ارزش ممیز
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>DecimalText<span style="color:#f92672">=</span>  <span style="color:#66d9ef">REPLACE</span>(RTRIM(<span style="color:#66d9ef">REPLACE</span>(<span style="color:#f92672">@</span>DecimalText,<span style="color:#e6db74">&#39;0&#39;</span>,<span style="color:#e6db74">&#39; &#39;</span>)),<span style="color:#e6db74">&#39; &#39;</span>,<span style="color:#e6db74">&#39;0&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- در انتها به مقدار عدد صحیح نیاز خواهیم داشت
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber<span style="color:#f92672">=</span> <span style="color:#f92672">@</span>IntegerText
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>Number <span style="color:#66d9ef">AS</span> INT
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>MyNumbers <span style="color:#66d9ef">TABLE</span>
+</span></span><span style="display:flex;"><span>	(
+</span></span><span style="display:flex;"><span>		id   INT <span style="color:#66d9ef">IDENTITY</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>		Val1 INT,
+</span></span><span style="display:flex;"><span>		Val2 INT,
+</span></span><span style="display:flex;"><span>		Val3 INT
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	WHILE (<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&lt;&gt;</span> <span style="color:#e6db74">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">-- جدا کردن سه رقم از سمت راست
+</span></span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Number<span style="color:#f92672">=</span> <span style="color:#66d9ef">CAST</span>(<span style="color:#66d9ef">RIGHT</span>(<span style="color:#f92672">@</span>pNumber, <span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">AS</span> INT)	
+</span></span><span style="display:flex;"><span>	    
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">-- تفکیک صدگان، دهگان و یکان
+</span></span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#f92672">@</span>MyNumbers(Val1, Val2, Val3)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SELECT</span> 
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">--@Number / 100 * 100,
+</span></span></span><span style="display:flex;"><span>			<span style="color:#f92672">@</span>Number <span style="color:#f92672">-</span> (<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span>), 
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">CASE</span> 
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">WHEN</span> <span style="color:#f92672">@</span>Number <span style="color:#66d9ef">BETWEEN</span> <span style="color:#ae81ff">10</span> <span style="color:#66d9ef">AND</span> <span style="color:#ae81ff">19</span> <span style="color:#66d9ef">THEN</span> <span style="color:#f92672">@</span>Number
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">ELSE</span> (<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span>)<span style="color:#f92672">-</span>(<span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">--ELSE @Number / 10 * 10
+</span></span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">END</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">CASE</span> 
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">WHEN</span> <span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#66d9ef">BETWEEN</span> <span style="color:#ae81ff">10</span> <span style="color:#66d9ef">AND</span> <span style="color:#ae81ff">19</span> <span style="color:#66d9ef">THEN</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">ELSE</span> <span style="color:#f92672">@</span>Number <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span>	    
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">-- طول عدد بیشتر از دو است	
+</span></span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">-- حذف سه رقم پردازش‌ شده از انتهای رشته
+</span></span></span><span style="display:flex;"><span>	        <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber <span style="color:#f92672">=</span> <span style="color:#66d9ef">LEFT</span>(<span style="color:#f92672">@</span>pNumber, LEN(<span style="color:#f92672">@</span>pNumber) <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>	    <span style="color:#66d9ef">ELSE</span>
+</span></span><span style="display:flex;"><span>	        <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>pNumber <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">---------------------------------------------------------------------	
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>Str <span style="color:#66d9ef">AS</span> NVARCHAR(<span style="color:#ae81ff">2000</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">+=</span> <span style="color:#66d9ef">REPLACE</span>(<span style="color:#66d9ef">REPLACE</span>(
+</span></span><span style="display:flex;"><span>							<span style="color:#66d9ef">TRIM</span>(nt1.Title <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> nt2.Title <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> nt3.title)
+</span></span><span style="display:flex;"><span>							,<span style="color:#e6db74">&#39; &#39;</span>, N<span style="color:#e6db74">&#39; و &#39;</span>),<span style="color:#e6db74">&#39;  &#39;</span>,<span style="color:#e6db74">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>	       <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> pt.title <span style="color:#f92672">+</span> N<span style="color:#e6db74">&#39; و &#39;</span>
+</span></span><span style="display:flex;"><span>		  
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">FROM</span>   <span style="color:#f92672">@</span>MyNumbers  <span style="color:#66d9ef">AS</span> mn
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>PositionTitle pt
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  pt.id <span style="color:#f92672">=</span> mn.id
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>NumberTitle nt1
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  nt1.val <span style="color:#f92672">=</span> mn.Val1
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>NumberTitle nt2
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  nt2.val <span style="color:#f92672">=</span> mn.Val2
+</span></span><span style="display:flex;"><span>	       <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#f92672">@</span>NumberTitle nt3
+</span></span><span style="display:flex;"><span>	            <span style="color:#66d9ef">ON</span>  nt3.val <span style="color:#f92672">=</span> mn.Val3
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">WHERE</span>  (mn.val1 <span style="color:#f92672">+</span> mn.val2 <span style="color:#f92672">+</span> mn.val3 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> pt.id <span style="color:#66d9ef">DESC</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">------------------------------------------------------
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- صفر بودن قسمت صحیح؛ علامت منفی فقط برای عدد اعشاری غیرصفر حفظ می‌شود
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> <span style="color:#f92672">@</span>IntegerText<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0&#39;</span>  
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">=</span>  <span style="color:#f92672">@</span>Negative <span style="color:#f92672">+</span>  N<span style="color:#e6db74">&#39;صفر&#39;</span>		
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">ELSE</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">-- افزودن علامت منفی و حذف « و » اضافی انتهای عدد صحیح
+</span></span></span><span style="display:flex;"><span>		<span style="color:#75715e">-- در صورت حذف نشدن =&gt; مثلا: شصت و  و  ممیز چهار و صدم
+</span></span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">=</span> <span style="color:#f92672">@</span>Negative  <span style="color:#f92672">+</span> <span style="color:#66d9ef">LEFT</span> (<span style="color:#f92672">@</span>Str, LEN(<span style="color:#f92672">@</span>Str) <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">------------------------------------------------------	
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- تعیین عنوان جایگاه اعشار بر اساس تعداد ارقام بخش اعشاری
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">DECLARE</span> <span style="color:#f92672">@</span>PTitle NVARCHAR(<span style="color:#ae81ff">100</span>)<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">ISNULL</span>(
+</span></span><span style="display:flex;"><span>					(<span style="color:#66d9ef">SELECT</span> Title 
+</span></span><span style="display:flex;"><span>					 <span style="color:#66d9ef">FROM</span> <span style="color:#f92672">@</span>DecimalTitle 
+</span></span><span style="display:flex;"><span>					 <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> LEN(<span style="color:#f92672">@</span>DecimalText)
+</span></span><span style="display:flex;"><span>					),
+</span></span><span style="display:flex;"><span>				<span style="color:#e6db74">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- تبدیل بخش اعشاری به حروف و افزودن عنوان جایگاه اعشار
+</span></span></span><span style="display:flex;"><span>	<span style="color:#75715e">-- افزودن بخش اعشاری به عبارت نهایی
+</span></span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">IF</span> LEN(<span style="color:#f92672">@</span>DecimalText) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span>Str <span style="color:#f92672">+=</span>
+</span></span><span style="display:flex;"><span>			N<span style="color:#e6db74">&#39; ممیز &#39;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>			dbo.fnNumberToWords_Persian(<span style="color:#f92672">@</span>DecimalText) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>			N<span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> <span style="color:#f92672">@</span>PTitle;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">END</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">RETURN</span> <span style="color:#f92672">@</span>str
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  
+
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hr-abedini.github.io/tags/mssql/">MSSQL</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/sql-server/">SQL Server</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/function/">Function</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://hr-abedini.github.io/posts/terms/geek-%D9%88-nerd-%D8%A7%D8%B2-%DB%8C%DA%A9-%D8%A8%D8%B1%DA%86%D8%B3%D8%A8-%D8%AA%D8%AD%D9%82%DB%8C%D8%B1%D8%A2%D9%85%DB%8C%D8%B2-%D8%AA%D8%A7-%D9%86%D8%B4%D8%A7%D9%86-%D8%A7%D9%81%D8%AA%D8%AE%D8%A7%D8%B1/">
+    <span class="title">صفحه بعدی »</span>
+    <br>
+    <span> Geek و Nerd، از یک برچسب تحقیرآمیز تا نشان افتخار</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share تبدیل عدد به حروف فارسی در SQL Server on x"
+            href="https://x.com/intent/tweet/?text=%d8%aa%d8%a8%d8%af%db%8c%d9%84%20%d8%b9%d8%af%d8%af%20%d8%a8%d9%87%20%d8%ad%d8%b1%d9%88%d9%81%20%d9%81%d8%a7%d8%b1%d8%b3%db%8c%20%d8%af%d8%b1%20SQL%20Server&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fsqlserver%2f%25D8%25AA%25D8%25A8%25D8%25AF%25DB%258C%25D9%2584-%25D8%25B9%25D8%25AF%25D8%25AF-%25D8%25A8%25D9%2587-%25D8%25AD%25D8%25B1%25D9%2588%25D9%2581-%25D8%25AF%25D8%25B1-sql-server%2f&amp;hashtags=MSSQL%2cSQLServer%2cfunction">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share تبدیل عدد به حروف فارسی در SQL Server on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fsqlserver%2f%25D8%25AA%25D8%25A8%25D8%25AF%25DB%258C%25D9%2584-%25D8%25B9%25D8%25AF%25D8%25AF-%25D8%25A8%25D9%2587-%25D8%25AD%25D8%25B1%25D9%2588%25D9%2581-%25D8%25AF%25D8%25B1-sql-server%2f&amp;title=%d8%aa%d8%a8%d8%af%db%8c%d9%84%20%d8%b9%d8%af%d8%af%20%d8%a8%d9%87%20%d8%ad%d8%b1%d9%88%d9%81%20%d9%81%d8%a7%d8%b1%d8%b3%db%8c%20%d8%af%d8%b1%20SQL%20Server&amp;summary=%d8%aa%d8%a8%d8%af%db%8c%d9%84%20%d8%b9%d8%af%d8%af%20%d8%a8%d9%87%20%d8%ad%d8%b1%d9%88%d9%81%20%d9%81%d8%a7%d8%b1%d8%b3%db%8c%20%d8%af%d8%b1%20SQL%20Server&amp;source=https%3a%2f%2fhr-abedini.github.io%2fposts%2fsqlserver%2f%25D8%25AA%25D8%25A8%25D8%25AF%25DB%258C%25D9%2584-%25D8%25B9%25D8%25AF%25D8%25AF-%25D8%25A8%25D9%2587-%25D8%25AD%25D8%25B1%25D9%2588%25D9%2581-%25D8%25AF%25D8%25B1-sql-server%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share تبدیل عدد به حروف فارسی در SQL Server on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhr-abedini.github.io%2fposts%2fsqlserver%2f%25D8%25AA%25D8%25A8%25D8%25AF%25DB%258C%25D9%2584-%25D8%25B9%25D8%25AF%25D8%25AF-%25D8%25A8%25D9%2587-%25D8%25AD%25D8%25B1%25D9%2588%25D9%2581-%25D8%25AF%25D8%25B1-sql-server%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share تبدیل عدد به حروف فارسی در SQL Server on whatsapp"
+            href="https://api.whatsapp.com/send?text=%d8%aa%d8%a8%d8%af%db%8c%d9%84%20%d8%b9%d8%af%d8%af%20%d8%a8%d9%87%20%d8%ad%d8%b1%d9%88%d9%81%20%d9%81%d8%a7%d8%b1%d8%b3%db%8c%20%d8%af%d8%b1%20SQL%20Server%20-%20https%3a%2f%2fhr-abedini.github.io%2fposts%2fsqlserver%2f%25D8%25AA%25D8%25A8%25D8%25AF%25DB%258C%25D9%2584-%25D8%25B9%25D8%25AF%25D8%25AF-%25D8%25A8%25D9%2587-%25D8%25AD%25D8%25B1%25D9%2588%25D9%2581-%25D8%25AF%25D8%25B1-sql-server%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share تبدیل عدد به حروف فارسی در SQL Server on telegram"
+            href="https://telegram.me/share/url?text=%d8%aa%d8%a8%d8%af%db%8c%d9%84%20%d8%b9%d8%af%d8%af%20%d8%a8%d9%87%20%d8%ad%d8%b1%d9%88%d9%81%20%d9%81%d8%a7%d8%b1%d8%b3%db%8c%20%d8%af%d8%b1%20SQL%20Server&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fsqlserver%2f%25D8%25AA%25D8%25A8%25D8%25AF%25DB%258C%25D9%2584-%25D8%25B9%25D8%25AF%25D8%25AF-%25D8%25A8%25D9%2587-%25D8%25AD%25D8%25B1%25D9%2588%25D9%2581-%25D8%25AF%25D8%25B1-sql-server%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+
+        
+
+
+<section class="related-posts">
+    <h3>نوشته‌های مرتبط</h3>
+    <ul>
+    
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/db/%D8%A7%D9%86%D9%88%D8%A7%D8%B9-%DA%A9%D9%84%DB%8C%D8%AF%D9%87%D8%A7-%D8%AF%D8%B1-%D9%BE%D8%A7%DB%8C%DA%AF%D8%A7%D9%87-%D8%AF%D8%A7%D8%AF%D9%87/">انواع کلیدها در پایگاه‌داده</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/">چرا در دیتابیس null = null نیست؟</a> </li>
+        
+    
+    </ul>
+</section>
+
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://hr-abedini.github.io/">حمیدرضا عابدینی</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script src="/js/jdate.js"></script>
+<script data-goatcounter="https://hr-abedini.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'کپی';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'کپی شد!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'کپی';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
