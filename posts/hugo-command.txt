@@ -1,0 +1,12 @@
+
+hugo version
+-----------------------------------------------------------
+hugo serve -D
+hugo serve
+
+-----------------------------------------------------------
+hugo --cleanDestinationDir
+
+hugo new content content/posts/db/14050425-keys2/index.md
+
+

@@ -10,7 +10,7 @@
 <meta name="description" content="مفهوم null در دیتابیس">
 <meta name="author" content="حمیدرضا عابدینی">
 <link rel="canonical" href="https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.26e220620d8ac45f42ca6ffcd68b7bcd361db3b4e7c63a3d6117d8fa2ce92a60.css" integrity="sha256-JuIgYg2KxF9Cym/81ot7zTYds7Tnxjo9YRfY&#43;izpKmA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.a21cde726a9eb5f091c3c39375379aa259a48325234cb9e652f2df4cd5da2a7b.css" integrity="sha256-ohzecmqetfCRw8OTdTeaolmkgyUjTLnmUvLfTNXaKns=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://hr-abedini.github.io/favicon/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon/favicon-96x96.png">
@@ -267,7 +267,7 @@
   </header> 
 <figure class="entry-cover">
             <img loading="eager"
-                srcset='https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db_hu_bf35f7d45f840870.png 360w,https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db_hu_6d9e423984aa887e.png 480w,https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db.png 600w'
+                srcset='https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db_hu_95322352c27b1aeb.png 360w,https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db_hu_3fda6e8ceef6dba5.png 480w,https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db.png 600w'
                 src="https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/images/null%20in%20db.png"
                 sizes="(min-width: 768px) 720px, 100vw"
                 width="600" height="335"
@@ -325,15 +325,21 @@
 <ul>
 <li>ریشه سخت‌افزاری/حافظه‌ای (تونی هور <a href="https://fa.wikipedia.org/wiki/%D8%AA%D9%88%D9%86%DB%8C_%D9%87%D9%88%D8%B1" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Tony Hoare</a>
+
+
 )</li>
 <li>ریشه معنایی/اطلاعاتی (ادگار کاد) در دنیای Database</li>
 </ul>
 <p>در سیستم‌های اولیه ذخیره‌سازی داده در دهه‌های ۱۹۶۰ و اوایل ۱۹۷۰ (پیش از مدل رابطه‌ای)، روش استانداردی برای نمایش داده‌های ناموجود وجود نداشت و هر سیستمی به شکل خاص خود با این مساله برخورد می‌کرد.</p>
 <p>ادگار فرانک کاد (<a href="https://fa.wikipedia.org/wiki/%D8%A7%D8%AF%DA%AF%D8%A7%D8%B1_%DA%A9%D8%A7%D8%AF" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Edgar F. Codd</a>
+
+
 ) پدر علم دیتابیس‌های مدرن و یکی از محققین IBM، در سال ۱۹۷۰ مقاله مشهور خود درباره مدل رابطه‌ای را منتشر کرد که البته در آن چیزی به نام null وجود نداشت.</p>
 <p>در حدود سال 1975 پژوهشگران IBM برای پیاده‌سازی مدل رابطه‌ای او، پروژه‌ای به نام «<a href="https://en.wikipedia.org/wiki/IBM_System_R" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> System R</a>
+
+
 » را توسعه دادند. در این پروژه زبانی به نام SEQUEL <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> (که بعداً SQL <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> شد) ایجاد شد و مفهوم NULL را برای داده‌های ناقص در آن گنجاندند.</p>
  
 
@@ -376,6 +382,8 @@ target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style
 
 <p>ادگار کاد هرچند که در ابتدا از مخالفان رویکرد تیم IBM برای null بود اما در سال 1979 مساله «اطلاعات گمشده» (Missing Information) را مطرح کرد و مفهوم Null  را به عنوان یک نشانگر (Marker) برای داده‌های از دست رفته یا ناموجود همراه با منطق ۳ ارزشی  (True, False, Unknown) به صورت رسمی معرفی کرد، و در نهایت اولین استاندارد رسمی توسط <a href="https://www.ansi.org/" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> ANSI</a>
+
+
  و با نام ANSI SQL-86 در سال ۱۹۸۶ منتشر شد.</p>
 <p>کاد در سال‌های بعد (1990) برای تفکیک بهتر، پیشنهاد کرد که دو نوع NULL داشته باشیم:</p>
 <ul>
@@ -662,6 +670,8 @@ target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style
 
 <p><a href="https://fa.wikipedia.org/wiki/%D8%B3%DB%8C%E2%80%8C%D8%AC%DB%8C_%D8%AF%DB%8C%D8%AA" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Christopher J. Date</a>
+
+
  از مخالفان جدی NULL محسوب می‌شود. چرا؟</p>
 <ul>
 <li>ابهام معنایی به دلیل چند مفهومی بودن null</li>
@@ -780,8 +790,12 @@ target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style
 <h2 id="بازگشت-به-منطق-دو-ارزشی">بازگشت به منطق دو ارزشی<a hidden class="anchor" aria-hidden="true" href="#بازگشت-به-منطق-دو-ارزشی">#</a></h2>
 <p>ANSI در استاندارد SQL:1999 دستور جدیدی را معرفی کرد که در دیتابیس‌هایی مانند <a href="https://wiki.postgresql.org/wiki/Is_distinct_from" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> PostgreSQL</a>
+
+
  و <a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/is-distinct-from-transact-sql?view=sql-server-ver16" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> SQL Server 2022</a>
+
+
   تعبیه شده‌اند.</p>
 <p>آیا دو عبارت با هم متفاوت هستند/نیستند؟ البته با منطق دو ارزشی</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>expression <span style="color:#66d9ef">IS</span> [<span style="color:#66d9ef">NOT</span>] <span style="color:#66d9ef">DISTINCT</span> <span style="color:#66d9ef">FROM</span> expression 
@@ -859,6 +873,8 @@ target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> Col <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
 </span></span></code></pre></div><p>در نسخه‌های اولیه که مبتنی بر <a href="https://en.wikipedia.org/wiki/Sybase" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Sybase</a>
+
+
  بود امکان استفاده از این عملگرهای مقایسه‌ای بود. اما برای سازگاری با استاندارد ANSI SQL در دهه 90 تنظیمات ANSI مختلفی در MSSQL معرفی شدند تا برنامه‌نویسان امکان انتخاب بین رفتار قدیمی و استاندارد را داشته باشند. بدین ترتیب سازگاری با کدهای قدیمی (backwards compatibility) حفظ شد.</p>
  
 
@@ -879,6 +895,8 @@ target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style
 
   <p><span class="alert-icon">🚨</span> از SQL Server 2017 به بعد، ANSI_NULLS OFF  منسوخ شده است (deprecated) و همیشه به صورت ON اعمال می‌شود. مایکروسافت <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/set-ansi-nulls-transact-sql?view=sql-server-ver17" 
 target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> توصیه می‌کند</a>
+
+
  از OFF استفاده نکنید زیرا برخی از قابلیت‌ها مانند Index on Computed Columns  دیگر کار نخواهند کرد.</p>
 
 </blockquote>
@@ -1048,7 +1066,9 @@ target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style
         <path d="M12 6H0l6-6z" />
     </svg>
 </a><script src="/js/jdate.js"></script>
+
 <script data-goatcounter="https://hr-abedini.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 
 
 <script>

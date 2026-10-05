@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>آشنایی با Secure Hash Algorithm (SHA) | حمیدرضا عابدینی</title>
+<meta name="keywords" content="Avalanche Effect, Birthday Attack, Block, Collision, Cryptographic Hash, FIPS, Hash Function, Length Extension Attack, Message Digest, NIST, Preimage Attack, Second Preimage Attack, Secure Hash Algorithm, SHA, SHA-0, SHA-1, SHA-2, SHA-256, SHA-3, Word, XOF, اثر بهمن, الگوریتم هش, برخورد, هش, fips">
+<meta name="description" content="آشنایی با خانواده الگوریتم‌های SHA، تاریخچه، نسل‌های مختلف SHA و تفاوت‌های SHA-0، SHA-1، SHA-2 و SHA-3">
+<meta name="author" content="حمیدرضا عابدینی">
+<link rel="canonical" href="https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.a21cde726a9eb5f091c3c39375379aa259a48325234cb9e652f2df4cd5da2a7b.css" integrity="sha256-ohzecmqetfCRw8OTdTeaolmkgyUjTLnmUvLfTNXaKns=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hr-abedini.github.io/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://hr-abedini.github.io/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hr-abedini.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="fa" href="https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+
+
+
+                                    
+                                <meta property="og:url" content="https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/">
+  <meta property="og:site_name" content="حمیدرضا عابدینی">
+  <meta property="og:title" content="آشنایی با Secure Hash Algorithm (SHA)">
+  <meta property="og:description" content="آشنایی با خانواده الگوریتم‌های SHA، تاریخچه، نسل‌های مختلف SHA و تفاوت‌های SHA-0، SHA-1، SHA-2 و SHA-3">
+  <meta property="og:locale" content="fa-IR">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-05T09:48:41+03:30">
+    <meta property="article:modified_time" content="2026-10-05T09:48:41+03:30">
+    <meta property="article:tag" content="SHA">
+    <meta property="article:tag" content="SHA-1">
+    <meta property="article:tag" content="SHA-2">
+    <meta property="article:tag" content="SHA-3">
+    <meta property="article:tag" content="Hash Function">
+    <meta property="article:tag" content="Cryptography">
+    <meta property="og:image" content="https://hr-abedini.github.io/images/sha-secure%20hash%20algorithm.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hr-abedini.github.io/images/sha-secure%20hash%20algorithm.png">
+<meta name="twitter:title" content="آشنایی با Secure Hash Algorithm (SHA)">
+<meta name="twitter:description" content="آشنایی با خانواده الگوریتم‌های SHA، تاریخچه، نسل‌های مختلف SHA و تفاوت‌های SHA-0، SHA-1، SHA-2 و SHA-3">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "پست‌ها",
+      "item": "https://hr-abedini.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "آشنایی با Secure Hash Algorithm (SHA)",
+      "item": "https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "آشنایی با Secure Hash Algorithm (SHA)",
+  "name": "آشنایی با Secure Hash Algorithm (SHA)",
+  "description": "آشنایی با خانواده الگوریتم‌های SHA، تاریخچه، نسل‌های مختلف SHA و تفاوت‌های SHA-0، SHA-1، SHA-2 و SHA-3",
+  "keywords": [
+    "Avalanche Effect", "Birthday Attack", "Block", "Collision", "Cryptographic Hash", "FIPS", "Hash Function", "Length Extension Attack", "Message Digest", "NIST", "Preimage Attack", "Second Preimage Attack", "Secure Hash Algorithm", "SHA", "SHA-0", "SHA-1", "SHA-2", "SHA-256", "SHA-3", "Word", "XOF", "اثر بهمن", "الگوریتم هش", "برخورد", "هش", "fips"
+  ],
+  "articleBody": "SHA چیست؟ SHA مخفف Secure Hash Algorithm (الگوریتم هش امن) است. مجموعه‌ای از توابع هش رمزنگاری (Cryptographic Hash) است که توسط مؤسسه ملی استاندارد و فناوری آمریکا (1 NIST ) استاندارد شده‌اند.\nاین الگوریتم‌ها هر ورودی با طول دلخواه را می‌گیرند و آن را به یک خروجی با طول ثابت به نام Message Digest (چکیده پیام) یا hash تبدیل می‌کنند.\nتوابع خانواده SHA شامل 4 نسل (نسل صفر تا سه) می‌شوند و در حوزه‌هایی مانند امنیت و رمزنگاری، بررسی یکپارچگی فایل‌ها و داده‌ها، بلاک‌چین و ارزهای دیجیتال، سیستم‌های کنترل نسخه مانند Git و ایجاد اثرانگشت دیجیتال برای داده‌ها کاربرد دارند.\n🔔 واژه‌ی Hash در انگلیسی به معنی «درهم‌ریختن» یا «خرد کردن» است. الگوریتم SHA ورودی را آن‌قدر با عملیات ریاضی درهم می‌آمیزد که دیگر هیچ شباهتی بین ورودی و خروجی دیده نمی‌شود.\nچند ویژگی‌ مهم ورودی: اندازه‌ی ورودی تابع، تقریبا نامحدود است. خروجی: طول خروجی براساس نوع تابع، همیشه ثابت است. یعنی با اجرای هربار آن، طول خروجی تغییر نخواهد کرد. یک طرفه بودن: از روی هش خروجی به مقدار ورودی نمی‌توان رسید. دارا بودن اثر بهمن (Avalanche Effect) سرعت بالا در محاسبه در نسل 2 به بعد، احتمال برخورد (Collision) تقریبا صفر است. ویژگی‌های Digest طول آن ثابت است. مثلا برای SHA-256 خروجی همیشه یک رشته ثابت ۶۴ کاراکتری است. مثل یک «اثرانگشت دیجیتال» برای داده عمل می‌کند. اندازه ورودی (حتی خیلی بزرگ) تاثیری در اندازه خروجی نخواهد داشت. اگر حتی یک بیت از داده اصلی تغییر کند، دایجست کاملا متفاوت می‌شود (اثر بهمن). Block توابع SHA پیام ورودی را یکجا پردازش نمی‌کنند، بلکه پیام را به قطعاتی با اندازه ثابت تقسیم می‌کنند (بسته به نوع الگوریتم) و سپس هر قطعه را وارد مراحل محاسباتی می‌کنند. برای مثال، در SHA-256 اندازه هر Block برابر با ۵۱۲ بیت است.\nWord داده ورودی پس از تقسیم‌بندی، در ساختار داخلی الگوریتم به واحدهای کوچک‌تر و با اندازه ثابت برای انجام محاسبات پردازشی سازمان‌دهی می‌شود که به آن‌ها کلمه پردازشی (Word) گفته می‌شود. اندازه Word بسته به نوع الگوریتم متفاوت است.\nبرخورد (Collision) منظور از برخورد یعنی دو ورودی متفاوت، دقیقاً یک خروجی هش یکسان تولید کنند.\nهمانطور که پیش از این اشاره کردم، اندازه ورودی SHA تقریبا نامحدود است و می‌تواند بسیار بزرگ باشد. بنابراین از نظر ریاضی، ناگزیر ورودی‌های متفاوتی خواهیم داشت که به یک خروجی hash یکسان برسند.\n🔔 اما مساله امنیتی این نیست که از لحاظ ریاضی این برخورد (Collision) وجود دارد یا نه؛ بلکه پرسش اصلی این است: آیا پیدا کردن دو ورودی متفاوت با هش یکسان، از نظر محاسباتی عملی است یا خیر؟\nبرای یک تابع هش امن، پیدا کردن چنین چیزی باید بسیار دشوار باشد.\nاثر بهمن (Avalanche Effect) یکی از مهم‌ترین ویژگی‌های توابع هش رمزنگاری (Cryptographic Hash) است. به زبان ساده، اگر حتی یک بیت از ورودی تغییر کند، خروجی هش باید به طور گسترده و غیرقابل پیش‌بینی تغییر کند (حدود نیمی از بیت‌های خروجی)\nچرا به آن «اثر بهمن» می‌گویند؟ مانند حرکت کوچکی که باعث شروع یک بهمن می‌شود، یک تغییر کوچک در ورودی، کل هش را زیر و رو خواهد کرد. به عنوان نمونه خروجی موارد زیر با SHA-256:\nسلام دنیا\nA5243B50DAC2E60EE8F7756FCB7C7CF282E485BEA5F91DB3EA621A786C0C554E سلام دنیا!\nFD535F4B547DBDF8E4FFA7E02EF4FA70E8D199673AE55E7B5D7E320FF4C43F50 اهمیت اثر بهمن\nیکی از معیارهای کیفیت یک تابع hash، همین اثر بهمن است. چرا که باعث می‌شود نتوان از روی هش خروجی، جزییات ورودی را حدس زد، که باعث افزایش امنیت و مقاومت در برابر حملات خواهد شد.\n🔔 توابع هش ضعیف (مثل نسخه‌های قدیمی) اثر بهمن ضعیفی دارند و به همین دلیل نا امن محسوب می‌شوند.\nاعضای خانواده SHA خانواده‌ی SHA (Secure Hash Algorithm) از چهار نسل (نسل صفر تا سه) تشکیل شده است که امروزه تقریباً تمام کاربردهای عملی بر پایه SHA-2 و در موارد خاص SHA-3 هستند.\nflowchart TD SHA[\"Secure Hash Algorithm\"] SHA --\u003e SHA0[\" SHA-0 ⛔\"] SHA --\u003e SHA1[\" SHA-1 ⛔\"] SHA --\u003e SHA2[\"SHA-2\"] SHA --\u003e SHA3[\"SHA-3\"] %% SHA-2 SHA2 --\u003e SHA2_M[\"SHA-224 SHA-256 SHA-384 SHA-512 ───────────\nSHA-512/224 SHA-512/256\"] %% SHA-3 SHA3 --\u003e SHA3_M[\"SHA3-224 SHA3-256 SHA3-384 SHA3-512 ───────────\nSHAKE128 SHAKE256\"] %% Styles style SHA fill:#f9d71c,stroke:#333,stroke-width:2px style SHA0 fill:#f4cccc,stroke:#cc0000,stroke-width:2px,color:#990000 style SHA1 fill:#f4cccc,stroke:#cc0000,stroke-width:2px,color:#990000 style SHA2 fill:#d9ead3,stroke:#0f7701,stroke-width:2px,color:#0f7701 style SHA3 fill:#c6e0f5,stroke:#333,stroke-width:2px %%style SHA2_M fill:#d9ead3,stroke:#0f7701 %% SHA-0 و SHA-1 arrows %%linkStyle 0,1 stroke:#cc0000,stroke-width:2px linkStyle 0,1 stroke:#cc0000,stroke-width:2px linkStyle 2,4 stroke:#18cc00,stroke-width:2px linkStyle 3,5 stroke:#4b88fa,stroke-width:2px عددی که بعد از نام الگوریتم SHA-2 و SHA-3 می‌آید بدین معنی است:\nاندازه‌ی خروجی هش (Digest Size) را بر حسب بیت نشان می‌دهد. تعداد خروجی ممکن 2n خواهد بود. SHA-512/224 و SHA-512/256: توضیح در قسمت SHA-2 SHAKE128 و SHAKE256: توضیح در قسمت SHA-3 مثلا برای SHA-256 خروجی 32 بایت و 2256 (یعنی 78 رقم) حالت را خواهیم داشت:\n256(b) / 8 = 32(B) یا حتی اگر فایل ۱ کیلوبایتی یا ۱۰ گیگابایتی داشته باشیم، خروجی آن باز هم 32 بایت خواهد بود که معمولاً به صورت ۶۴ رقم هگزادسیمال (hexadecimal) نمایش داده می‌شود:\n5B7AEB5CB2B31FD93C6CD899927CC31D52A0941593B8465294EAA02D2F104325 🔔 هر رقم هگزادسیمال (مبنای 16/hex) برابر با ۴ بیت است. بنابراین:\n256 / 4 = 64 SHA-0 نام اصلی آن SHA بود و در سال 1993 توسط آژانس امنیت ملی آمریکا (2 NSA) طراحی و منتشر شد اما خیلی زود، NSA یک ضعف جدی در آن کشف کرد (جزئیات ضعف را منتشر نکردند) و آن را کنار گذاشت. نسخه اصلاح‌شده‌اش در سال ۱۹۹۵ با نام SHA-1 منتشر شد. بنابراین برای اشاره به الگوریتم قبلی نام آن به SHA-0 تغییر کرد.\nسال ساخت 1993 خروجی 160 بیت استاندارد FIPS 180 ⛔ منسوخ و بدون استفاده است. 🔔 FIPS Federal Information Processing Standards (استانداردهای پردازش اطلاعات فدرال) این استانداردها توسط NIST در ایالات متحده برای تعیین استانداردهای پردازش و مدیریت اطلاعات در سیستم‌های دولتی فدرال تدوین می‌شوند.\nSHA-1 SHA-1 در سال ۱۹۹۵ به عنوان نسخه اصلاح ‌شده SHA-0 استاندارد شد. بیش از یک دهه، یکی از مهم‌ترین توابع هش رمزنگاری بود و برای امضای دیجیتال، گواهی‌های TLS/SSL،Git و … استفاده می‌شد.\n2005: ضعف‌های جدی در مقاومت برخورد آن آشکار شد (از نظر ریاضی و الگوریتمی) 2013: Marc Stevens حملات برخوردی SHA-1 را از نظر محاسباتی بهبود داد و نشان داد که یافتن برخورد از آنچه قبلا تصور می‌شد، عملی‌تر است. ( مقاله ) 2017: اولین برخورد عملی (Practical Collision) آن با پروژه SHAttered به نمایش درآمد. Google و CWI Amsterdam اعلام کردند که اولین برخورد عملی SHA-1 را ایجاد کرده‌اند ( مقاله ). آن‌ها دو فایل PDF متفاوت ساختند ولی خروجی هش هردو یکسان شد و برخورد رخ داد. ویژگی‌ها\nسال ساخت 1995 اصلاح شده SHA-0 خروجی 160 بیت استاندارد FIPS 180-1 ⛔ منسوخ شده است: امروزه در برخی موارد، برای سازگاری با سیستم‌های قدیمی ممکن است استفاده شود. 🔔 فرض کنید می‌خواهیم قفل یک گاوصندوق را باز کنیم:\nتحلیل نظری: اگر این روش را دنبال کنیم، می‌توان قفل را باز کرد. تحلیل محاسباتی: برای این روش باید حدود یک میلیارد حالت را امتحان کنیم. حمله عملی: یک میلیارد حالت را واقعاً امتحان کردیم و گاوصندوق باز شد. نام سال خروجی (بیت) خروجی (hex) اندازه Block (بیت) اندازه Word (بیت) SHA-0 1993 160 40 512 32 SHA-1 1995 160 40 512 32 SHA-2 در سال 2001 هنوز الگوریتم SHA-1 شکسته نشده بود، اما نیاز به سطوح امنیتی بالاتر و خروجی‌های بزرگتر و احتمال وجود ضعف در SHA-1 باعث خلق SHA-2 شد. این بار NIST به جای یک الگوریتم، یک خانواده از الگوریتم‌ها را معرفی کرد. در سال 2001 پیش‌نویس استاندارد آن معرفی شد و به صورت رسمی در سال 2002 منتشر شد و تا سال 2012 اعضای این خانواده تکمیل شدند:\nدر سال 2002 استاندارد FIPS 180-2 SHA-256 (پرکاربردترین) SHA-384 SHA-512 در سال 2008 FIPS 180-3 SHA-224 در سال 2012 FIPS 180-4 SHA-512/224 SHA-512/256 و در نهایت در سال 2015 آخرین استاندارد FIPS 180-4 منتشر شد.\n🔔 SHA-512/224, SHA-512/256 الگوریتم داخلی همان SHA-512 است. اما خروجی به ۲۲۴ یا ۲۵۶ بیت کوتاه می‌شود (Truncate). بنابراین در اینجا عدد بعد از اسلش طول خروجی را نشان می‌دهد و الگوریتم جدیدی استفاده نشده است.\nنام سال خروجی (بیت) خروجی (hex) اندازه Block (بیت) اندازه Word (بیت) SHA-224 2008 224 56 512 32 SHA-256 2002 256 64 512 32 SHA-384 2002 384 96 1024 64 SHA-512 2002 512 128 1024 64 SHA-512/224 2012 224 56 1024 64 SHA-512/256 2012 256 64 1024 64 SHA-3 SHA-3 یک خانواده مستقل و متفاوت (از لحاظ الگوریتمی) است که به‌عنوان گزینه‌ای جدید و جایگزین در کنار SHA-2 ایجاد شد، تا اگر زمانی ضعف جدی‌ای در SHA-2 پدیدار شد، بتوان از SHA-3 به‌عنوان جایگزین استفاده کرد.\nدر سال 2007 ، NIST به‌جای اینکه خود یک الگوریتم جدید طراحی کند، از پژوهشگران سراسر دنیا خواست الگوریتم‌های پیشنهادی خود را برای یک رقابت عمومی ارائه کنند. در مجموع 64 الگوریتم ارائه شد و در نهایت، برنده‌ی این رقابت در سال 2012 (پس از حدود 5 سال) گروه Keccak (با تلفظ catch-ack) شد.\nسال انتخاب الگوریتم 2012 - الگوریتم گروه Keccak 2015 ارائه نسخه استاندارد توسط NIST ساختار آن کاملا با SHA-2 متفاوت است. استاندارد FIPS 202 نام خروجی (بیت) خروجی (hex) اندازه Block (بیت) اندازه Word (بیت) SHA3-224 224 56 1152 64 SHA3-256 256 64 1088 64 SHA3-384 384 96 832 64 SHA3-512 512 128 576 64 SHAKE128 متغیر متغیر 1344 64 SHAKE256 متغیر متغیر 1088 64 🔔 Extendable-Output Function اندازه خروجی برای SHAKE128 و SHAKE256 توسط استفاده کننده، قابل تعیین می‌باشد. بنابراین طراحی Keccak اجازه می‌دهد مفهوم XOF را نیز داشته باشیم.\nامروزه کدام‌ها استفاده می‌شوند؟ SHA-256: رایج‌ترین (TLS، بلاک‌چین، بررسی صحت فایل‌ها و…) SHA-512: مناسب برای سیستم‌های ۶۴ بیتی و کاربردهای با امنیت بالا SHA-3: در برخی سامانه‌های جدید و کاربردهای خاص حملات این حملات مختص SHA نیستند و در بررسی امنیت توابع هش به‌ طور کلی مطرح می‌شوند. با این حال، برخی از آن‌ها به ساختار یا ضعف‌های الگوریتم‌های خاص وابسته‌اند.\nحملات مرتبط با توابع Hash نام حمله توضیحات Birthday Attack یافتن دو ورودی متفاوت با هش یکسان؛ برای هش n بیتی حدود (2n) تلاش لازم است. Chosen-Prefix Collision ساخت دو پیام با پیشوندهای متفاوت و انتخابی که در نهایت هش یکسانی داشته باشند. Preimage Attack با داشتن یک هش مشخص، تلاش برای پیدا کردن ورودی متناظر با آن. Second Preimage Attack با داشتن یک ورودی مشخص، یافتن ورودی متفاوتی که همان هش را تولید کند. Length Extension Attack سو استفاده از ساختار برخی توابع هش برای محاسبه‌ی هش پیام توسعه‌یافته، بدون دانستن پیام اولیه. Password Hashing نام حمله توضیحات Brute-Force Attack امتحان کردن تعداد زیادی مقدار ممکن تا رسیدن به هش مورد نظر. Dictionary Attack امتحان کردن فهرستی از کلمات عبور رایج و احتمالی. Rainbow Table Attack استفاده از جداول ازپیش محاسبه شده‌ی هش برای یافتن مقدار متناظر با هش. National Institute of Standards and Technology ( سایت ) ↩︎\nNational Security Agency ( سایت ) ( ویکی‌پدیا ) ↩︎\n",
+  "wordCount" : "1719",
+  "inLanguage": "fa",
+  "image":"https://hr-abedini.github.io/images/sha-secure%20hash%20algorithm.png","datePublished": "2026-10-05T09:48:41+03:30",
+  "dateModified": "2026-10-05T09:48:41+03:30",
+  "author":{
+    "@type": "Person",
+    "name": "حمیدرضا عابدینی"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "حمیدرضا عابدینی",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hr-abedini.github.io/favicon/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hr-abedini.github.io/" accesskey="h" title="حمیدرضا عابدینی (Alt + H)">حمیدرضا عابدینی</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hr-abedini.github.io/" title="خانه">
+                    <span>خانه</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/categories/" title="دسته‌بندی‌ها">
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/search/" title="جستجو (Alt &#43; /)" accesskey=/>
+                    <span>جستجو</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/archives/" title="بایگانی">
+                    <span>بایگانی</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/about/" title="درباره‌ی من">
+                    <span>درباره‌ی من</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hr-abedini.github.io/">خانه</a>&nbsp;»&nbsp;<a href="https://hr-abedini.github.io/posts/">پست‌ها</a></div>
+    <h1 class="post-title entry-hint-parent">
+      آشنایی با Secure Hash Algorithm (SHA)
+    </h1>
+    <div class="post-description">
+      آشنایی با خانواده الگوریتم‌های SHA، تاریخچه، نسل‌های مختلف SHA و تفاوت‌های SHA-0، SHA-1، SHA-2 و SHA-3
+    </div>
+    
+    <div class="post-meta">
+
+      <hr style=" border: none; border-top: 1px dotted ;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-footer">📅 <span class='post-date' title='2026-10-05 09:48:41 +0330 +0330'>اکتبر 5, 2026</span>&nbsp;·&nbsp;<span class="reading-time"> 📖 9 دقیقه</span>&nbsp;·&nbsp;<span class="word-count"> 📊 1719 واژه</span>&nbsp;·&nbsp;حمیدرضا عابدینی</div>
+
+
+
+<hr style=" border: none; border-top: 1px dotted ;">
+
+<div class="post-tags">
+  
+  <a class="cat" href="/categories/%D8%A7%D8%B5%D8%B7%D9%84%D8%A7%D8%AD%D8%A7%D8%AA"><i class="fa-solid fa-layer-group"></i> اصطلاحات</a>
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </header> 
+<figure class="entry-cover">
+            <img loading="eager"
+                srcset='https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/images/sha-secure%20hash%20algorithm_hu_d1852c902982087f.png 360w,https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/images/sha-secure%20hash%20algorithm_hu_a51402c991dc8919.png 480w,https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/images/sha-secure%20hash%20algorithm_hu_f369e18e23a06d00.png 720w,https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/images/sha-secure%20hash%20algorithm.png 724w'
+                src="https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/images/sha-secure%20hash%20algorithm.png"
+                sizes="(min-width: 768px) 720px, 100vw"
+                width="724" height="389"
+                alt="">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">فهرست مطالب</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#sha-%da%86%db%8c%d8%b3%d8%aa" aria-label="SHA چیست؟">SHA چیست؟</a><ul>
+                        
+                <li>
+                    <a href="#%da%86%d9%86%d8%af-%d9%88%db%8c%da%98%da%af%db%8c-%d9%85%d9%87%d9%85" aria-label="چند ویژگی‌ مهم">چند ویژگی‌ مهم</a></li>
+                <li>
+                    <a href="#%d9%88%db%8c%da%98%da%af%db%8c%d9%87%d8%a7%db%8c-digest" aria-label="ویژگی‌های Digest">ویژگی‌های Digest</a></li>
+                <li>
+                    <a href="#block" aria-label="Block">Block</a></li>
+                <li>
+                    <a href="#word" aria-label="Word">Word</a></li>
+                <li>
+                    <a href="#%d8%a8%d8%b1%d8%ae%d9%88%d8%b1%d8%af-collision" aria-label="برخورد (Collision)">برخورد (Collision)</a></li>
+                <li>
+                    <a href="#%d8%a7%d8%ab%d8%b1-%d8%a8%d9%87%d9%85%d9%86-avalanche-effect" aria-label="اثر بهمن (Avalanche Effect)">اثر بهمن (Avalanche Effect)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%a7%d8%b9%d8%b6%d8%a7%db%8c-%d8%ae%d8%a7%d9%86%d9%88%d8%a7%d8%af%d9%87-sha" aria-label="اعضای خانواده SHA">اعضای خانواده SHA</a><ul>
+                        
+                <li>
+                    <a href="#sha-0" aria-label="SHA-0">SHA-0</a></li>
+                <li>
+                    <a href="#sha-1" aria-label="SHA-1">SHA-1</a></li>
+                <li>
+                    <a href="#sha-2" aria-label="SHA-2">SHA-2</a></li>
+                <li>
+                    <a href="#sha-3" aria-label="SHA-3">SHA-3</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%a7%d9%85%d8%b1%d9%88%d8%b2%d9%87-%da%a9%d8%af%d8%a7%d9%85%d9%87%d8%a7-%d8%a7%d8%b3%d8%aa%d9%81%d8%a7%d8%af%d9%87-%d9%85%db%8c%d8%b4%d9%88%d9%86%d8%af" aria-label="امروزه کدام‌ها استفاده می‌شوند؟">امروزه کدام‌ها استفاده می‌شوند؟</a></li>
+                <li>
+                    <a href="#%d8%ad%d9%85%d9%84%d8%a7%d8%aa" aria-label="حملات">حملات</a><ul>
+                        
+                <li>
+                    <a href="#%d8%ad%d9%85%d9%84%d8%a7%d8%aa-%d9%85%d8%b1%d8%aa%d8%a8%d8%b7-%d8%a8%d8%a7-%d8%aa%d9%88%d8%a7%d8%a8%d8%b9-hash" aria-label="حملات مرتبط با توابع Hash">حملات مرتبط با توابع Hash</a></li>
+                <li>
+                    <a href="#password-hashing" aria-label="Password Hashing">Password Hashing</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="sha-چیست">SHA چیست؟<a hidden class="anchor" aria-hidden="true" href="#sha-چیست">#</a></h2>
+<p>SHA مخفف Secure Hash Algorithm (الگوریتم هش امن) است.
+مجموعه‌ای از توابع هش رمزنگاری (Cryptographic Hash) است که توسط مؤسسه ملی استاندارد و فناوری آمریکا (<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> <a href="https://csrc.nist.gov/projects/hash-functions" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> NIST</a>
+
+
+) استاندارد شده‌اند.</p>
+<p>این الگوریتم‌ها هر ورودی با طول دلخواه را می‌گیرند و آن را به یک خروجی با طول ثابت به نام <strong>Message Digest</strong> (چکیده پیام) یا hash تبدیل می‌کنند.</p>
+<p>توابع خانواده SHA شامل 4 نسل (نسل صفر تا سه) می‌شوند و
+در حوزه‌هایی مانند امنیت و رمزنگاری، بررسی یکپارچگی فایل‌ها و داده‌ها، بلاک‌چین و ارزهای دیجیتال، سیستم‌های کنترل نسخه مانند Git و ایجاد اثرانگشت دیجیتال برای داده‌ها کاربرد دارند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> واژه‌ی Hash در انگلیسی به معنی «درهم‌ریختن» یا «خرد کردن» است.
+الگوریتم SHA ورودی را آن‌قدر با عملیات ریاضی درهم می‌آمیزد که دیگر هیچ شباهتی بین ورودی و خروجی دیده نمی‌شود.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h3 id="چند-ویژگی-مهم">چند ویژگی‌ مهم<a hidden class="anchor" aria-hidden="true" href="#چند-ویژگی-مهم">#</a></h3>
+<ul>
+<li><strong>ورودی:</strong> اندازه‌ی ورودی تابع، تقریبا نامحدود است.</li>
+<li><strong>خروجی:</strong> طول خروجی براساس نوع تابع، همیشه ثابت است. یعنی با اجرای هربار آن، طول خروجی تغییر نخواهد کرد.</li>
+<li><strong>یک طرفه بودن:</strong> از روی هش خروجی به مقدار ورودی نمی‌توان رسید.</li>
+<li>دارا بودن اثر بهمن (Avalanche Effect)</li>
+<li>سرعت  بالا در محاسبه</li>
+<li>در نسل 2 به بعد، احتمال برخورد (Collision) تقریبا صفر است.</li>
+</ul>
+<br>
+<h3 id="ویژگیهای-digest">ویژگی‌های Digest<a hidden class="anchor" aria-hidden="true" href="#ویژگیهای-digest">#</a></h3>
+<ul>
+<li>طول آن ثابت است. مثلا برای SHA-256 خروجی همیشه یک رشته ثابت ۶۴ کاراکتری است.</li>
+<li><i class='fas fa-fingerprint' style='font-size:24px;color:red'></i> مثل یک «اثرانگشت  دیجیتال» برای داده عمل می‌کند.</li>
+<li>اندازه ورودی (حتی خیلی بزرگ) تاثیری در اندازه خروجی نخواهد داشت.</li>
+<li>اگر حتی یک بیت از داده اصلی تغییر کند، دایجست کاملا متفاوت می‌شود (اثر بهمن).</li>
+</ul>
+<h3 id="block">Block<a hidden class="anchor" aria-hidden="true" href="#block">#</a></h3>
+<p>توابع SHA پیام ورودی را یکجا پردازش نمی‌کنند، بلکه پیام را به قطعاتی با اندازه ثابت تقسیم می‌کنند
+(بسته به نوع الگوریتم)  و سپس هر قطعه را وارد مراحل محاسباتی می‌کنند.
+برای مثال، در SHA-256 اندازه هر Block برابر با ۵۱۲ بیت است.</p>
+<h3 id="word">Word<a hidden class="anchor" aria-hidden="true" href="#word">#</a></h3>
+<p>داده ورودی پس از تقسیم‌بندی، در ساختار داخلی الگوریتم به واحدهای کوچک‌تر و با اندازه ثابت برای انجام محاسبات پردازشی سازمان‌دهی می‌شود که به آن‌ها کلمه پردازشی (Word) گفته می‌شود. اندازه Word بسته به نوع الگوریتم متفاوت است.</p>
+<h3 id="برخورد-collision">برخورد (Collision)<a hidden class="anchor" aria-hidden="true" href="#برخورد-collision">#</a></h3>
+<p>منظور از برخورد یعنی دو ورودی متفاوت، دقیقاً یک خروجی هش یکسان تولید کنند.</p>
+<p>همانطور که پیش از این اشاره کردم، اندازه ورودی SHA تقریبا نامحدود است و می‌تواند بسیار بزرگ باشد.
+بنابراین از نظر ریاضی، ناگزیر ورودی‌های متفاوتی خواهیم داشت که به یک خروجی hash یکسان برسند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> اما مساله امنیتی این نیست که از لحاظ ریاضی این برخورد (Collision) وجود دارد یا نه؛
+بلکه پرسش اصلی این است:
+<strong>آیا پیدا کردن دو ورودی متفاوت با هش یکسان، از نظر محاسباتی عملی است یا خیر؟</strong><br>
+برای یک تابع هش امن، پیدا کردن چنین چیزی باید بسیار دشوار باشد.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h3 id="اثر-بهمن-avalanche-effect">اثر بهمن (Avalanche Effect)<a hidden class="anchor" aria-hidden="true" href="#اثر-بهمن-avalanche-effect">#</a></h3>
+<p>یکی از مهم‌ترین ویژگی‌های توابع هش رمزنگاری (Cryptographic Hash) است.
+به زبان ساده، اگر حتی یک بیت از ورودی تغییر کند، خروجی هش باید به طور گسترده و غیرقابل پیش‌بینی تغییر کند (حدود نیمی از بیت‌های خروجی)</p>
+<p><strong>چرا به آن «اثر بهمن» می‌گویند؟</strong> <br>
+مانند حرکت کوچکی که باعث شروع یک بهمن می‌شود، یک تغییر کوچک در ورودی، کل هش را زیر و رو خواهد کرد.
+به عنوان نمونه خروجی موارد زیر با SHA-256:</p>
+<p>سلام دنیا</p>
+<pre tabindex="0"><code>A5243B50DAC2E60EE8F7756FCB7C7CF282E485BEA5F91DB3EA621A786C0C554E
+</code></pre><p>سلام دنیا!</p>
+<pre tabindex="0"><code>FD535F4B547DBDF8E4FFA7E02EF4FA70E8D199673AE55E7B5D7E320FF4C43F50
+</code></pre><p><strong>اهمیت اثر بهمن</strong></p>
+<p>یکی از معیارهای کیفیت یک تابع hash، همین اثر بهمن است.
+چرا که باعث می‌شود نتوان از روی هش خروجی، جزییات ورودی را حدس زد، که باعث افزایش امنیت و مقاومت در برابر حملات خواهد شد.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> توابع هش ضعیف (مثل نسخه‌های قدیمی) اثر بهمن ضعیفی دارند و به همین دلیل نا امن محسوب می‌شوند.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h2 id="اعضای-خانواده-sha">اعضای خانواده SHA<a hidden class="anchor" aria-hidden="true" href="#اعضای-خانواده-sha">#</a></h2>
+<p>خانواده‌ی SHA (<strong>S</strong>ecure <strong>H</strong>ash <strong>A</strong>lgorithm) از چهار نسل (نسل صفر تا سه) تشکیل شده است
+که امروزه تقریباً تمام کاربردهای عملی بر پایه SHA-2 و در موارد خاص SHA-3 هستند.</p>
+
+<div class="mermaid" style="text-align: center; background: transparent;">
+    
+flowchart TD
+    SHA["Secure Hash Algorithm"]
+
+    SHA --> SHA0[" SHA-0 ⛔"]
+    SHA --> SHA1[" SHA-1 ⛔"] 
+    SHA --> SHA2["SHA-2"]
+    SHA --> SHA3["SHA-3"]
+
+    %% SHA-2
+    SHA2 --> SHA2_M["SHA-224 <br> SHA-256 <br> SHA-384 <br> SHA-512 <br>───────────<br> <b>SHA-512</b>/224 <br> <b>SHA-512</b>/256"]
+   
+    %% SHA-3
+    SHA3 --> SHA3_M["SHA3-224 <br> SHA3-256 <br> SHA3-384 <br> SHA3-512 <br>───────────<br> <b>SHAKE128 <br> SHAKE256</b>"]
+
+
+    %% Styles
+    style SHA fill:#f9d71c,stroke:#333,stroke-width:2px
+
+    style SHA0 fill:#f4cccc,stroke:#cc0000,stroke-width:2px,color:#990000
+    style SHA1 fill:#f4cccc,stroke:#cc0000,stroke-width:2px,color:#990000
+
+    style SHA2 fill:#d9ead3,stroke:#0f7701,stroke-width:2px,color:#0f7701
+    style SHA3 fill:#c6e0f5,stroke:#333,stroke-width:2px
+
+    %%style SHA2_M fill:#d9ead3,stroke:#0f7701
+
+    %% SHA-0 و SHA-1 arrows
+    %%linkStyle 0,1 stroke:#cc0000,stroke-width:2px
+    linkStyle 0,1 stroke:#cc0000,stroke-width:2px
+    linkStyle 2,4 stroke:#18cc00,stroke-width:2px
+    linkStyle 3,5 stroke:#4b88fa,stroke-width:2px
+  
+  
+    
+
+</div>
+
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                          document.body.classList.contains('dark');
+            
+            const mermaidTheme = isDark ? 'base' : 'base';
+            
+           
+            
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: mermaidTheme,
+                themeVariables: themeVariables,
+                securityLevel: 'loose',
+                flowchart: { useMaxWidth: true }
+            });
+        });
+    </script>
+
+<p>عددی که بعد از نام الگوریتم SHA-2 و SHA-3 می‌آید بدین معنی است:</p>
+<ul>
+<li>اندازه‌ی خروجی هش (Digest Size) را بر حسب بیت نشان می‌دهد.
+<ul>
+<li>تعداد خروجی ممکن  2<sup>n</sup> خواهد بود.</li>
+</ul>
+</li>
+<li>SHA-512/224 و SHA-512/256: توضیح در قسمت <a href="#sha-2"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> SHA-2</a>
+
+
+</li>
+<li>SHAKE128 و SHAKE256: توضیح در قسمت <a href="#sha-3"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> SHA-3</a>
+
+
+</li>
+</ul>
+<p>مثلا برای SHA-256 خروجی 32 بایت و 2<sup>256</sup> (یعنی 78 رقم) حالت را خواهیم داشت:</p>
+<pre tabindex="0"><code>256(b) / 8 = 32(B)
+</code></pre><p>یا حتی اگر فایل ۱ کیلوبایتی یا ۱۰ گیگابایتی داشته باشیم،
+خروجی آن باز هم 32 بایت خواهد بود که معمولاً به صورت ۶۴ رقم هگزادسیمال (hexadecimal) نمایش داده می‌شود:</p>
+<pre tabindex="0"><code>5B7AEB5CB2B31FD93C6CD899927CC31D52A0941593B8465294EAA02D2F104325
+</code></pre> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> هر رقم هگزادسیمال (مبنای 16/hex) برابر با ۴ بیت است. بنابراین:</p>
+<pre tabindex="0"><code>256 / 4 = 64
+</code></pre>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<hr>
+<h3 id="sha-0">SHA-0<a hidden class="anchor" aria-hidden="true" href="#sha-0">#</a></h3>
+<p>نام اصلی آن SHA بود و در سال 1993 توسط آژانس امنیت ملی آمریکا (<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> NSA) طراحی و منتشر شد
+اما خیلی زود، NSA یک ضعف جدی در آن کشف کرد (جزئیات ضعف را منتشر نکردند) و آن را کنار گذاشت.
+نسخه اصلاح‌شده‌اش در سال ۱۹۹۵ با نام SHA-1 منتشر شد.
+بنابراین برای اشاره به الگوریتم قبلی نام آن به SHA-0 تغییر کرد.</p>
+<ul>
+<li>سال ساخت 1993</li>
+<li>خروجی 160 بیت</li>
+<li>استاندارد <a href="https://csrc.nist.gov/pubs/fips/180/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 180</a>
+
+
+</li>
+<li>⛔ منسوخ و بدون استفاده است.</li>
+</ul>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+   
+    <p class="alert-heading"> 
+      🔔
+      FIPS
+    </p>
+    
+    <p>Federal Information Processing Standards (استانداردهای پردازش اطلاعات فدرال) <br>
+این استانداردها توسط NIST در ایالات متحده برای تعیین استانداردهای پردازش و مدیریت اطلاعات در سیستم‌های دولتی فدرال تدوین می‌شوند.</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<br>  
+<h3 id="sha-1">SHA-1<a hidden class="anchor" aria-hidden="true" href="#sha-1">#</a></h3>
+<p>SHA-1 در سال ۱۹۹۵ به عنوان نسخه اصلاح ‌شده SHA-0 استاندارد شد. بیش از یک دهه، یکی از مهم‌ترین توابع هش رمزنگاری بود و برای امضای دیجیتال، گواهی‌های  TLS/SSL،Git و &hellip; استفاده می‌شد.</p>
+<ul>
+<li>2005: ضعف‌های جدی در مقاومت برخورد آن آشکار شد (از نظر ریاضی و الگوریتمی)</li>
+<li>2013: <a href="https://www.marc-stevens.nl/research/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Marc Stevens</a>
+
+
+ حملات برخوردی SHA-1 را از نظر محاسباتی بهبود داد و نشان داد که یافتن برخورد از آنچه قبلا تصور می‌شد، عملی‌تر است. (<a href="https://www.marc-stevens.nl/research/papers/EC13-S.pdf" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> مقاله</a>
+
+
+)</li>
+<li>2017: اولین برخورد عملی (Practical Collision) آن با پروژه SHAttered به نمایش درآمد. Google و CWI Amsterdam اعلام کردند که اولین برخورد عملی SHA-1 را ایجاد کرده‌اند
+(<a href="https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> مقاله</a>
+
+
+).
+آن‌ها دو فایل PDF متفاوت ساختند ولی خروجی هش هردو یکسان شد و برخورد رخ داد.</li>
+</ul>
+<p><strong>ویژگی‌ها</strong></p>
+<ul>
+<li>سال ساخت 1995</li>
+<li>اصلاح شده SHA-0</li>
+<li>خروجی 160 بیت</li>
+<li>استاندارد <a href="https://csrc.nist.gov/pubs/fips/180-1/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 180-1</a>
+
+
+</li>
+<li>⛔ منسوخ شده است: امروزه در برخی موارد، برای سازگاری با سیستم‌های قدیمی ممکن است استفاده شود.</li>
+</ul>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> فرض کنید می‌خواهیم قفل یک گاوصندوق را باز کنیم:</p>
+<ul>
+<li>تحلیل نظری: اگر این روش را دنبال کنیم، می‌توان قفل را باز کرد.</li>
+<li>تحلیل محاسباتی: برای این روش باید حدود یک میلیارد حالت را امتحان کنیم.</li>
+<li>حمله عملی: یک میلیارد حالت را واقعاً امتحان کردیم و گاوصندوق باز شد.</li>
+</ul>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<br>  
+<table>
+	<thead>
+			<tr>
+					<th>نام</th>
+					<th style="text-align: right">سال</th>
+					<th style="text-align: right">خروجی (بیت)</th>
+					<th style="text-align: right">خروجی (hex)</th>
+					<th style="text-align: right">اندازه Block (بیت)</th>
+					<th style="text-align: right">اندازه Word (بیت)</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>SHA-0</td>
+					<td style="text-align: right">1993</td>
+					<td style="text-align: right">160</td>
+					<td style="text-align: right">40</td>
+					<td style="text-align: right">512</td>
+					<td style="text-align: right">32</td>
+			</tr>
+			<tr>
+					<td>SHA-1</td>
+					<td style="text-align: right">1995</td>
+					<td style="text-align: right">160</td>
+					<td style="text-align: right">40</td>
+					<td style="text-align: right">512</td>
+					<td style="text-align: right">32</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="sha-2">SHA-2<a hidden class="anchor" aria-hidden="true" href="#sha-2">#</a></h3>
+<p>در سال 2001 هنوز الگوریتم SHA-1 شکسته نشده بود، اما نیاز به سطوح امنیتی بالاتر و خروجی‌های بزرگتر و احتمال وجود ضعف در SHA-1 باعث خلق SHA-2 شد.
+این بار NIST به جای یک الگوریتم، یک خانواده از الگوریتم‌ها را معرفی کرد.
+در سال 2001 پیش‌نویس استاندارد آن معرفی شد و به صورت رسمی در سال 2002 منتشر شد و
+تا سال 2012 اعضای این خانواده تکمیل شدند:</p>
+<ul>
+<li>در سال 2002 استاندارد <a href="https://csrc.nist.gov/pubs/fips/180-2/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 180-2</a>
+
+
+
+<ul>
+<li>SHA-256 (<strong>پرکاربردترین</strong>)</li>
+<li>SHA-384</li>
+<li>SHA-512</li>
+</ul>
+</li>
+<li>در سال 2008<a href="https://csrc.nist.gov/pubs/fips/180-3/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 180-3</a>
+
+
+
+<ul>
+<li>SHA-224</li>
+</ul>
+</li>
+<li>در سال 2012<a href="https://csrc.nist.gov/pubs/fips/180-4/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 180-4</a>
+
+
+
+<ul>
+<li>SHA-512/224</li>
+<li>SHA-512/256</li>
+</ul>
+</li>
+</ul>
+<p>و در نهایت در سال 2015 آخرین استاندارد <a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 180-4</a>
+
+
+ منتشر شد.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+   
+    <p class="alert-heading"> 
+      🔔
+      SHA-512/224, SHA-512/256
+    </p>
+    
+    <p>الگوریتم داخلی همان SHA-512 است.
+اما خروجی به ۲۲۴ یا ۲۵۶ بیت کوتاه می‌شود (Truncate).
+بنابراین در اینجا عدد بعد از <strong>اسلش</strong> طول خروجی را نشان می‌دهد و الگوریتم جدیدی استفاده نشده است.</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<br>  
+<table>
+	<thead>
+			<tr>
+					<th>نام</th>
+					<th style="text-align: right">سال</th>
+					<th style="text-align: right">خروجی (بیت)</th>
+					<th style="text-align: right">خروجی (hex)</th>
+					<th style="text-align: right">اندازه Block (بیت)</th>
+					<th style="text-align: right">اندازه Word (بیت)</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>SHA-224</td>
+					<td style="text-align: right">2008</td>
+					<td style="text-align: right">224</td>
+					<td style="text-align: right">56</td>
+					<td style="text-align: right">512</td>
+					<td style="text-align: right">32</td>
+			</tr>
+			<tr>
+					<td>SHA-256</td>
+					<td style="text-align: right">2002</td>
+					<td style="text-align: right">256</td>
+					<td style="text-align: right">64</td>
+					<td style="text-align: right">512</td>
+					<td style="text-align: right">32</td>
+			</tr>
+			<tr>
+					<td>SHA-384</td>
+					<td style="text-align: right">2002</td>
+					<td style="text-align: right">384</td>
+					<td style="text-align: right">96</td>
+					<td style="text-align: right">1024</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td>SHA-512</td>
+					<td style="text-align: right">2002</td>
+					<td style="text-align: right">512</td>
+					<td style="text-align: right">128</td>
+					<td style="text-align: right">1024</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td><strong>SHA-512</strong>/224</td>
+					<td style="text-align: right">2012</td>
+					<td style="text-align: right">224</td>
+					<td style="text-align: right">56</td>
+					<td style="text-align: right">1024</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td><strong>SHA-512</strong>/256</td>
+					<td style="text-align: right">2012</td>
+					<td style="text-align: right">256</td>
+					<td style="text-align: right">64</td>
+					<td style="text-align: right">1024</td>
+					<td style="text-align: right">64</td>
+			</tr>
+	</tbody>
+</table>
+<br>  
+<h3 id="sha-3">SHA-3<a hidden class="anchor" aria-hidden="true" href="#sha-3">#</a></h3>
+<p>SHA-3 یک خانواده مستقل و متفاوت (از لحاظ الگوریتمی) است که به‌عنوان گزینه‌ای جدید و جایگزین در کنار SHA-2 ایجاد شد،
+تا اگر زمانی ضعف جدی‌ای در SHA-2 پدیدار شد، بتوان از SHA-3 به‌عنوان جایگزین استفاده کرد.</p>
+<p>در سال <a href="https://www.nist.gov/publications/third-round-report-sha-3-cryptographic-hash-algorithm-competition" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> 2007</a>
+
+
+، NIST به‌جای اینکه خود یک الگوریتم جدید طراحی کند، از پژوهشگران سراسر دنیا خواست الگوریتم‌های پیشنهادی خود را برای یک رقابت عمومی ارائه کنند.
+در مجموع 64 الگوریتم ارائه شد
+و در نهایت، <a href="https://www.nist.gov/news-events/news/2012/10/nist-selects-winner-secure-hash-algorithm-sha-3-competition" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> برنده‌ی</a>
+
+
+ این رقابت در سال 2012 (پس از حدود 5 سال) گروه Keccak  (با تلفظ catch-ack) شد.</p>
+<ul>
+<li>سال انتخاب الگوریتم 2012 - الگوریتم گروه Keccak</li>
+<li>2015 ارائه نسخه استاندارد توسط NIST</li>
+<li>ساختار آن کاملا با SHA-2 متفاوت است.</li>
+<li>استاندارد <a href="https://csrc.nist.gov/pubs/fips/202/final" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> FIPS 202</a>
+
+
+</li>
+</ul>
+<table>
+	<thead>
+			<tr>
+					<th>نام</th>
+					<th style="text-align: right">خروجی (بیت)</th>
+					<th style="text-align: right">خروجی (hex)</th>
+					<th style="text-align: right">اندازه Block (بیت)</th>
+					<th style="text-align: right">اندازه Word (بیت)</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>SHA3-224</td>
+					<td style="text-align: right">224</td>
+					<td style="text-align: right">56</td>
+					<td style="text-align: right">1152</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td>SHA3-256</td>
+					<td style="text-align: right">256</td>
+					<td style="text-align: right">64</td>
+					<td style="text-align: right">1088</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td>SHA3-384</td>
+					<td style="text-align: right">384</td>
+					<td style="text-align: right">96</td>
+					<td style="text-align: right">832</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td>SHA3-512</td>
+					<td style="text-align: right">512</td>
+					<td style="text-align: right">128</td>
+					<td style="text-align: right">576</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td><strong>SHAKE128</strong></td>
+					<td style="text-align: right">متغیر</td>
+					<td style="text-align: right">متغیر</td>
+					<td style="text-align: right">1344</td>
+					<td style="text-align: right">64</td>
+			</tr>
+			<tr>
+					<td><strong>SHAKE256</strong></td>
+					<td style="text-align: right">متغیر</td>
+					<td style="text-align: right">متغیر</td>
+					<td style="text-align: right">1088</td>
+					<td style="text-align: right">64</td>
+			</tr>
+	</tbody>
+</table>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> E<strong>x</strong>tendable-<strong>O</strong>utput <strong>F</strong>unction <br>
+اندازه خروجی برای SHAKE128 و SHAKE256 توسط استفاده کننده، قابل تعیین می‌باشد.
+بنابراین طراحی Keccak اجازه می‌دهد مفهوم XOF را نیز داشته باشیم.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h2 id="امروزه-کدامها-استفاده-میشوند">امروزه کدام‌ها استفاده می‌شوند؟<a hidden class="anchor" aria-hidden="true" href="#امروزه-کدامها-استفاده-میشوند">#</a></h2>
+<ul>
+<li>SHA-256: رایج‌ترین (TLS، بلاک‌چین، بررسی صحت فایل‌ها و&hellip;)</li>
+<li>SHA-512: مناسب برای سیستم‌های ۶۴ بیتی و کاربردهای با امنیت بالا</li>
+<li>SHA-3: در برخی سامانه‌های جدید و کاربردهای خاص</li>
+</ul>
+<hr>
+<h2 id="حملات">حملات<a hidden class="anchor" aria-hidden="true" href="#حملات">#</a></h2>
+<p>این حملات مختص SHA نیستند و در بررسی امنیت توابع هش به‌ طور کلی مطرح می‌شوند. با این حال، برخی از آن‌ها به ساختار یا ضعف‌های الگوریتم‌های خاص وابسته‌اند.</p>
+<h3 id="حملات-مرتبط-با-توابع-hash">حملات مرتبط با توابع Hash<a hidden class="anchor" aria-hidden="true" href="#حملات-مرتبط-با-توابع-hash">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>نام حمله</th>
+					<th>توضیحات</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Birthday Attack</td>
+					<td>یافتن دو ورودی متفاوت با هش یکسان؛ برای هش n بیتی حدود (2<sup>n</sup>) تلاش لازم است.</td>
+			</tr>
+			<tr>
+					<td>Chosen-Prefix Collision</td>
+					<td>ساخت دو پیام با پیشوندهای متفاوت و انتخابی که در نهایت هش یکسانی داشته باشند.</td>
+			</tr>
+			<tr>
+					<td>Preimage Attack</td>
+					<td>با داشتن یک هش مشخص، تلاش برای پیدا کردن ورودی متناظر با آن.</td>
+			</tr>
+			<tr>
+					<td>Second Preimage Attack</td>
+					<td>با داشتن یک ورودی مشخص، یافتن ورودی متفاوتی که همان هش را تولید کند.</td>
+			</tr>
+			<tr>
+					<td>Length Extension Attack</td>
+					<td>سو استفاده از ساختار برخی توابع هش برای محاسبه‌ی هش پیام توسعه‌یافته، بدون دانستن پیام اولیه.</td>
+			</tr>
+	</tbody>
+</table>
+<br>
+<h3 id="password-hashing">Password Hashing<a hidden class="anchor" aria-hidden="true" href="#password-hashing">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th>نام حمله</th>
+					<th>توضیحات</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Brute-Force Attack</td>
+					<td>امتحان کردن تعداد زیادی مقدار ممکن تا رسیدن به هش مورد نظر.</td>
+			</tr>
+			<tr>
+					<td>Dictionary Attack</td>
+					<td>امتحان کردن فهرستی از کلمات عبور رایج و احتمالی.</td>
+			</tr>
+			<tr>
+					<td>Rainbow Table Attack</td>
+					<td>استفاده از جداول ازپیش محاسبه شده‌ی هش برای یافتن مقدار متناظر با هش.</td>
+			</tr>
+	</tbody>
+</table>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><strong>N</strong>ational <strong>I</strong>nstitute of <strong>S</strong>tandards and <strong>T</strong>echnology (<a href="https://www.nist.gov/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> سایت</a>
+
+
+)&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><strong>N</strong>ational <strong>S</strong>ecurity <strong>A</strong>gency (<a href="https://www.nsa.gov/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> سایت</a>
+
+
+) (<a href="https://fa.wikipedia.org/wiki/%D8%A2%DA%98%D8%A7%D9%86%D8%B3_%D8%A7%D9%85%D9%86%DB%8C%D8%AA_%D9%85%D9%84%DB%8C" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> ویکی‌پدیا</a>
+
+
+)&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+
+  </div>
+
+  
+
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hr-abedini.github.io/tags/sha/">SHA</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/sha-1/">SHA-1</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/sha-2/">SHA-2</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/sha-3/">SHA-3</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/hash-function/">Hash Function</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/cryptography/">Cryptography</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://hr-abedini.github.io/posts/sqlserver/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B9%D8%AF%D8%AF-%D8%A8%D9%87-%D8%AD%D8%B1%D9%88%D9%81-%D8%AF%D8%B1-sql-server/">
+    <span class="title">صفحه بعدی »</span>
+    <br>
+    <span>تبدیل عدد به حروف فارسی در SQL Server</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share آشنایی با Secure Hash Algorithm (SHA) on x"
+            href="https://x.com/intent/tweet/?text=%d8%a2%d8%b4%d9%86%d8%a7%db%8c%db%8c%20%d8%a8%d8%a7%20Secure%20Hash%20Algorithm%20%28SHA%29&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fterms%2f%25D8%25A2%25D8%25B4%25D9%2586%25D8%25A7%25DB%258C%25DB%258C-%25D8%25A8%25D8%25A7-secure-hash-algorithm-sha%2f&amp;hashtags=SHA%2cSHA-1%2cSHA-2%2cSHA-3%2cHashFunction%2cCryptography">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share آشنایی با Secure Hash Algorithm (SHA) on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fterms%2f%25D8%25A2%25D8%25B4%25D9%2586%25D8%25A7%25DB%258C%25DB%258C-%25D8%25A8%25D8%25A7-secure-hash-algorithm-sha%2f&amp;title=%d8%a2%d8%b4%d9%86%d8%a7%db%8c%db%8c%20%d8%a8%d8%a7%20Secure%20Hash%20Algorithm%20%28SHA%29&amp;summary=%d8%a2%d8%b4%d9%86%d8%a7%db%8c%db%8c%20%d8%a8%d8%a7%20Secure%20Hash%20Algorithm%20%28SHA%29&amp;source=https%3a%2f%2fhr-abedini.github.io%2fposts%2fterms%2f%25D8%25A2%25D8%25B4%25D9%2586%25D8%25A7%25DB%258C%25DB%258C-%25D8%25A8%25D8%25A7-secure-hash-algorithm-sha%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share آشنایی با Secure Hash Algorithm (SHA) on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhr-abedini.github.io%2fposts%2fterms%2f%25D8%25A2%25D8%25B4%25D9%2586%25D8%25A7%25DB%258C%25DB%258C-%25D8%25A8%25D8%25A7-secure-hash-algorithm-sha%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share آشنایی با Secure Hash Algorithm (SHA) on whatsapp"
+            href="https://api.whatsapp.com/send?text=%d8%a2%d8%b4%d9%86%d8%a7%db%8c%db%8c%20%d8%a8%d8%a7%20Secure%20Hash%20Algorithm%20%28SHA%29%20-%20https%3a%2f%2fhr-abedini.github.io%2fposts%2fterms%2f%25D8%25A2%25D8%25B4%25D9%2586%25D8%25A7%25DB%258C%25DB%258C-%25D8%25A8%25D8%25A7-secure-hash-algorithm-sha%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share آشنایی با Secure Hash Algorithm (SHA) on telegram"
+            href="https://telegram.me/share/url?text=%d8%a2%d8%b4%d9%86%d8%a7%db%8c%db%8c%20%d8%a8%d8%a7%20Secure%20Hash%20Algorithm%20%28SHA%29&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fterms%2f%25D8%25A2%25D8%25B4%25D9%2586%25D8%25A7%25DB%258C%25DB%258C-%25D8%25A8%25D8%25A7-secure-hash-algorithm-sha%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+
+        
+
+
+<section class="related-posts">
+    <h3>نوشته‌های مرتبط</h3>
+    <ul>
+    
+        
+    
+    </ul>
+</section>
+<script src="https://giscus.app/client.js"
+        data-repo="Hr-Abedini/site-comments"
+        data-repo-id="R_kgDOQwO4wA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQwO4wM4C0UmL"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="fa"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://hr-abedini.github.io/">حمیدرضا عابدینی</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script src="/js/jdate.js"></script>
+
+<script data-goatcounter="https://hr-abedini.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'کپی';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'کپی شد!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'کپی';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
