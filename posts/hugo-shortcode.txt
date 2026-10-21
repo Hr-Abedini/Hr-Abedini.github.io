@@ -35,6 +35,9 @@ https://gohugo.io/shortcodes/figure/
 >}}
 
 
+
+![alt](images/...png#center)
+
 ------------------------------------------------------
 {{< ltr >}}
 Order.OrderID → Customer.CustomerID

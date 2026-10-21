@@ -175,5 +175,88 @@ target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt; &lt;i class=&#34;fa-solid fa-
 &lt;/ol&gt;
 &lt;p&gt;&lt;img alt=&#34;static/fonts/vazirmatn&#34; loading=&#34;lazy&#34; src=&#34;https://hr-abedini.github.io/posts/hugo/%D8%AA%D8%BA%DB%8C%DB%8C%D8%B1-%D9%81%D9%88%D9%86%D8%AA-%D8%AF%D8%B1-hugo/images/static-fonts-vazirmatn.png#center&#34;&gt;&lt;/p&gt;</description>
     </item>
+    <item>
+      <title></title>
+      <link>https://hr-abedini.github.io/posts/x/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://hr-abedini.github.io/posts/x/</guid>
+      <description>&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;نوع&lt;/th&gt;
+					&lt;th&gt;معنی&lt;/th&gt;
+					&lt;th&gt;چه زمانی استفاده کنم؟&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;quote&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;نقل‌قول&lt;/td&gt;
+					&lt;td&gt;نقل‌قول از یک شخص، کتاب، مستندات یا منبع دیگر&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;note&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;نکته&lt;/td&gt;
+					&lt;td&gt;ارائه‌ی اطلاعات تکمیلی که دانستن آن مفید است&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;tip&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;ترفند / پیشنهاد کاربردی&lt;/td&gt;
+					&lt;td&gt;ارائه‌ی راهی بهتر، سریع‌تر یا ساده‌تر برای انجام یک کار&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;important&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;مهم&lt;/td&gt;
+					&lt;td&gt;تأکید بر اطلاعاتی که برای درک مطلب یا انجام صحیح کار اهمیت زیادی دارند&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;warning&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;هشدار&lt;/td&gt;
+					&lt;td&gt;اعلام خطری که ممکن است به خطا، از دست رفتن داده یا پیامد نامطلوب منجر شود&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;caution&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;احتیاط&lt;/td&gt;
+					&lt;td&gt;درخواست دقت بیشتر هنگام انجام کاری که ممکن است پیامد منفی داشته باشد&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;نوع&lt;/th&gt;
+					&lt;th&gt;کاربرد پیشنهادی در وبلاگ&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;quote&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;نقل‌قول از مستندات رسمی، کتاب‌ها و نویسندگان&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;note&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;توضیحات تکمیلی، استثناها و اطلاعات جانبی&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;tip&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;ترفندها، روش‌های جایگزین و پیشنهادهای کاربردی&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;important&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;مفاهیم کلیدی و نکاتی که برای استفاده‌ی صحیح باید جدی گرفته شوند&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;warning&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;خطرات جدی، احتمال از دست رفتن داده یا پیامدهای مهم اجرای دستورات&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;caution&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;اقدامات حساس که پیش از اجرا به بررسی و دقت نیاز دارند&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;یک قاعده‌ی ساده برای انتخاب
+اگر هنگام نوشتن مطلب نمی‌دانی از کدام کادر استفاده کنی، این پرسش‌ها را به‌ترتیب از خودت بپرس:&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
