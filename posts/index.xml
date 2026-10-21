@@ -6,8 +6,15 @@
     <description>Recent content in پست‌ها on حمیدرضا عابدینی</description>
     <generator>Hugo -- 0.166.0</generator>
     <language>fa-IR</language>
-    <lastBuildDate>Mon, 05 Oct 2026 09:48:41 +0330</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 08:45:22 +0330</lastBuildDate>
     <atom:link href="https://hr-abedini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BPMN در APEX</title>
+      <link>https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/</link>
+      <pubDate>Wed, 21 Oct 2026 08:45:22 +0330</pubDate>
+      <guid>https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/</guid>
+      <description>چطور می‌توان از نمودارهای BPMN در محیط  Oracle APEX استفاده کرد. Oracle APEX 24.2</description>
+    </item>
     <item>
       <title>آشنایی با Secure Hash Algorithm (SHA)</title>
       <link>https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/</link>

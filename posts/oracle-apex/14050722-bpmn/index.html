@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>BPMN در APEX | حمیدرضا عابدینی</title>
+<meta name="keywords" content="bpmn, BPMN.IO, Flows for APEX, oracle, oracle apex, Table Function, xmltable, bpmnContainer">
+<meta name="description" content="چطور می‌توان از نمودارهای BPMN در محیط  Oracle APEX استفاده کرد. Oracle APEX 24.2">
+<meta name="author" content="حمیدرضا عابدینی">
+<link rel="canonical" href="https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.0fd7ee620120df9f229463158006c1cc20f9f2a1113b10feb242c9c32c7e104b.css" integrity="sha256-D9fuYgEg358ilGMVgAbBzCD58qEROxD&#43;skLJwyx&#43;EEs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hr-abedini.github.io/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://hr-abedini.github.io/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hr-abedini.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="fa" href="https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+
+
+
+                                    
+                                <meta property="og:url" content="https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/">
+  <meta property="og:site_name" content="حمیدرضا عابدینی">
+  <meta property="og:title" content="BPMN در APEX">
+  <meta property="og:description" content="چطور می‌توان از نمودارهای BPMN در محیط  Oracle APEX استفاده کرد. Oracle APEX 24.2">
+  <meta property="og:locale" content="fa-IR">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-10-21T08:45:22+03:30">
+    <meta property="article:modified_time" content="2026-10-21T08:45:22+03:30">
+    <meta property="article:tag" content="Oracle APEX">
+    <meta property="article:tag" content="BPMN">
+    <meta property="og:image" content="https://hr-abedini.github.io/images/Cover-Oracle%20APEX%20BPMN%20Workflow.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hr-abedini.github.io/images/Cover-Oracle%20APEX%20BPMN%20Workflow.png">
+<meta name="twitter:title" content="BPMN در APEX">
+<meta name="twitter:description" content="چطور می‌توان از نمودارهای BPMN در محیط  Oracle APEX استفاده کرد. Oracle APEX 24.2">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "پست‌ها",
+      "item": "https://hr-abedini.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "BPMN در APEX",
+      "item": "https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "BPMN در APEX",
+  "name": "BPMN در APEX",
+  "description": "چطور می‌توان از نمودارهای BPMN در محیط  Oracle APEX استفاده کرد. Oracle APEX 24.2",
+  "keywords": [
+    "bpmn", "BPMN.IO", "Flows for APEX", "oracle", "oracle apex", "Table Function", "xmltable", "bpmnContainer"
+  ],
+  "articleBody": "مساله در برنامه‌‌ام نمی‌خواستم که فقط فایل‌های مربوط به BPMN را ذخیره کنم، بلکه می‌خواستم کاربر بتواند آن را در محیط Oracle Apex ویرایش کند. همچنین بتوانم Activityهای آن را استخراج کنم تا بشود در آینده از آن‌ها استفاده کرد.\n💡 تجربه‌ای که پیش از این در .NET و برای نوشتن سیستم مدیریت فرایندهای سازمانی داشتم. در آن سیستم این امکان وجود داشت که هر فعالیت به پست سازمانی مرتبط شود. بدین ترتیب در صورت حذف یک پست در سازمان مشخص می‌شد که چه وظایفی دستخوش تغییر خواهند شد، یا هر فرد چه نقش‌هایی در سازمان ایفا خواهد کرد و …\nبرای استفاده از BPMN در Oracle Apex می‌توان از افزونه‌ای به نام Flows for APEX استفاده کرد که یک Workflow Engine قدرتمند با کلی امکانات است.\n📌 اما من نمی‌خواستم برای شکار خرگوش از توپ جنگی استفاده کنم!!!\nبنابراین از BPMN.IO برای اینکار استفاده کردم.\nپس از انجام مراحلی که در ادامه خواهید دید، در نهایت امکانات زیر را بدست می‌آوریم:\nبارگذاری فایل‌ها BPMN خروجی با فرمت: XML, SVG, PNG, JPG, WEBP ثبت در دیتابیس PL/SQL برای استخراج تمامی objectها، activityها و … از فایل BPMN معرفی BPMN Business Process Model and Notation BPMN استاندارد جهانی برای مدل‌سازی و نمایش فرآیندهای کسب‌وکار است که به سازمان‌ها امکان می‌دهد مراحل انجام کار، ترتیب فعالیت‌ها، نقاط تصمیم‌گیری و تعاملات میان افراد و واحدهای سازمانی را با استفاده از علائم گرافیکی ترسیم کنند و نمایش دهند.\n🔔 قالب استاندارد ذخیره‌سازی مدل‌های BPMN، فرمت XML است.\nنرم‌افزارهایی مانند Camunda و Bizagi Modeler و همچنین افزونه‌هایی در VS Code امکان کار با این فایل‌ها را فراهم می‌کنند.\nFlows for APEX Flows for APEX یک افزونه متن‌باز برای Oracle APEX است که امکان طراحی، اجرا و مدیریت گردش کار (Workflow) را در برنامه‌های APEX فراهم می‌کند.\nمدل‌سازی گردش کار بر اساس استاندارد BPMN اجرای فرایندها و مدیریت وضعیت آن‌ها تخصیص وظایف به کاربران مدیریت مراحل و مسیرهای اجرای فرایند پشتیبانی از تأیید و رد درخواست‌ها پیگیری وضعیت و تاریخچه اجرای فرایندها یکپارچگی با Oracle APEX و پایگاه داده Oracle BPMN.IO BPMN.IO مجموعه‌ای از کتابخانه‌های جاوا اسکریپت (JavaScript):\nامکان ایجاد و نمایش مدل‌ها در مرورگر ایجاد و نمایش نمودارهای BPMN import/export از مدل‌ها در قالب XML توسعه‌پذیری از طریق کتابخانه‌های JavaScript … پیاده‌سازی در APEX Source در اینجا ، می‌توانید سورس مربوطه شامل صفحه، فایل‌های js و package مورد نیاز را مشاهده و دانلود کنید. تمامی فایل‌هایی که در ادامه توضیح خواهم داد در این مخزن وجود دارند. فایل‌های مورد نیاز bpmn-modeler.development.js ( دریافت )\nهسته Modeler است و برای نمایش و ویرایش دیاگرام استفاده می‌شود. ایجاد Task، Gateway، اتصال‌ها، جابه‌جایی عناصر و… diagram-js.css ( دریافت ) فایل CSS کتابخانه diagram-js است که ظاهر و نحوه نمایش اجزای نمودار، ابزارهای تعاملی و عناصر رابط کاربری آن را مشخص می‌کند. bpmn-embedded.css ( دریافت ) این فایلcss فونت آیکون‌های BPMN است که در کتابخانه bpmn-js استفاده می‌شود. این فونت شامل نمادهای گرافیکی عناصر BPMN است و نمایش صحیح آیکون‌هایی مانند event, activity, gateway و … را امکان‌پذیر می‌کند. برای اینکه از آخرین نسخه فایل‌ها استفاده کنید، کافی است شماره نسخه را از لینک حذف کنید. سایت دیگر برای دانلود فایل‌ها unpkg به خاطر اینکه برنامه‌ها معمولا درون سازمانی هستند و ممکن است به اینترنت دسترسی نداشته باشند، این فایل‌ها را دانلود و در قسمت Static Application Files بارگذاری می‌کنیم. من آن‌ها را در پوشه‌ی bpmn ذخیره کردم. Shared Components | Static Application Files\nmy-bpmn.js ( دریافت ) این فایلی است که تمام ‌متدهای لازم را در آن نوشته‌ام که با هر صفحه‌ی وبی (web) قابل استفاده خواهد بود و وابسته به Oracle APEX نیست. Shared Components | Static Application Files\nدر این فایل از شی window جهت ایجاد فضای نام bpmn استفاده شده است.\n🔔 شی window در JavaScript، شی window نماینده‌ی محیط سراسری مرورگر است. با تعریف window.bpmn، یک فضای نام برای نگهداری متغیرها و توابع مرتبط با BPMN ایجاد می‌کنیم. به این ترتیب، به‌جای تعریف متغیرهای مستقل، آن‌ها را در قالب یک شی سازمان‌دهی می‌کنیم و احتمال تداخل نام‌ها با سایر فایل‌های JavaScript کاهش می‌یابد.\nحالت دیگر استفاده مستقیم از متدها در قسمت Function and Global Variable Declaration است که می‌توانید از اینجا این فایل را دانلود کنید، ولی پیشنهاد من همان مورد قبلی است. در این فایل من برای متدها از پیشوند bpmn_ استفاده کرده‌ام.\nمتدها my-bpmn.js برای استفاده از این متدها باید از فضای نام (namespace) bpmn استفاده شود.\ninit: اختصاص المنت (element) برای نمایش مدل new: ایجاد دیاگرام جدید readFile: خواندن فایل BPMN و برگشت نام فایل و محتویات آن load: بارگذاری دیاگرام با استفاده از قالب xml exportXML: ارسال خروجی دیاگرام به یک المنت. دراینجا آیتم اپکس downloadXML: دانلود فایل با فرمت xml downloadSVG: دانلود فایل با فرمت svg downloadImage: دانلود تصویر با فرمت دلخواه (png, jpg, webp) و دو مورد آخر که متدهای بالا از آن‌ها استفاده خواهند کرد:\nsvgToImage: تبدیل فرمت svg به image در زمان تبدیل به فرمت‌های تصویری downloadBlob: تبدیل خروجی به فایل قابل دانلود 🔔 روند تبدیل بدین صورت است: تبدیل دیاگرام به svg تبدیل svg به image تبدیل خروجی (image, text) به فایل blob و فرمت مربوطه ایجاد لینک و دانلود ایجاد صفحه فایل‌ها پس از ایجاد صفحه جدید، لینک آدرس‌های موجود در Static Application Files را در Properies صفحه قرار می‌دهیم:\nPage JavaScript | File URLs: #APP_FILES#bpmn/bpmn-modeler.development.js #APP_FILES#bpmn/my-bpmn.js CSS | File URLs: #APP_FILES#bpmn/diagram-js.css #APP_FILES#bpmn/bpmn-embedded.css direction برای نمایش درست نمودار و خروجی‌ها، صفحه حتما باید چپ‌چین باشد. بنابراین: Page | CSS | Inline: html body {direction: ltr !important;} در غیر این صورت خروجی‌ها برای فارسی (یا زبان‌های راست‌چین rtl) بدین شکل خواهد شد: تعیین نمودار در زمان Load شدن صفحه دو متد init و new را فراخوانی می‌کنیم.\nبرای اینکه مشخص کنیم که دیاگرام در کدام المنت نمایش داده شود از متد bpmn.init و شناسه (id) المنت مربوطه استفاده می‌کنیم؛ و برای داشتن یک نمودار جدید از متد bpmn.new استفاده می‌کنیم. اگر از bmpn.new استفاده نکنیم، اجازه ورود شکل‌ها به صفحه را نخواهیم داشت.\nPage JavaScript | Execute when Page Loads: bpmn.init('bpmnContainer') bpmn.new(); اجزای صفحه بارگذاری فایل آیتم‌هایی جهت import/export و دکمه‌های مربوطه دانلود فایل با فرمت‌های bpmn(xml),svg, png, jpg, webp دیاگرام برای مشاهده و ویرایش BPMN ثبت در DB خواندن از جدول و نمایش گزارش‌هایی از object, activity, flow Modeler فضایی که می‌خواهیم نمودار در آن قرار بگیرد.\nشناسه آن bpmnContainer است که در متد init مورد استفاده قرار می‌گیرد. ارتفاع 600px از نوع Static Content دکمه‌ای جهت ثبت نمودار در DB Source | HTML Code:\n\u003cdiv id=\"bpmnContainer\" style=\"width:100%; height:600px; border:1px solid #ccc;\"\u003e\u003c/div\u003e 💡 استفاده از Static ID برای این region، خروجی درستی به ما نخواهد داد. همانطور که در تصویر زیر مشاهده می‌کنید، اجزای نمودار از region خارج شده‌اند. Upload File برای اینکه بتوانیم محتویات یک فایل را بدون ارسال به سرور بخوانیم، از input استفاده می‌کنیم.\nRegion | Upload File\nاز نوع Static Content آیتم FILENAME جهت درج نام فایل خوانده شده Source | HTML Code: \u003cinput type=\"file\" id=\"bpmnFile\" accept=\".bpmn,.xml\"\u003e سپس یک Dynamic Action با رویداد Change اضافه می‌کنیم. برای قسمت True آن یک Action از نوع Execute JavaScript Code انتخاب کرده و متد خواندن فایل را در آن فراخوانی می‌کنیم:\nbpmn.readFile('bpmnFile').then(({ filename, content }) =\u003e { bpmn.load(content); apex.item('P100012_IMPORT').setValue(content); apex.item('P100012_FILENAME').setValue(filename); }); خروجی متد bpmn.readFile دو مقدار “نام فایل” و “محتویات” آن خواهد بود.\n🔔 هنگام فراخوانی یک متد async، برای دسترسی به نتیجه‌ی آن باید منتظر تکمیل عملیات بمانیم. برای این کار دو روش داریم:\nاستفاده از then برای دریافت نتیجه پس از تکمیل عملیات. استفاده از await درون یک تابع async و دریافت نتیجه پس از تکمیل عملیات. آیتم‌های import/export import/export items\nآیتم IMPORT: برای نمایش محتویات xml فایل خوانده شده، استفاده می‌شود. همچنین می‌توان محتویات را در این قسمت copy/paste کرد و سپس با استفاده از دکمه Import from Item خروجی را مشاهده کرد. آیتم EXPORT: با استفاده از دکمه‌ی Export to XML Item می‌توان محتویات xml نمودار را پس از ایجاد تغییرات دریافت کرد. دکمه‌های import/export import/export buttons\nImport: با استفاده از این دکمه محتویات آیتم Import را خوانده و در نمودار نمایش می‌دهیم. Export: تبدیل نمودار به فرمت xml و درج آن در آیتم Export دکمه‌های دانلود download buttons\nدر اینجا من دکمه‌های مختلفی (5 دکمه) را جهت استفاده از متدها ایجاد کرده‌ام. برای هر دکمه یک Dynamic Action از نوع Click می‌سازیم و در قسمت True آن یک Action از نوع از Execute JavaScript Code برای فراخوانی متد مربوطه ایجاد می‌کنیم.\nمثلا برای دانلود فایل با فرمت webp\n// نام فایل و فرمت مورد نظر bpmn.downloadImage('diagram',bpmn.IMAGE_FORMAT.WEBP) گزارش Region | Reports\nپس از ثبت نمودار در جدول، در گزارش‌های زیر محتویات نمودار انتخاب شده را مشاهده خواهیم کرد:\nObjects: تمام اشیا استفاده شده در نمودار Activities: مشاهده اطلاعات تمام فعالیت‌ها Flows: مشاهده اطلاعات خطوط ارتباطی که این موارد در 4 ستون نمایش داده می‌شوند: ID, NAME, BPMN_NAME, XML_NAME\nگزارش‌ها\nبدست آوردن Activityها (PL/SQL) برای ثبت نمودار جدولی با مشخصات زیر ایجاد می‌کنیم:\ncreate table \"MY_FLOWS\" ( \"ID\" number generated by default on null as identity, \"NAME\" varchar2(200), \"CONTENT\" clob not null, constraint \"MY_FLOW_PK\" primary key ( \"ID\" ) ); برای بدست آوردن محتویات نمودار، کدهای PL/SQL را در یک package به نام PKG_BPMN قرار داده‌ام، که شامل سه function است که نوع خروجی آن‌ها table است:\nget_objects get_activities get_flows get_objects در این متد لیست تمام اشیای مورد استفاده در نمودار را بدست میاوریم. برای این کار از xmltable استفاده می‌کنیم\nselect x.id, x.name, x.element from xmltable('//*' passing v_xml columns id varchar2(100) path '@id', name varchar2(1000) path '@name', element varchar2(100) path 'local-name()' ) x عبارت ‘//*’: یعنی تمام عناصر XML (با هر نامی و در هر سطحی) را انتخاب کن، به جز گره ریشه. PASSING v_xml: متغیر v_xml را به‌عنوان ورودی XML در اختیار XMLTABLE قرار می‌دهد. columns: در این قسمت ستون‌ها را مشخص می‌کنیم. در اینجا 3 ستون تعریف ستون کاربرد id varchar2(100) path '@id' مقدار ویژگی id عنصر را استخراج می‌کند. name varchar2(1000) path '@name' مقدار ویژگی name عنصر را استخراج می‌کند. element varchar2(100) path 'local-name()' نام خود عنصر را بدون پیشوند فضای نام استخراج می‌کند. local-name: این تابع نام عنصر را بدون پیشوند فضای نام (Namespace Prefix) استخراج می‌کند. به شکل زیر هم می‌توان استفاده کرد: local-name(.) برای نمونه اگر یک عنصر به این شکل باشد\n",
+  "wordCount" : "2052",
+  "inLanguage": "fa",
+  "image":"https://hr-abedini.github.io/images/Cover-Oracle%20APEX%20BPMN%20Workflow.png","datePublished": "2026-10-21T08:45:22+03:30",
+  "dateModified": "2026-10-21T08:45:22+03:30",
+  "author":{
+    "@type": "Person",
+    "name": "حمیدرضا عابدینی"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "حمیدرضا عابدینی",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hr-abedini.github.io/favicon/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hr-abedini.github.io/" accesskey="h" title="حمیدرضا عابدینی (Alt + H)">حمیدرضا عابدینی</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hr-abedini.github.io/" title="خانه">
+                    <span>خانه</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/categories/" title="دسته‌بندی‌ها">
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/search/" title="جستجو (Alt &#43; /)" accesskey=/>
+                    <span>جستجو</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/archives/" title="بایگانی">
+                    <span>بایگانی</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/about/" title="درباره‌ی من">
+                    <span>درباره‌ی من</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hr-abedini.github.io/">خانه</a>&nbsp;»&nbsp;<a href="https://hr-abedini.github.io/posts/">پست‌ها</a></div>
+    <h1 class="post-title entry-hint-parent">
+      BPMN در APEX
+    </h1>
+    <div class="post-description">
+      چطور می‌توان از نمودارهای BPMN در محیط  Oracle APEX استفاده کرد. Oracle APEX 24.2
+    </div>
+    
+    <div class="post-meta">
+
+      <hr style=" border: none; border-top: 1px dotted ;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-footer">📅 <span class='post-date' title='2026-10-21 08:45:22 +0330 +0330'>اکتبر 21, 2026</span>&nbsp;·&nbsp;<span class="reading-time"> 📖 10 دقیقه</span>&nbsp;·&nbsp;<span class="word-count"> 📊 2052 واژه</span>&nbsp;·&nbsp;حمیدرضا عابدینی</div>
+
+
+
+<hr style=" border: none; border-top: 1px dotted ;">
+
+<div class="post-tags">
+  
+  <a class="cat" href="/categories/oracle-apex"><i class="fa-solid fa-layer-group"></i> Oracle APEX</a>
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </header> 
+<figure class="entry-cover">
+            <img loading="eager"
+                srcset='https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/images/Cover-Oracle%20APEX%20BPMN%20Workflow_hu_a5e19eca0fef99c7.png 360w,https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/images/Cover-Oracle%20APEX%20BPMN%20Workflow_hu_937601d7734b8134.png 480w,https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/images/Cover-Oracle%20APEX%20BPMN%20Workflow_hu_790241f4aa4ee712.png 720w,https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/images/Cover-Oracle%20APEX%20BPMN%20Workflow.png 1000w'
+                src="https://hr-abedini.github.io/posts/oracle-apex/14050722-bpmn/images/Cover-Oracle%20APEX%20BPMN%20Workflow.png"
+                sizes="(min-width: 768px) 720px, 100vw"
+                width="1000" height="667"
+                alt="">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">فهرست مطالب</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d9%85%d8%b3%d8%a7%d9%84%d9%87" aria-label="مساله">مساله</a></li>
+                <li>
+                    <a href="#%d9%85%d8%b9%d8%b1%d9%81%db%8c" aria-label="معرفی">معرفی</a><ul>
+                        
+                <li>
+                    <a href="#bpmn" aria-label="BPMN">BPMN</a></li>
+                <li>
+                    <a href="#flows-for-apex" aria-label="Flows for APEX">Flows for APEX</a></li>
+                <li>
+                    <a href="#bpmnio" aria-label="BPMN.IO">BPMN.IO</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d9%be%db%8c%d8%a7%d8%af%d9%87%d8%b3%d8%a7%d8%b2%db%8c-%d8%af%d8%b1-apex" aria-label="پیاده‌سازی در APEX">پیاده‌سازی در APEX</a><ul>
+                        
+                <li>
+                    <a href="#source" aria-label="Source">Source</a></li>
+                <li>
+                    <a href="#%d9%81%d8%a7%db%8c%d9%84%d9%87%d8%a7%db%8c-%d9%85%d9%88%d8%b1%d8%af-%d9%86%db%8c%d8%a7%d8%b2" aria-label="فایل‌های مورد نیاز">فایل‌های مورد نیاز</a><ul>
+                        
+                <li>
+                    <a href="#%d9%85%d8%aa%d8%af%d9%87%d8%a7-my-bpmnjs" aria-label="متدها my-bpmn.js">متدها my-bpmn.js</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%a7%db%8c%d8%ac%d8%a7%d8%af-%d8%b5%d9%81%d8%ad%d9%87" aria-label="ایجاد صفحه">ایجاد صفحه</a><ul>
+                        
+                <li>
+                    <a href="#%d8%a7%d8%ac%d8%b2%d8%a7%db%8c-%d8%b5%d9%81%d8%ad%d9%87" aria-label="اجزای صفحه">اجزای صفحه</a></li>
+                <li>
+                    <a href="#modeler" aria-label="Modeler">Modeler</a></li>
+                <li>
+                    <a href="#%d8%a2%db%8c%d8%aa%d9%85%d9%87%d8%a7%db%8c-importexport" aria-label="آیتم‌های import/export">آیتم‌های import/export</a></li>
+                <li>
+                    <a href="#%d8%af%da%a9%d9%85%d9%87%d9%87%d8%a7%db%8c-importexport" aria-label="دکمه‌های import/export">دکمه‌های import/export</a></li>
+                <li>
+                    <a href="#%d8%af%da%a9%d9%85%d9%87%d9%87%d8%a7%db%8c-%d8%af%d8%a7%d9%86%d9%84%d9%88%d8%af" aria-label="دکمه‌های دانلود">دکمه‌های دانلود</a></li>
+                <li>
+                    <a href="#%da%af%d8%b2%d8%a7%d8%b1%d8%b4" aria-label="گزارش">گزارش</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%a8%d8%af%d8%b3%d8%aa-%d8%a2%d9%88%d8%b1%d8%af%d9%86-activity%d9%87%d8%a7-plsql" aria-label="بدست آوردن Activityها (PL/SQL)">بدست آوردن Activityها (PL/SQL)</a><ul>
+                        
+                <li>
+                    <a href="#get_objects" aria-label="get_objects">get_objects</a></li>
+                <li>
+                    <a href="#get_activities" aria-label="get_activities">get_activities</a></li>
+                <li>
+                    <a href="#get_flows" aria-label="get_flows">get_flows</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="مساله">مساله<a hidden class="anchor" aria-hidden="true" href="#مساله">#</a></h2>
+<p>در برنامه‌‌ام نمی‌خواستم که فقط فایل‌های مربوط به BPMN را ذخیره کنم،
+بلکه می‌خواستم کاربر بتواند آن را در محیط Oracle Apex ویرایش کند.
+همچنین بتوانم Activityهای آن را استخراج کنم تا بشود در آینده از آن‌ها استفاده کرد.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-tip">
+
+  <p><span class="alert-icon">💡</span> تجربه‌ای که پیش از این در .NET و برای نوشتن سیستم مدیریت فرایندهای سازمانی داشتم.
+در آن سیستم این امکان وجود داشت که هر فعالیت به پست سازمانی مرتبط شود.
+بدین ترتیب  در صورت حذف یک پست در سازمان مشخص می‌شد که چه وظایفی دستخوش تغییر خواهند شد،
+یا هر فرد چه نقش‌هایی در سازمان ایفا خواهد کرد و &hellip;</p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>برای استفاده از BPMN در Oracle Apex می‌توان از افزونه‌ای به نام <a href="https://flowsforapex.org/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Flows for APEX</a>
+
+
+ استفاده کرد که یک Workflow Engine قدرتمند با کلی امکانات است.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-important">
+
+  <p><span class="alert-icon">📌</span> اما من نمی‌خواستم <strong>برای شکار خرگوش از توپ جنگی استفاده کنم</strong>!!!</p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>بنابراین از <a href="https://bpmn.io/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> BPMN.IO</a>
+
+
+ برای اینکار استفاده کردم.</p>
+<p>پس از انجام مراحلی که در ادامه خواهید دید، در نهایت امکانات زیر را بدست می‌آوریم:</p>
+<ul>
+<li>بارگذاری فایل‌ها BPMN</li>
+<li>خروجی با فرمت: XML, SVG, PNG, JPG, WEBP</li>
+<li>ثبت در دیتابیس</li>
+<li>PL/SQL برای استخراج تمامی objectها، activityها و &hellip; از فایل BPMN</li>
+</ul>
+<p><img alt="موارد استفاده شده در صفحه" loading="lazy" src="/posts/oracle-apex/14050722-bpmn/images/page%20output.png#center"></p>
+<hr>
+<h2 id="معرفی">معرفی<a hidden class="anchor" aria-hidden="true" href="#معرفی">#</a></h2>
+<h3 id="bpmn">BPMN<a hidden class="anchor" aria-hidden="true" href="#bpmn">#</a></h3>
+<p><strong>B</strong>usiness <strong>P</strong>rocess <strong>M</strong>odel and <strong>N</strong>otation <br>
+<a href="https://www.bpmn.org/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> BPMN</a>
+
+
+
+استاندارد جهانی برای مدل‌سازی و نمایش فرآیندهای کسب‌وکار است
+که به سازمان‌ها امکان می‌دهد مراحل انجام کار، ترتیب فعالیت‌ها، نقاط تصمیم‌گیری و تعاملات میان افراد و واحدهای سازمانی را
+با استفاده از علائم گرافیکی ترسیم کنند و نمایش دهند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> قالب استاندارد ذخیره‌سازی مدل‌های BPMN، فرمت XML است.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>نرم‌افزارهایی مانند <a href="https://docs.camunda.io/downloads/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Camunda</a>
+
+
+
+و <a href="https://www.bizagi.com/en/platform/modeler" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Bizagi Modeler</a>
+
+
+ و همچنین افزونه‌هایی در  <a href="https://marketplace.visualstudio.com/search?term=bpmn&amp;target=VSCode&amp;category=All%20categories&amp;sortBy=Relevance" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> VS Code</a>
+
+
+ امکان کار با این فایل‌ها را فراهم می‌کنند.</p>
+<br>
+<h3 id="flows-for-apex">Flows for APEX<a hidden class="anchor" aria-hidden="true" href="#flows-for-apex">#</a></h3>
+<p><a href="https://flowsforapex.org/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Flows for APEX</a>
+
+
+
+یک افزونه <a href="https://github.com/flowsforapex/apex-flowsforapex" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> متن‌باز</a>
+
+
+ برای Oracle APEX است که امکان طراحی، اجرا و مدیریت گردش کار (Workflow) را در برنامه‌های APEX فراهم می‌کند.</p>
+<ul>
+<li>مدل‌سازی گردش کار بر اساس استاندارد BPMN</li>
+<li>اجرای فرایندها و مدیریت وضعیت آن‌ها</li>
+<li>تخصیص وظایف به کاربران</li>
+<li>مدیریت مراحل و مسیرهای اجرای فرایند</li>
+<li>پشتیبانی از تأیید و رد درخواست‌ها</li>
+<li>پیگیری وضعیت و تاریخچه اجرای فرایندها</li>
+<li>یکپارچگی با Oracle APEX و پایگاه داده Oracle</li>
+</ul>
+<br>
+<h3 id="bpmnio">BPMN.IO<a hidden class="anchor" aria-hidden="true" href="#bpmnio">#</a></h3>
+<p><a href="https://bpmn.io/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> BPMN.IO</a>
+
+
+
+مجموعه‌ای از کتابخانه‌های جاوا اسکریپت (JavaScript):</p>
+<ul>
+<li>امکان ایجاد و نمایش مدل‌ها در <a href="https://demo.bpmn.io/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> مرورگر</a>
+
+
+</li>
+<li>ایجاد و نمایش نمودارهای BPMN</li>
+<li>import/export از مدل‌ها در قالب XML</li>
+<li>توسعه‌پذیری از طریق کتابخانه‌های JavaScript</li>
+<li>&hellip;</li>
+</ul>
+<hr>
+<h2 id="پیادهسازی-در-apex">پیاده‌سازی در APEX<a hidden class="anchor" aria-hidden="true" href="#پیادهسازی-در-apex">#</a></h2>
+<h3 id="source">Source<a hidden class="anchor" aria-hidden="true" href="#source">#</a></h3>
+<p>در <a href="https://github.com/Hr-Abedini/Oracle-APEX/tree/main/Examples/BPMN" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> اینجا</a>
+
+
+، می‌توانید سورس مربوطه شامل صفحه، فایل‌های js و package
+مورد نیاز را مشاهده و دانلود کنید.
+تمامی فایل‌هایی که در ادامه توضیح خواهم داد در این مخزن وجود دارند.
+<figure class="align-center ">
+      <img loading="lazy" src="images/github-files.png#center"
+           alt="github | Files"/> 
+  </figure>
+</p>
+<h3 id="فایلهای-مورد-نیاز">فایل‌های مورد نیاز<a hidden class="anchor" aria-hidden="true" href="#فایلهای-مورد-نیاز">#</a></h3>
+<ol>
+<li><strong>bpmn-modeler.development.js</strong> (<a href="https://cdn.jsdelivr.net/npm/bpmn-js@18.6.3/dist/bpmn-modeler.development.js" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> دریافت</a>
+
+
+)<br>
+هسته Modeler است و برای نمایش و ویرایش دیاگرام استفاده می‌شود. ایجاد Task، Gateway، اتصال‌ها، جابه‌جایی عناصر و&hellip;</li>
+<li><strong>diagram-js.css</strong> (<a href="https://cdn.jsdelivr.net/npm/bpmn-js@18.6.3/dist/assets/diagram-js.css" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> دریافت</a>
+
+
+) <br>
+فایل CSS کتابخانه <code>diagram-js</code> است که ظاهر و نحوه نمایش اجزای نمودار، ابزارهای تعاملی و عناصر رابط کاربری آن را مشخص می‌کند.</li>
+<li><strong>bpmn-embedded.css</strong> (<a href="https://cdn.jsdelivr.net/npm/bpmn-js@18.6.3/dist/assets/bpmn-font/css/bpmn-embedded.css" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> دریافت</a>
+
+
+) <br>
+این فایلcss فونت آیکون‌های BPMN است که در کتابخانه <code>bpmn-js</code> استفاده می‌شود. این فونت شامل نمادهای گرافیکی عناصر BPMN است و
+نمایش صحیح آیکون‌هایی مانند event, activity, gateway و &hellip; را امکان‌پذیر می‌کند.</li>
+</ol>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-tip">
+
+  <ul>
+<li>برای اینکه از آخرین نسخه فایل‌ها استفاده کنید،
+کافی است شماره نسخه را از لینک حذف کنید. <br></li>
+<li>سایت دیگر برای دانلود فایل‌ها <strong><a href="https://unpkg.com/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> unpkg</a>
+
+
+</strong></li>
+</ul>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>به خاطر اینکه برنامه‌ها معمولا درون سازمانی هستند و ممکن است به اینترنت دسترسی نداشته باشند،
+این فایل‌ها را دانلود و در قسمت Static Application Files بارگذاری می‌کنیم.
+من آن‌ها را در پوشه‌ی bpmn ذخیره کردم.
+<figure class="align-center ">
+    <img loading="lazy" src="images/Static%20Application%20Files-bpmn.png#center"
+         alt="Shared Components | Static Application Files"/> <figcaption>
+            <p>Shared Components | Static Application Files</p>
+        </figcaption>
+</figure>
+</p>
+<ol start="4">
+<li><strong>my-bpmn.js</strong> (<a href="https://github.com/Hr-Abedini/Oracle-APEX/blob/main/Examples/BPMN/my-bpmn.js" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> دریافت</a>
+
+
+) <br>
+این فایلی است که تمام ‌متدهای لازم را در آن نوشته‌ام
+که با هر صفحه‌ی وبی (web) قابل استفاده خواهد بود
+و وابسته به Oracle APEX نیست.</li>
+</ol>
+<figure class="align-center ">
+    <img loading="lazy" src="images/Static%20Application%20Files-my%20bpmn.png#center"
+         alt="Shared Components | Static Application Files"/> <figcaption>
+            <p>Shared Components | Static Application Files</p>
+        </figcaption>
+</figure>
+
+<p>در این فایل  از شی window جهت ایجاد فضای نام bpmn استفاده شده است.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+   
+    <p class="alert-heading"> 
+      🔔
+      شی window
+    </p>
+    
+    <p>در JavaScript، شی window نماینده‌ی محیط سراسری مرورگر است. با تعریف window.bpmn، یک فضای نام برای نگهداری متغیرها و توابع مرتبط با BPMN ایجاد می‌کنیم.
+به این ترتیب، به‌جای تعریف متغیرهای مستقل، آن‌ها را در قالب یک شی سازمان‌دهی می‌کنیم و احتمال تداخل نام‌ها با سایر فایل‌های JavaScript کاهش می‌یابد.</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>حالت دیگر استفاده مستقیم از متدها در قسمت <strong>Function and Global Variable Declaration</strong> است
+که می‌توانید از <a href="https://github.com/Hr-Abedini/Oracle-APEX/blob/main/Examples/BPMN/x%20my%20bpmn%20methods.js" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> اینجا</a>
+
+
+ این فایل را دانلود کنید، ولی پیشنهاد من همان مورد قبلی است.
+در این فایل من برای متدها از پیشوند <code>bpmn_</code> استفاده کرده‌ام.</p>
+<h4 id="متدها-my-bpmnjs">متدها my-bpmn.js<a hidden class="anchor" aria-hidden="true" href="#متدها-my-bpmnjs">#</a></h4>
+<p>برای استفاده از این متدها باید از فضای نام (namespace) <strong>bpmn</strong> استفاده شود.</p>
+<ul>
+<li>init: اختصاص المنت (element) برای نمایش مدل</li>
+<li>new: ایجاد دیاگرام جدید</li>
+<li>readFile: خواندن فایل BPMN  و برگشت نام فایل و محتویات آن</li>
+<li>load: بارگذاری دیاگرام با استفاده از قالب xml</li>
+<li>exportXML: ارسال خروجی دیاگرام به یک المنت. دراینجا آیتم اپکس</li>
+<li>downloadXML: دانلود فایل با فرمت xml</li>
+<li>downloadSVG: دانلود فایل با فرمت svg</li>
+<li>downloadImage: دانلود تصویر با فرمت دلخواه (png, jpg, webp)</li>
+</ul>
+<p>و دو مورد آخر که متدهای بالا از آن‌ها استفاده خواهند کرد:</p>
+<ul>
+<li>svgToImage: تبدیل فرمت svg به image در زمان تبدیل به فرمت‌های تصویری</li>
+<li>downloadBlob: تبدیل خروجی به فایل قابل دانلود</li>
+</ul>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> روند تبدیل بدین صورت است: <br></p>
+<ol>
+<li>تبدیل دیاگرام به svg</li>
+<li>تبدیل svg به image</li>
+<li>تبدیل خروجی (image, text) به فایل blob  و فرمت مربوطه</li>
+<li>ایجاد لینک و دانلود</li>
+</ol>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<hr>
+<h3 id="ایجاد-صفحه">ایجاد صفحه<a hidden class="anchor" aria-hidden="true" href="#ایجاد-صفحه">#</a></h3>
+<p><strong>فایل‌ها</strong> <br>
+پس از ایجاد صفحه جدید، لینک آدرس‌های موجود در Static Application Files را در Properies صفحه قرار می‌دهیم:</p>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Page
+<ul>
+<li>JavaScript | File URLs:
+<ul>
+<li>#APP_FILES#<span style='color:red'>bpmn/bpmn-modeler.development.js </span></li>
+<li>#APP_FILES<span style='color:#13bf8e'>#bpmn/my-bpmn.js</span></li>
+</ul>
+</li>
+<li>CSS | File URLs:
+<ul>
+<li>#APP_FILES#<span style='color:red'>bpmn/diagram-js.css </span></li>
+<li>#APP_FILES#<span style='color:red'>bpmn/bpmn-embedded.css </span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  
+</div>
+
+<p><strong>direction</strong> <br>
+برای نمایش درست نمودار و خروجی‌ها، صفحه حتما باید چپ‌چین باشد. بنابراین:
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Page | CSS | Inline:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">html</span> <span style="color:#f92672">body</span> {<span style="color:#66d9ef">direction</span>: <span style="color:#66d9ef">ltr</span> <span style="color:#75715e">!important</span>;} 
+</span></span></code></pre></div>
+  
+</div>
+</p>
+<p>در غیر این صورت خروجی‌ها برای فارسی (یا زبان‌های راست‌چین rtl) بدین شکل خواهد شد:
+<img alt="direction" loading="lazy" src="/posts/oracle-apex/14050722-bpmn/images/bpmn-dir.png#center"></p>
+<p><strong>تعیین نمودار</strong> <br>
+در زمان Load شدن صفحه دو متد init و new را فراخوانی می‌کنیم.</p>
+<p>برای اینکه مشخص کنیم که دیاگرام در کدام المنت نمایش داده شود
+از متد <code>bpmn.init</code> و شناسه (id) المنت مربوطه استفاده می‌کنیم؛
+و برای داشتن یک نمودار جدید از متد <code>bpmn.new</code> استفاده می‌کنیم.
+اگر از <code>bmpn.new</code> استفاده نکنیم، اجازه ورود شکل‌ها به صفحه را نخواهیم داشت.</p>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Page
+<ul>
+<li>JavaScript | Execute when Page Loads:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">bpmn</span>.<span style="color:#a6e22e">init</span>(<span style="color:#e6db74">&#39;bpmnContainer&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">bpmn</span>.<span style="color:#66d9ef">new</span>();
+</span></span></code></pre></div>
+  
+</div>
+
+<h4 id="اجزای-صفحه">اجزای صفحه<a hidden class="anchor" aria-hidden="true" href="#اجزای-صفحه">#</a></h4>
+<ul>
+<li>بارگذاری فایل</li>
+<li>آیتم‌هایی جهت import/export و دکمه‌های مربوطه</li>
+<li>دانلود فایل با فرمت‌های bpmn(xml),svg, png, jpg, webp</li>
+<li>دیاگرام برای مشاهده و ویرایش BPMN</li>
+<li>ثبت در DB</li>
+<li>خواندن از جدول و نمایش گزارش‌هایی از  object, activity, flow</li>
+</ul>
+<h4 id="modeler">Modeler<a hidden class="anchor" aria-hidden="true" href="#modeler">#</a></h4>
+<p>فضایی که می‌خواهیم نمودار در آن قرار بگیرد.</p>
+<ul>
+<li>شناسه آن <code>bpmnContainer</code> است که در متد init مورد استفاده قرار می‌گیرد.</li>
+<li>ارتفاع 600px</li>
+<li>از نوع Static Content</li>
+<li>دکمه‌ای جهت ثبت نمودار در DB</li>
+</ul>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <p>Source | HTML Code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bpmnContainer&#34;</span>  <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:100%; height:600px; border:1px solid #ccc;&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div>
+  
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-tip">
+
+  <p><span class="alert-icon">💡</span> استفاده از Static ID برای این region، خروجی درستی به ما نخواهد داد.
+همانطور که در تصویر زیر مشاهده می‌کنید، اجزای نمودار از region خارج شده‌اند.
+<img alt="تعریف static id" loading="lazy" src="/posts/oracle-apex/14050722-bpmn/images/region-static%20id.png#center"></p>
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p><strong>Upload File</strong> <br>
+برای اینکه بتوانیم محتویات یک فایل را بدون ارسال به سرور بخوانیم،
+از input استفاده می‌کنیم.</p>
+<figure class="align-center ">
+    <img loading="lazy" src="images/region-upload%20file.png#center"
+         alt="Upload File"/> <figcaption>
+            <p>Region | Upload File</p>
+        </figcaption>
+</figure>
+
+<ul>
+<li>از نوع Static Content</li>
+<li>آیتم FILENAME جهت درج نام فایل خوانده شده</li>
+</ul>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Source | HTML Code:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bpmnFile&#34;</span> <span style="color:#a6e22e">accept</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.bpmn,.xml&#34;</span>&gt;
+</span></span></code></pre></div>
+  
+</div>
+
+<p>سپس یک Dynamic Action با رویداد Change  اضافه می‌کنیم.
+برای قسمت True آن یک Action از نوع Execute JavaScript Code انتخاب کرده
+و متد خواندن فایل را در آن فراخوانی می‌کنیم:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">bpmn</span>.<span style="color:#a6e22e">readFile</span>(<span style="color:#e6db74">&#39;bpmnFile&#39;</span>).<span style="color:#a6e22e">then</span>(({ <span style="color:#a6e22e">filename</span>, <span style="color:#a6e22e">content</span> }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">bpmn</span>.<span style="color:#a6e22e">load</span>(<span style="color:#a6e22e">content</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">apex</span>.<span style="color:#a6e22e">item</span>(<span style="color:#e6db74">&#39;P100012_IMPORT&#39;</span>).<span style="color:#a6e22e">setValue</span>(<span style="color:#a6e22e">content</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">apex</span>.<span style="color:#a6e22e">item</span>(<span style="color:#e6db74">&#39;P100012_FILENAME&#39;</span>).<span style="color:#a6e22e">setValue</span>(<span style="color:#a6e22e">filename</span>);  
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>خروجی متد bpmn.readFile دو مقدار &ldquo;نام فایل&rdquo; و &ldquo;محتویات&rdquo; آن خواهد بود.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> هنگام فراخوانی یک متد <strong>async</strong>، برای دسترسی به نتیجه‌ی آن باید منتظر تکمیل عملیات بمانیم. برای این کار دو روش داریم:</p>
+<ul>
+<li>استفاده از <code>then</code> برای دریافت نتیجه پس از تکمیل عملیات.</li>
+<li>استفاده از <code>await</code> درون یک تابع <code>async</code> و دریافت نتیجه پس از تکمیل عملیات.</li>
+</ul>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h4 id="آیتمهای-importexport">آیتم‌های import/export<a hidden class="anchor" aria-hidden="true" href="#آیتمهای-importexport">#</a></h4>
+<figure class="align-center ">
+    <img loading="lazy" src="images/region-items%20imp_exp.png#center"
+         alt="import/export items"/> <figcaption>
+            <p>import/export items</p>
+        </figcaption>
+</figure>
+
+<ul>
+<li>آیتم IMPORT: برای نمایش محتویات xml فایل خوانده شده، استفاده می‌شود.
+همچنین می‌توان محتویات را در این قسمت copy/paste کرد و سپس با استفاده از دکمه <code>Import from Item</code>
+خروجی را مشاهده کرد.</li>
+<li>آیتم EXPORT: با استفاده از دکمه‌ی <code>Export to XML Item</code> می‌توان محتویات xml نمودار را پس از ایجاد تغییرات دریافت کرد.</li>
+</ul>
+<h4 id="دکمههای-importexport">دکمه‌های import/export<a hidden class="anchor" aria-hidden="true" href="#دکمههای-importexport">#</a></h4>
+<figure class="align-center ">
+    <img loading="lazy" src="images/region-buttons%20imp_exp.png#center"
+         alt="import/export buttons"/> <figcaption>
+            <p>import/export buttons</p>
+        </figcaption>
+</figure>
+
+<ul>
+<li>Import: با استفاده از این دکمه محتویات آیتم Import را خوانده و در نمودار نمایش می‌دهیم.</li>
+<li>Export: تبدیل نمودار به فرمت xml و درج آن در آیتم Export</li>
+</ul>
+<h4 id="دکمههای-دانلود">دکمه‌های دانلود<a hidden class="anchor" aria-hidden="true" href="#دکمههای-دانلود">#</a></h4>
+<p><figure class="align-center ">
+    <img loading="lazy" src="images/region-buttons%20download.png#center"
+         alt="download buttons"/> <figcaption>
+            <p>download buttons</p>
+        </figcaption>
+</figure>
+
+در اینجا من دکمه‌های مختلفی (5 دکمه) را جهت استفاده از متدها ایجاد کرده‌ام.
+برای هر دکمه یک Dynamic Action از نوع Click می‌سازیم و
+در قسمت True آن یک Action از نوع از Execute JavaScript Code برای فراخوانی متد مربوطه ایجاد می‌کنیم.</p>
+<p>مثلا برای دانلود فایل با فرمت webp</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// نام فایل و فرمت مورد نظر
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">bpmn</span>.<span style="color:#a6e22e">downloadImage</span>(<span style="color:#e6db74">&#39;diagram&#39;</span>,<span style="color:#a6e22e">bpmn</span>.<span style="color:#a6e22e">IMAGE_FORMAT</span>.<span style="color:#a6e22e">WEBP</span>)
+</span></span></code></pre></div><h4 id="گزارش">گزارش<a hidden class="anchor" aria-hidden="true" href="#گزارش">#</a></h4>
+<p><figure class="align-center ">
+    <img loading="lazy" src="images/region-reports.png#center"
+         alt="Region | Reports"/> <figcaption>
+            <p>Region | Reports</p>
+        </figcaption>
+</figure>
+
+پس از ثبت نمودار در جدول، در گزارش‌های زیر محتویات نمودار انتخاب شده  را مشاهده خواهیم کرد:</p>
+<ul>
+<li>Objects: تمام اشیا استفاده شده در نمودار</li>
+<li>Activities: مشاهده اطلاعات تمام فعالیت‌ها</li>
+<li>Flows: مشاهده اطلاعات خطوط ارتباطی</li>
+</ul>
+<p>که این موارد در 4 ستون نمایش داده می‌شوند:
+ID, NAME, BPMN_NAME, XML_NAME</p>
+<figure class="align-center ">
+    <img loading="lazy" src="images/region-reports2.png#center"
+         alt="گزارش‌ها"/> <figcaption>
+            <p>گزارش‌ها</p>
+        </figcaption>
+</figure>
+
+<hr>
+<h3 id="بدست-آوردن-activityها-plsql">بدست آوردن Activityها (PL/SQL)<a hidden class="anchor" aria-hidden="true" href="#بدست-آوردن-activityها-plsql">#</a></h3>
+<p>برای ثبت نمودار جدولی با مشخصات زیر ایجاد می‌کنیم:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#e6db74">&#34;MY_FLOWS&#34;</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ID&#34;</span>        number <span style="color:#66d9ef">generated</span> <span style="color:#66d9ef">by</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">on</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">identity</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;NAME&#34;</span>      varchar2(<span style="color:#ae81ff">200</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;CONTENT&#34;</span>   <span style="color:#66d9ef">clob</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">constraint</span> <span style="color:#e6db74">&#34;MY_FLOW_PK&#34;</span> <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> ( <span style="color:#e6db74">&#34;ID&#34;</span> )
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>برای بدست آوردن محتویات نمودار، کدهای PL/SQL را در یک package به نام <strong>PKG_BPMN</strong> قرار داده‌ام،
+که شامل سه function است که نوع خروجی آن‌ها table است:</p>
+<ul>
+<li>get_objects</li>
+<li>get_activities</li>
+<li>get_flows</li>
+</ul>
+<h4 id="get_objects">get_objects<a hidden class="anchor" aria-hidden="true" href="#get_objects">#</a></h4>
+<p>در این متد لیست تمام اشیای مورد استفاده در نمودار را بدست میاوریم.
+برای این کار از <strong>xmltable</strong> استفاده می‌کنیم</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span>
+</span></span><span style="display:flex;"><span>    x.id,
+</span></span><span style="display:flex;"><span>    x.name,
+</span></span><span style="display:flex;"><span>    x.element
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">from</span> xmltable(<span style="color:#e6db74">&#39;//*&#39;</span>
+</span></span><span style="display:flex;"><span>    passing v_xml
+</span></span><span style="display:flex;"><span>    columns
+</span></span><span style="display:flex;"><span>        id      varchar2(<span style="color:#ae81ff">100</span>)  path <span style="color:#e6db74">&#39;@id&#39;</span>,
+</span></span><span style="display:flex;"><span>        name    varchar2(<span style="color:#ae81ff">1000</span>) path <span style="color:#e6db74">&#39;@name&#39;</span>,
+</span></span><span style="display:flex;"><span>        element varchar2(<span style="color:#ae81ff">100</span>)  path <span style="color:#e6db74">&#39;local-name()&#39;</span>
+</span></span><span style="display:flex;"><span>) x
+</span></span></code></pre></div><ul>
+<li><strong>عبارت &lsquo;//*&rsquo;</strong>: یعنی تمام عناصر XML (با هر نامی و در هر سطحی) را انتخاب کن، به جز گره ریشه.</li>
+<li><strong>PASSING v_xml</strong>: متغیر v_xml را به‌عنوان ورودی XML در اختیار XMLTABLE قرار می‌دهد.</li>
+<li><strong>columns</strong>: در این قسمت ستون‌ها را مشخص می‌کنیم. در اینجا 3 ستون</li>
+</ul>
+<table>
+	<thead>
+			<tr>
+					<th>تعریف ستون</th>
+					<th>کاربرد</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>id varchar2(100) path '@id'</code></td>
+					<td>مقدار ویژگی <code>id</code> عنصر را استخراج می‌کند.</td>
+			</tr>
+			<tr>
+					<td><code>name varchar2(1000) path '@name'</code></td>
+					<td>مقدار ویژگی <code>name</code> عنصر را استخراج می‌کند.</td>
+			</tr>
+			<tr>
+					<td><code>element varchar2(100) path 'local-name()'</code></td>
+					<td>نام خود عنصر را بدون پیشوند فضای نام استخراج می‌کند.</td>
+			</tr>
+	</tbody>
+</table>
+<ul>
+<li><strong>local-name</strong>: این تابع نام عنصر را بدون پیشوند فضای نام (Namespace Prefix) استخراج می‌کند.
+به شکل زیر هم می‌توان استفاده کرد:</li>
+</ul>
+<pre tabindex="0"><code>local-name(.)
+</code></pre><p>برای نمونه اگر <strong>یک عنصر</strong> به این شکل باشد</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;bpmn:task</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;Task_1&#34;</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;Check Order&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>خروجی یک رکورد با محتویات زیر را خواهد بود:</p>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>id: Task_1</li>
+<li>name: Check Order</li>
+<li>element: task</li>
+</ul>
+
+  
+</div>
+
+<p>بنابراین XMLTABLE برای هر عنصر انتخاب‌شده یک سطر تولید می‌کند
+و اگر عنصری مثلا ویژگی id را نداشته باشد، مقدار ستون متناظر آن NULL خواهد بود.</p>
+<h4 id="get_activities">get_activities<a hidden class="anchor" aria-hidden="true" href="#get_activities">#</a></h4>
+<p>در این function از get_objects برای بدست آوردن اشیا استفاده می‌کنیم
+و آن‌ها را با جدولی که انواع activiyها در آن قرار دارد join ‌می‌کنیم.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span> <span style="color:#66d9ef">with</span> symbols <span style="color:#66d9ef">as</span> (
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Task&#39;</span> <span style="color:#66d9ef">AS</span> name, <span style="color:#e6db74">&#39;task&#39;</span> <span style="color:#66d9ef">AS</span> xml_name <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;User Task&#39;</span>, <span style="color:#e6db74">&#39;userTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Manual Task&#39;</span>, <span style="color:#e6db74">&#39;manualTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Service Task&#39;</span>, <span style="color:#e6db74">&#39;serviceTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Script Task&#39;</span>, <span style="color:#e6db74">&#39;scriptTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Business Rule Task&#39;</span>, <span style="color:#e6db74">&#39;businessRuleTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Send Task&#39;</span>, <span style="color:#e6db74">&#39;sendTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Receive Task&#39;</span>, <span style="color:#e6db74">&#39;receiveTask&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Sub-Process&#39;</span>, <span style="color:#e6db74">&#39;subProcess&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Call Activity&#39;</span>, <span style="color:#e6db74">&#39;callActivity&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Transaction&#39;</span>, <span style="color:#e6db74">&#39;transaction&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;Ad-Hoc Sub-Process&#39;</span>, <span style="color:#e6db74">&#39;adHocSubProcess&#39;</span> <span style="color:#66d9ef">FROM</span> dual
+</span></span><span style="display:flex;"><span>           )
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">select</span> x.id, 
+</span></span><span style="display:flex;"><span>         x.name, 
+</span></span><span style="display:flex;"><span>         s.name <span style="color:#66d9ef">as</span> bpmn_name, 
+</span></span><span style="display:flex;"><span>         x.xml_name
+</span></span><span style="display:flex; background-color:#3c3d38"><span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">table</span> (get_objects(p_xml)) x
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> symbols s
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">on</span> x.xml_name <span style="color:#f92672">=</span> s.xml_name         
+</span></span></code></pre></div> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> در نسخه‌های قبل از 12 اوراکل، استفاده از Table Function اجباری بود. <br>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    select * from table (&hellip;)
+  
+</div>
+</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h4 id="get_flows">get_flows<a hidden class="anchor" aria-hidden="true" href="#get_flows">#</a></h4>
+<p>این کوئری دو نوع ارتباط (ارتباطات بین اجزا) را شناسایی می‌کند:</p>
+<ul>
+<li>sequenceFlow: ترتیب اجرای فعالیت‌ها در یک فرایند را مشخص می‌کند.</li>
+<li>messageFlow: جریان پیام بین مشارکت‌کنندگان مختلف در فرایند را مشخص می‌کند.</li>
+</ul>
+<p>در این متد، دو ستون source_id و target_id برای مشخص کردن عنصر آغازین و پایانی وجود دارد.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span>
+</span></span><span style="display:flex;"><span>      x.id,
+</span></span><span style="display:flex;"><span>      x.name,
+</span></span><span style="display:flex;"><span>      x.source_id,
+</span></span><span style="display:flex;"><span>      x.target_id,
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">lower</span>(x.<span style="color:#66d9ef">type</span>) <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">type</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">from</span> xmltable(
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#39;//*[local-name() = &#34;sequenceFlow&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        or local-name() = &#34;messageFlow&#34;]&#39;</span>
+</span></span><span style="display:flex;"><span>      passing v_xml
+</span></span><span style="display:flex;"><span>      columns
+</span></span><span style="display:flex;"><span>          id        varchar2(<span style="color:#ae81ff">100</span>)  path <span style="color:#e6db74">&#39;@id&#39;</span>,
+</span></span><span style="display:flex;"><span>          name      varchar2(<span style="color:#ae81ff">1000</span>) path <span style="color:#e6db74">&#39;@name&#39;</span>,
+</span></span><span style="display:flex;"><span>          source_id varchar2(<span style="color:#ae81ff">100</span>)  path <span style="color:#e6db74">&#39;@sourceRef&#39;</span>,
+</span></span><span style="display:flex;"><span>          target_id varchar2(<span style="color:#ae81ff">100</span>)  path <span style="color:#e6db74">&#39;@targetRef&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">type</span>      varchar2(<span style="color:#ae81ff">100</span>)  path <span style="color:#e6db74">&#39;local-name(.)&#39;</span>
+</span></span><span style="display:flex;"><span>  ) x
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">where</span> x.id <span style="color:#66d9ef">is</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>
+</span></span></code></pre></div><p>منظور از عبارت زیر یعنی فقط عناصری انتخاب شوند که نام آن‌ها sequenceFlow یا messageFlow است.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>[
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span><span style="color:#f92672">-</span>name() <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sequenceFlow&#34;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">or</span> <span style="color:#66d9ef">local</span><span style="color:#f92672">-</span>name() <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;messageFlow&#34;</span>
+</span></span><span style="display:flex;"><span> ]
+</span></span></code></pre></div><p>بدین ترتیب با استفاده از <strong>PKG_BPMN</strong> و متدهای داخل آن عملیات استخراج انجام می‌شود.
+خروجی آن‌ها در صفحه و در قسمت گزارش‌ها می‌توانید مشاهده کنید.
+برای نمونه در گزارش objects نحوه استفاده بدین شکل است:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">from</span>  PKG_BPMN.get_objects 
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>   (<span style="color:#66d9ef">select</span> <span style="color:#e6db74">&#34;CONTENT&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">from</span> my_flows
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">where</span> id <span style="color:#f92672">=</span> :P100012_LOV_DIAGRAM)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div> 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> برای استفاده از subquery باید آن را داخل پرانتز قرار داد.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+
+  
+
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hr-abedini.github.io/tags/oracle-apex/">Oracle APEX</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/bpmn/">BPMN</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://hr-abedini.github.io/posts/terms/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-secure-hash-algorithm-sha/">
+    <span class="title">صفحه بعدی »</span>
+    <br>
+    <span>آشنایی با Secure Hash Algorithm (SHA)</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share BPMN در APEX on x"
+            href="https://x.com/intent/tweet/?text=BPMN%20%d8%af%d8%b1%20APEX&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f14050722-bpmn%2f&amp;hashtags=OracleAPEX%2cBPMN">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share BPMN در APEX on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f14050722-bpmn%2f&amp;title=BPMN%20%d8%af%d8%b1%20APEX&amp;summary=BPMN%20%d8%af%d8%b1%20APEX&amp;source=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f14050722-bpmn%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share BPMN در APEX on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f14050722-bpmn%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share BPMN در APEX on whatsapp"
+            href="https://api.whatsapp.com/send?text=BPMN%20%d8%af%d8%b1%20APEX%20-%20https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f14050722-bpmn%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share BPMN در APEX on telegram"
+            href="https://telegram.me/share/url?text=BPMN%20%d8%af%d8%b1%20APEX&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2foracle-apex%2f14050722-bpmn%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+
+        
+
+
+<section class="related-posts">
+    <h3>نوشته‌های مرتبط</h3>
+    <ul>
+    
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%D8%AC%D8%B3%D8%AA%D8%AC%D9%88-%D8%A8%D8%B1%D8%A7%DB%8C-shuttle/">ایجاد جستجو برای Shuttle</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%86%D9%85%D8%A7%DB%8C%D8%B4-%D9%BE%D8%B3%D9%88%D8%B1%D8%AF-%D8%AF%D8%B1-oracle-apex-24-2/">نمایش پسورد در Oracle APEX 24.2</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%86%D9%85%D8%A7%DB%8C%D8%B4-%D9%BE%D8%B3%D9%88%D8%B1%D8%AF-%D8%A8%D9%87-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1/">نمایش Password به کاربر</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/oracle-apex/%D9%BE%D8%B1-%D8%B4%D8%AF%D9%86-%D8%AE%D9%88%D8%AF%DA%A9%D8%A7%D8%B1-username-%D9%88-password-%D8%AF%D8%B1-%D8%B2%D9%85%D8%A7%D9%86-%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF/">پر شدن ناخواسته‌ی username و password در زمان ایجاد!!</a> </li>
+        
+    
+    </ul>
+</section>
+<script src="https://giscus.app/client.js"
+        data-repo="Hr-Abedini/site-comments"
+        data-repo-id="R_kgDOQwO4wA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQwO4wM4C0UmL"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="fa"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://hr-abedini.github.io/">حمیدرضا عابدینی</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script src="/js/jdate.js"></script>
+<script data-goatcounter="https://hr-abedini.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'کپی';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'کپی شد!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'کپی';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
