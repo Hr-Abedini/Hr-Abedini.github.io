@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>ODBC چیست؟ | حمیدرضا عابدینی</title>
+<meta name="keywords" content="Database, Driver, ODBC, ODBC Driver, Open Database Connectivity">
+<meta name="description" content="آشنایی با ODBC، تاریخچه و معماری آن، اجزای اصلی و نحوه‌ی مدیریت درایورها و منابع داده در ویندوز.">
+<meta name="author" content="حمیدرضا عابدینی">
+<link rel="canonical" href="https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.0fd7ee620120df9f229463158006c1cc20f9f2a1113b10feb242c9c32c7e104b.css" integrity="sha256-D9fuYgEg358ilGMVgAbBzCD58qEROxD&#43;skLJwyx&#43;EEs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hr-abedini.github.io/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hr-abedini.github.io/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hr-abedini.github.io/favicon/favicon-96x96.png">
+<link rel="apple-touch-icon" href="https://hr-abedini.github.io/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hr-abedini.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="fa" href="https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+
+
+
+
+
+
+
+
+                              
+                                <meta property="og:url" content="https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/">
+  <meta property="og:site_name" content="حمیدرضا عابدینی">
+  <meta property="og:title" content="ODBC چیست؟">
+  <meta property="og:description" content="آشنایی با ODBC، تاریخچه و معماری آن، اجزای اصلی و نحوه‌ی مدیریت درایورها و منابع داده در ویندوز.">
+  <meta property="og:locale" content="fa-IR">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-11-11T09:50:00+03:30">
+    <meta property="article:modified_time" content="2026-11-11T09:50:00+03:30">
+    <meta property="article:tag" content="Database">
+    <meta property="article:tag" content="DB">
+    <meta property="og:image" content="https://hr-abedini.github.io/images/odbc%20architecture.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hr-abedini.github.io/images/odbc%20architecture.png">
+<meta name="twitter:title" content="ODBC چیست؟">
+<meta name="twitter:description" content="آشنایی با ODBC، تاریخچه و معماری آن، اجزای اصلی و نحوه‌ی مدیریت درایورها و منابع داده در ویندوز.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "پست‌ها",
+      "item": "https://hr-abedini.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "ODBC چیست؟",
+      "item": "https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ODBC چیست؟",
+  "name": "ODBC چیست؟",
+  "description": "آشنایی با ODBC، تاریخچه و معماری آن، اجزای اصلی و نحوه‌ی مدیریت درایورها و منابع داده در ویندوز.",
+  "keywords": [
+    "Database", "Driver", "ODBC", "ODBC Driver", "Open Database Connectivity"
+  ],
+  "articleBody": "تاریخچه زمینه شکل‌گیری روش‌های دسترسی به داده با گسترش پایگاه‌های داده‌ی رابطه‌ای در دهه‌ی ۱۹۷۰، روش‌های مختلفی برای دسترسی برنامه‌ها به داده‌ها وجود داشت. هر سیستم ممکن بود از زبان یا رابط اختصاصی خود برای دسترسی به داده‌ها استفاده کند. برای مثال:\nاستفاده از زبان SQL که در پروژه‌ی System R شرکت IBM توسعه یافت. استفاده از زبان QUEL در پروژه‌ی Ingres. استفاده از دستورات و کتابخانه‌های اختصاصی در dBASE . در نتیجه، برنامه‌ای که مثلا برای dBASE نوشته می‌شد، برای کار با یک پایگاه‌داده‌ی دیگر به تغییرات و پیاده‌سازی مجدد نیاز داشت. زبان SQL هم با هدف استانداردسازی زبان پرس‌وجو معرفی شد، اما با این حال، تفاوت‌های قابل توجهی در پیاده‌سازی آن میان DBMSهای مختلف باقی ماند.\nظهور Embedded SQL\nاز آنجا که SQL یک زبان مستقل از زبان‌های برنامه‌نویسی بود، برای استفاده از دستورات SQL در برنامه‌هایی که با زبان‌هایی مانند C و FORTRAN نوشته می‌شدند، روشی به نام Embedded SQL شکل گرفت و در سال 1989 استاندارد شد. در این روش، دستورات SQL مستقیما در کد منبع برنامه قرار می‌گرفتند.\nاز آنجا که کامپایلر دستورات Embedded SQL را نمی‌شناخت، ابزاری به نام Precompiler پیش از کامپایل اصلی اجرا می‌شد. این ابزار دستورات SQL را شناسایی و کد لازم برای فراخوانی توابع کتابخانه‌ی DBMS را تولید می‌کرد. سپس کد تبدیل‌شده در اختیار کامپایلر زبان برنامه‌نویسی قرار می‌گرفت تا کامپایل شود.\nدر روش Static SQL، دستورات SQL از پیش در کد منبع برنامه تعریف می‌شدند. بنابراین، اگر نیاز به تغییر ساختار این دستورات وجود داشت، باید کد منبع تغییر می‌کرد و فرایند کامپایل مجددا انجام می‌شد. برای رفع این محدودیت، مفهوم Dynamic SQL توسعه یافت. در این روش، دستورات SQL می‌توانستند به‌صورت متن در زمان اجرای برنامه ساخته و برای اجرا به DBMS ارسال شوند.\n🔔 اما همچنان مشکل پابرجا بود. روش پیاده‌سازی و رابط‌های برنامه‌نویسی DBMSهای مختلف همچنان متفاوت بود. در نتیجه، برنامه‌ای که برای ارتباط با یک DBMS نوشته می‌شد، لزوما نمی‌توانست بدون تغییر با DBMS دیگری کار کند.\nناهمگونی در محیط Client-Server برخلاف محیط Mainframe که معمولا سخت‌افزارها و نرم‌افزارهای یک تولیدکننده را به کار می‌گرفتند، در محیط ریزکامپیوترها (Microcomputers) تنوع سیستم‌عامل‌ها، شبکه‌ها و پایگاه‌های داده بیشتر بود. این تنوع باعث شد مشکلاتی که پیش‌تر به آن‌ها اشاره کردم، در محیط Client-Server ابعاد گسترده‌تری پیدا کند. برنامه‌ها علاوه بر وابستگی به رابط اختصاصی DBMS، با تفاوت‌های محیط اجرایی و زیرساخت ارتباطی نیز مواجه بودند.\nاین شرایط نیاز به روشی استاندارد برای دسترسی برنامه‌ها به منابع داده‌ی مختلف، مستقل از DBMS و محیط اجرایی آن‌ها را، بیش از پیش آشکار کرد.\n🔔 مساله این بود که چگونه یک برنامه بدون وابستگی شدید به یک DBMS خاص، بتواند با منابع داده‌ی مختلف کار کند.\nروند تاریخی در همین راستا، شرکت‌هایی مانند Microsoft و Lotus تلاش‌هایی را برای یکپارچه‌سازی روش‌های دسترسی به داده آغاز کردند. مایکروسافت نیز فناوری Jet را به‌عنوان یک موتور پایگاه‌داده‌ی مشترک توسعه داد که امکان دسترسی به منابع داده‌ی مختلف را از طریق یک رابط یکپارچه فراهم می‌کرد. این تلاش‌ها در ادامه و با مشارکت شرکت‌های مختلف، زمینه‌ساز شکل‌گیری استانداردهایی مانند CLI و ODBC شدند.\nاواخر دهه‌ی 80: گروه SQL Access Group (SAG) با هدف استانداردسازی دسترسی به پایگاه‌های داده و بهبود قابلیت همکاری میان سیستم‌های مختلف شکل گرفت. 1990: طرحی با عنوان SQL Connectivity که توسط Microsoft، Lotus، DEC و Sybase توسعه یافته بود، به این گروه ارائه شد و مبنایی برای توسعه‌ی رابط استاندارد Call Level Interface (CLI) قرار گرفت؛ رابطی که دسترسی به پایگاه داده را از طریق فراخوانی توابع استاندارد میسر می‌کرد. 1992: مایکروسافت نسخه‌ی 1.0 از ODBC را منتشر کرد. ODBC با تلاش‌های SQL Access Group در زمینه‌ی CLI ارتباط داشت، اما مشخصات و قابلیت‌های اختصاصی خود را نیز داشت. 1993: فرایند استانداردسازی CLI در چارچوب استاندارد ISO/IEC 9075-3 آغاز شد. 1994: نسخه‌ی 2.0 از ODBC منتشر شد و پس از آن نسخه‌ی 2.5 عرضه شد. 1995: نسخه‌ی 3.0 از ODBC منتشر شد. همچنین استاندارد SQL/CLI با شناسه‌ی ISO/IEC 9075-3:1995 به‌عنوان بخشی از استاندارد بین‌المللی SQL منتشر شد. 1997: نسخه 3.5 با پشتیبانی از Unicode عرضه شد. 2009: نسخه‌ی ODBC 3.8 با قابلیت‌هایی مانند اجرای ناهمگام عملیات اتصال و پشتیبانی از پارامترهای خروجی جریانی معرفی شد. 2016: مایکروسافت توسعه‌ی مشخصات ODBC 4.0 را با هدف گسترش پشتیبانی از منابع داده‌ی مدرن، از جمله پایگاه‌های داده‌ی سندگرا (Document-oriented) و سایر منابع غیررابطه‌ای (NoSQL) مطرح کرد. ( github ) تعریف ODBC ODBC مخفف Open Database Connectivity و به معنای اتصال باز (آزاد) به دیتابیس است. ODBC یک استاندارد و API1 مبتنی بر زبان C است که به برنامه‌ها اجازه می‌دهد بدون نیاز به استفاده از روش اتصال اختصاصی هر منبع داده، بدون کامپایل مجدد برنامه و از طریق Driver مربوطه، به آن‌ها متصل شوند.\n🔔 هدف اصلی‌ ODBC اتصال به پایگاه‌های داده رابطه‌ای بوده و همچنان هم هست. با این حال برخلاف نام آن که به Database اشاره می‌کند، ODBC امکان دسترسی به منابع داده‌ی دیگری مانند فایل‌های Excel و CSV را نیز فراهم می‌کند منابعی که لزوما از نظر فنی پایگاه داده محسوب نمی‌شوند. به همین دلیل، من از اصطلاح منبع داده (Data Source) استفاده می‌کنم.\nمزایای ODBC قابلیت اتصال به DBMSهای مختلف: امکان استفاده از یک برنامه برای اتصال به سیستم‌های مدیریت پایگاه‌داده‌ی متفاوت، بدون نیاز به پیاده‌سازی مجزای رابط اتصال برای هر DBMS.\nدسترسی هم‌زمان به چند منبع داده: امکان برقراری ارتباط با چند منبع داده، حتی از DBMSهای متفاوت، در یک برنامه.\nقابلیت توسعه‌پذیری: امکان افزودن درایورهای جدید برای پشتیبانی از منابع داده‌ی بیشتر، بدون نیاز به تغییر یا کامپایل مجدد برنامه؛ مشروط بر اینکه برنامه از قابلیت‌های موردنیاز پشتیبانی کند.\n⚠️ استفاده از ODBC به معنای سازگاری کامل با تمام DBMSها نیست! ODBC رابط دسترسی به داده را استاندارد می‌کند، اما تفاوت‌های میان DBMSها در زبان SQL، انواع داده و قابلیت‌های اختصاصی همچنان باقی می‌مانند. بنابراین، ممکن است برای انتقال یک برنامه از یک DBMS به DBMS دیگر، تغییراتی در کد برنامه لازم باشد.\nکاربردهای ODBC برخی از کاربردهای رایج ODBC عبارت‌اند از:\nExcel: اتصال به پایگاه‌داده‌هایی مانند SQL Server، Oracle و MySQL. گزارش‌گیری و هوش تجاری: اتصال ابزارهایی مانند Power BI و Tableau به منابع داده. برنامه‌نویسی: دسترسی برنامه‌های نوشته‌شده با زبان‌هایی مانند C، Python و R به پایگاه‌داده‌ها. ارتباط بین پایگاه‌داده‌ها: اتصال سیستم‌هایی مانند SQL Server و Oracle از طریق ODBC و قابلیت‌هایی مانند Linked Server. پایگاه‌داده‌های میزبانی‌شده: اتصال نرم‌افزارهای محلی به پایگاه‌داده‌های موجود روی هاست، مانند MySQL. به‌طور کلی، هر نرم‌افزاری که از رابط ODBC پشتیبانی کند، می‌تواند با استفاده از درایور مناسب به منابع داده‌ی سازگار متصل شود.\nتوابع استاندارد (API Functions) توابع استاندارد ODBC (ODBC API Functions) مجموعه‌ای از توابع هستند که به برنامه‌ها امکان می‌دهند عملیات مختلفی مانند برقراری ارتباط با Data Source، اجرای دستورات SQL، دریافت نتایج و مدیریت تراکنش‌ها را انجام دهند.\nاین توابع به‌صورت یک API مبتنی بر زبان C تعریف شده‌اند و به برنامه‌ها اجازه می‌دهند بدون نیاز به استفاده از API اختصاصی هر DBMS، از طریق یک رابط استاندارد با منابع داده ارتباط برقرار کنند.\n🔔 تمام توابع ODBC الزاما در هر برنامه‌ای استفاده نمی‌شوند. انتخاب توابع به نوع عملیات موردنیاز برنامه بستگی دارد. همچنین میزان پشتیبانی از قابلیت‌های ODBC ممکن است در Driverهای مختلف متفاوت باشد.\nنام بیشتر این توابع با پیشوند SQL شروع می‌شود و بر اساس کاربرد، شامل گروه‌های زیر هستند:\nگروه نمونه توابع کاربرد مدیریت اتصال Connection Management SQLConnect، SQLDisconnect برقراری و قطع ارتباط مدیریت منابع Handle Management SQLAllocHandle، SQLFreeHandle ایجاد و آزادسازی Handle اجرای دستورات SQL Statement Execution SQLPrepare، SQLExecute، SQLExecDirect آماده‌سازی و اجرای دستورات دریافت نتایج Result Retrieval SQLFetch، SQLGetData دریافت اطلاعات حاصل از Query اطلاعات ساختاری Metadata SQLTables، SQLColumns دریافت اطلاعات ساختار Data Source مدیریت تراکنش Transaction Management SQLEndTran اجرای Commit و Rollback مدیریت خطا Diagnostics SQLGetDiagRec دریافت اطلاعات خطا و هشدارها مستندات رسمی مایکروسافت شامل دسته‌بندی توابع، شرح عملکرد، پارامترها و مثال‌های برنامه‌نویسی است: ODBC API Reference معماری flowchart TD A[Application] \u003c--\u003e|ODBC API| B[\"⚙️ ODBC Driver Manager\"] B \u003c--\u003e| | C[\"🔌 Oracle Driver\"] B \u003c--\u003e| | D[\"🔌 SQL Server Driver\"] B \u003c--\u003e| | E[\"🔌 MySQL Driver\"] B \u003c--\u003e| | I[\"🔌 Excel Driver\"] C \u003c--\u003e|SQL / Results| F[(Oracle Database)] D \u003c--\u003e|SQL / Results| G[(SQL Server Database)] E \u003c--\u003e|SQL / Results| H[(MySQL Database)] I \u003c--\u003e|Read / Write| J@{ shape: doc, label: \"📄 Excel File (.xlsx)\" } style F fill:#fddd26,stroke:#333,color:#000 style G fill:#fddd26,stroke:#333,color:#000 style H fill:#fddd26,stroke:#333,color:#000 معماری ODBC از چهار جز اصلی تشکیل شده است:\nApplication برنامه‌ای که با استفاده از توابع استاندارد ODBC، عملیات موردنیاز خود را روی منبع داده انجام می‌دهد و نتایج را دریافت می‌کند. این برنامه می‌تواند نرم‌افزاری مانند Excel، برنامه‌ای نوشته‌شده با زبان C#، ابزارهای گزارش‌گیری و تحلیل داده و … باشد. Driver Manager لایه‌ای واسط میان برنامه‌ی کاربردی و درایورهای ODBC که وظایف زیر را بر عهده دارد:\nبارگذاری و مدیریت درایورهای ODBC. دریافت فراخوانی‌های ODBC از برنامه و هدایت آن‌ها به درایور مناسب. استفاده از اطلاعات DSN برای شناسایی منبع داده و درایور مربوطه. ODBC Driver ماژول نرم‌افزاری اختصاصی هر منبع داده که رابط استاندارد ODBC را برای آن منبع فراهم می‌کند. درایور درخواست‌های ODBC را دریافت می‌کند، آن‌ها را به شیوه‌ی قابل فهم برای منبع داده اجرا می‌کند و نتایج را در قالب مورد انتظار ODBC به برنامه بازمی‌گرداند.\nدرایورها به‌صورت کتابخانه‌های نرم‌افزاری در سیستم‌عامل نصب می‌شوند و Driver Manager در زمان اجرا آن‌ها را بارگذاری می‌کند. برای مثال، در ویندوز این کتابخانه‌ها معمولا از نوع DLL2 هستند.\nاز نظر نحوه‌ی پردازش داده، درایورها را می‌توان به دو گروه اصلی تقسیم کرد:\nFile-Based Driver: درایور علاوه بر فراهم کردن رابط ODBC، خودش وظیفه‌ی پردازش و مدیریت داده‌ها را نیز بر عهده دارد؛ مانند برخی درایورهای dBASE. DBMS-Based Driver: درایور درخواست‌ها را به سیستم مدیریت پایگاه‌داده (DBMS) منتقل می‌کند تا توسط موتور آن پردازش شوند؛ مانند درایورهای Oracle و SQL Server. 🔔 استاندارد ODBC مشخص می‌کند درایورها باید چه APIها و قراردادهایی را برای ارتباط با برنامه‌های کاربردی فراهم کنند. شرکت‌های مختلف براساس این استاندارد، درایورهای مخصوص منابع داده‌ی خود را توسعه می‌دهند. معمولا تولیدکنندگان DBMS نیز ODBC Driver مخصوص محصول خود را ارائه می‌کنند. برای مثال جهت اتصال به SQL Server از طریق ODBC باید ODBC Driver for SQL Server نصب شود. Data Source منبعی است که برنامه‌ی کاربردی قصد دسترسی به آن را دارد. این منبع می‌تواند یک فایل داده یا یک پایگاه‌داده‌ی مبتنی بر DBMS باشد. در حالت مبتنی بر DBMS، اجزای زیر ممکن است در دسترسی به منبع داده نقش داشته باشند:\nسیستم مدیریت پایگاه‌داده (DBMS) سیستم‌عامل میزبان شبکه و پروتکل ارتباطی (در صورت وجود) داده‌های ذخیره‌شده ارتباط SQL با توابع ODBC در ODBC، دستورات SQL و توابع API دو نقش متفاوت دارند:\nدستورات SQL به‌صورت متن (String) نوشته می‌شوند و مشخص می‌کنند چه عملیاتی باید روی Data Source انجام شود. در مقابل، توابع ODBC وظیفه‌ی مدیریت ارتباط، ارسال دستورات SQL، دریافت نتایج و آزادسازی منابع را بر عهده دارند. بنابراین هر برنامه‌ای که بخواهد از ODBC استفاده کند، باید بخشی داشته باشد که توابع و APIهای ODBC را فراخوانی کند. این بخش بسته به نوع برنامه می‌تواند متفاوت باشد. به عنوان نمونه:\nبرنامه‌ی نوشته‌شده با C/C++: مستقیما توابع ODBC را فراخوانی می‌کند. برنامه‌های .NET: می‌توانند از کلاس‌های System.Data.Odbc استفاده کنند که در نهایت با ODBC ارتباط برقرار می‌کنند. SQL Server: خودش مستقیما ODBC را فراخوانی نمی‌کند. هنگام استفاده از Linked Server مبتنی بر ODBC، توابع ODBC در لایه‌ی ارتباطی SQL Server و در پشت صحنه فراخوانی می‌شوند. این کار از طریق MSDASQL و با تبدیل درخواست‌های OLE DB به ODBC انجام می‌شود و کاربر فقط با محیط نرم‌افزار یا دستورات SQL سروکار دارد. ODBC در سیستم‌عامل‌ها برخلاف ویندوز که ODBC Driver Manager به‌صورت داخلی در سیستم‌عامل وجود دارد، در Linux و سایر سیستم‌های Unix معمولا باید یک Driver Manager جداگانه نصب شود.\nWindows: Microsoft ODBC Driver Manager Linux: unixODBC ، iODBC macOS: unixODBC ، iODBC 🔔 ODBC یک استاندارد مستقل از سیستم‌عامل است. با این حال، باید Driver Manager و درایور متناسب با سیستم‌عامل و معماری برنامه نصب شده باشند.\nODBC در Windows در ویندوز، ابزاری به نام ODBC Data Source Administrator برای مدیریت تنظیمات ODBC در اختیار کاربران قرار دارد. این ابزار امکان مشاهده و مدیریت درایورهای ODBC نصب شده، تعریف و پیکربندی منابع داده (DSN3) و دسترسی به برخی تنظیمات مرتبط با ODBC را فراهم می‌کند. ODBC Data Source Administrator\nفرض کنید برنامه‌ای قرار است به یک پایگاه‌داده‌ی SQL Server متصل شود. ابتدا باید درایور ODBC مربوط به SQL Server روی سیستم نصب شده باشد. سپس می‌توان با استفاده از این ابزار، تنظیمات اتصال به پایگاه‌داده را تعریف کرد تا برنامه بتواند از طریق ODBC به آن دسترسی پیدا کند. بدین‌سان، به‌جای اینکه اطلاعات اتصال به هر منبع داده در برنامه تعریف شود، می‌توان بخشی از تنظیمات را در سطح سیستم‌عامل مدیریت کرد.\nآشنایی با زبانه‌ها زبانه کاربرد 1 User DSN تعریف منبع داده برای کاربر فعلی 2 System DSN تعریف منبع داده در سطح سیستم 3 File DSN ذخیره‌ی تنظیمات منبع داده در فایل 4 Drivers مشاهده‌ی درایورهای نصب‌شده 5 Tracing ثبت فراخوانی‌های ODBC برای عیب‌یابی 6 Connection Pooling استفاده‌ی مجدد از اتصال‌ها 7 About نمایش اطلاعات نسخه و اجزای ODBC 🔔 برای دسترسی به این ابزار، کافی است عبارت ODBC Data Sources را در منوی Start ویندوز جست‌وجو کنید.\nUser DSN\nاطلاعات اتصال در محدوده‌ی حساب کاربری فعلی ویندوز ثبت می‌شود و فقط همان کاربر می‌تواند از آن استفاده کند و سایر کاربران ویندوز به آن دسترسی نخواهند داشت. محل ثبت:\nRegistry | HKEY_CURRENT_USER\rSystem DSN اطلاعات اتصال در سطح سیستم‌عامل ثبت می‌شود و محدود به یک کاربر خاص نیست. کاربران و سرویس‌هایی که مجوزهای لازم را داشته باشند، می‌توانند از آن استفاده کنند. محل ثبت: Registry | HKEY_LOCAL_MACHINE\rFile DSN اطلاعات اتصال به‌جای ثبت در تنظیمات ویندوز، در یک فایل با پسوند .dsn ذخیره می‌شود. این فایل را می‌توان به سیستم دیگری منتقل کرد یا در اختیار کاربران دیگر قرار داد. البته سیستم مقصد باید درایور مربوطه را نصب و به منبع داده دسترسی داشته باشد.\n🔔 اعطای مجوز دسترسی به پایگاه‌داده باید به صورت جداگانه انجام شود. یعنی تعریف DSN (نام منبع داده) به‌معنای ایجاد دسترسی به پایگاه‌داده نیست. DSN صرفا اطلاعات مورد نیاز برای شناسایی منبع داده و نحوه‌ی اتصال به آن را فراهم می‌کند.\n🔔 اتصال بدون DSN استفاده از DSN الزامی نیست.\nدر این حالت (DSN-less Connection) نیازی به تعریف منبع داده در ODBC Data Source نیست. برنامه می‌تواند اطلاعات اتصال، مانند نام درایور، سرور و پایگاه‌داده را مستقیما در قالب یک Connection String به Driver Manager ارسال کند.\nDrivers نصب درایور جدید معمولا از طریق اجرای بسته‌ی نصب (Installer) مربوط به آن انجام می‌شود. پس از نصب، در این زبانه فهرست درایورهای ODBC نصب شده روی سیستم به همراه مشخصات آن‌ها (نام، نسخه و …) نمایش داده می‌شود.\nODBC Data Source Administrator | Drivers\nTracing برای ثبت و ضبط فراخوانی‌های ODBC در یک فایل گزارش (Log) استفاده می‌شود. این قابلیت هنگام عیب‌یابی مشکلات ارتباطی و بررسی نحوه‌ی تعامل برنامه با درایورهای ODBC کاربرد دارد.\nODBC Data Source Administrator | Tracing\nConnection Pooling این زبانه برای تنظیم و مدیریت قابلیت استفاده‌ی مجدد از اتصال‌های پایگاه‌داده (Connection Pooling) به کار می‌رود. با استفاده از این قابلیت، اتصال‌های برقرار شده می‌توانند پس از پایان استفاده، به جای بسته‌شدن، برای درخواست‌های بعدی نگهداری و مجددا استفاده شوند. این کار هزینه‌ی برقراری اتصال‌های جدید را کاهش می‌دهد.\nODBC Data Source Administrator | Connection Pooling\nAbout این زبانه اطلاعاتی درباره‌ی نسخه و اجزای ODBC نصب‌شده روی سیستم نمایش می‌دهد. ODBC Data Source Administrator | About\nتفاوت ODBC در ویندوزهای 32 و 64 بیتی در ویندوز 64 بیتی، دو نسخه‌ی 32 و 64 بیتی از ODBC Data Source Administrator وجود دارد. معماری برنامه تعیین می‌کند که از کدام نسخه و درایور استفاده کند.\nبرنامه‌ی 32 بیتی به درایور 32 بیتی نیاز دارد. برنامه‌ی 64 بیتی به درایور 64 بیتی نیاز دارد. مسیر دسترسی به نسخه‌ها: 64-bit: C:\\Windows\\System32\\ 32-bit: C:\\Windows\\SysWOW64\\ نام پوشه‌ها گیج‌کننده است!!! پوشه‌ی System32 مربوط به نسخه‌ی 64 بیتی و پوشه‌ی SysWOW64 مربوط به نسخه‌ی 32 بیتی است.\n🔔 هنگام نصب درایور و تعریف DSN باید معماری برنامه‌ی مصرف‌کننده را در نظر گرفت.\nمنابع Open Database Connectivity Microsoft Open Database Connectivity (ODBC) ODBC Version History History of the Desktop Database Drivers About Drivers and Data Sources ODBC driver installation check\rApplication Programming Interface - رابط برنامه‌نویسی نرم‌افزار (برنامه کاربردی) ↩︎\nDynamic Link Library ↩︎\nData Source Name ↩︎\n",
+  "wordCount" : "2640",
+  "inLanguage": "fa",
+  "image":"https://hr-abedini.github.io/images/odbc%20architecture.png","datePublished": "2026-11-11T09:50:00+03:30",
+  "dateModified": "2026-11-11T09:50:00+03:30",
+  "author":{
+    "@type": "Person",
+    "name": "حمیدرضا عابدینی"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "حمیدرضا عابدینی",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hr-abedini.github.io/favicon/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hr-abedini.github.io/" accesskey="h" title="حمیدرضا عابدینی (Alt + H)">حمیدرضا عابدینی</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hr-abedini.github.io/" title="خانه">
+                    <span>خانه</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/categories/" title="دسته‌بندی‌ها">
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/search/" title="جستجو (Alt &#43; /)" accesskey=/>
+                    <span>جستجو</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/archives/" title="بایگانی">
+                    <span>بایگانی</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hr-abedini.github.io/about/" title="درباره‌ی من">
+                    <span>درباره‌ی من</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hr-abedini.github.io/">خانه</a>&nbsp;»&nbsp;<a href="https://hr-abedini.github.io/posts/">پست‌ها</a></div>
+    <h1 class="post-title entry-hint-parent">
+      ODBC چیست؟
+    </h1>
+    <div class="post-description">
+      آشنایی با ODBC، تاریخچه و معماری آن، اجزای اصلی و نحوه‌ی مدیریت درایورها و منابع داده در ویندوز.
+    </div>
+    
+    <div class="post-meta">
+
+      <hr style=" border: none; border-top: 1px dotted ;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-footer">📅 <span class='post-date' title='2026-11-11 09:50:00 +0330 +0330'>نوامبر 11, 2026</span>&nbsp;·&nbsp;<span class="reading-time"> 📖 13 دقیقه</span>&nbsp;·&nbsp;<span class="word-count"> 📊 2640 واژه</span>&nbsp;·&nbsp;حمیدرضا عابدینی</div>
+
+
+
+<hr style=" border: none; border-top: 1px dotted ;">
+
+<div class="post-tags">
+  
+  <a class="cat" href="/categories/database"><i class="fa-solid fa-layer-group"></i> Database</a>
+  <a class="cat" href="/categories/"><i class="fa-solid fa-layer-group"></i> </a>
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </header> 
+<figure class="entry-cover">
+            <img loading="eager"
+                srcset='https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/images/odbc%20architecture_hu_1169231e2080e644.png 360w,https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/images/odbc%20architecture_hu_2f4bda8fae1b6be0.png 480w,https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/images/odbc%20architecture_hu_4ac6734e8e358f0b.png 720w,https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/images/odbc%20architecture.png 751w'
+                src="https://hr-abedini.github.io/posts/db/odbc-%DA%86%DB%8C%D8%B3%D8%AA/images/odbc%20architecture.png"
+                sizes="(min-width: 768px) 720px, 100vw"
+                width="751" height="543"
+                alt="">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">فهرست مطالب</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d8%aa%d8%a7%d8%b1%db%8c%d8%ae%da%86%d9%87" aria-label="تاریخچه">تاریخچه</a><ul>
+                        
+                <li>
+                    <a href="#%d8%b2%d9%85%db%8c%d9%86%d9%87-%d8%b4%da%a9%d9%84%da%af%db%8c%d8%b1%db%8c" aria-label="زمینه شکل‌گیری">زمینه شکل‌گیری</a></li>
+                <li>
+                    <a href="#%d8%b1%d9%88%d9%86%d8%af-%d8%aa%d8%a7%d8%b1%db%8c%d8%ae%db%8c" aria-label="روند تاریخی">روند تاریخی</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%aa%d8%b9%d8%b1%db%8c%d9%81-odbc" aria-label="تعریف ODBC">تعریف ODBC</a><ul>
+                        
+                <li>
+                    <a href="#%d9%85%d8%b2%d8%a7%db%8c%d8%a7%db%8c-odbc" aria-label="مزایای ODBC">مزایای ODBC</a></li>
+                <li>
+                    <a href="#%da%a9%d8%a7%d8%b1%d8%a8%d8%b1%d8%af%d9%87%d8%a7%db%8c-odbc" aria-label="کاربردهای ODBC">کاربردهای ODBC</a></li>
+                <li>
+                    <a href="#%d8%aa%d9%88%d8%a7%d8%a8%d8%b9-%d8%a7%d8%b3%d8%aa%d8%a7%d9%86%d8%af%d8%a7%d8%b1%d8%af-api-functions" aria-label="توابع استاندارد (API Functions)">توابع استاندارد (API Functions)</a></li>
+                <li>
+                    <a href="#%d9%85%d8%b9%d9%85%d8%a7%d8%b1%db%8c" aria-label="معماری">معماری</a><ul>
+                        
+                <li>
+                    <a href="#application" aria-label="Application ">Application </a></li>
+                <li>
+                    <a href="#driver-manager" aria-label="Driver Manager ">Driver Manager </a></li>
+                <li>
+                    <a href="#odbc-driver" aria-label="ODBC Driver ">ODBC Driver </a></li>
+                <li>
+                    <a href="#data-source" aria-label="Data Source">Data Source</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%d8%a7%d8%b1%d8%aa%d8%a8%d8%a7%d8%b7-sql-%d8%a8%d8%a7-%d8%aa%d9%88%d8%a7%d8%a8%d8%b9-odbc" aria-label="ارتباط SQL با توابع ODBC">ارتباط SQL با توابع ODBC</a></li>
+                <li>
+                    <a href="#odbc-%d8%af%d8%b1-%d8%b3%db%8c%d8%b3%d8%aa%d9%85%d8%b9%d8%a7%d9%85%d9%84%d9%87%d8%a7" aria-label="ODBC در سیستم‌عامل‌ها">ODBC در سیستم‌عامل‌ها</a></li>
+                <li>
+                    <a href="#odbc-%d8%af%d8%b1-windows" aria-label="ODBC در Windows">ODBC در Windows</a><ul>
+                        
+                <li>
+                    <a href="#%d8%a2%d8%b4%d9%86%d8%a7%db%8c%db%8c-%d8%a8%d8%a7-%d8%b2%d8%a8%d8%a7%d9%86%d9%87%d9%87%d8%a7" aria-label="آشنایی با زبانه‌ها">آشنایی با زبانه‌ها</a></li>
+                <li>
+                    <a href="#%d8%aa%d9%81%d8%a7%d9%88%d8%aa-odbc-%d8%af%d8%b1-%d9%88%db%8c%d9%86%d8%af%d9%88%d8%b2%d9%87%d8%a7%db%8c-32-%d9%88-64-%d8%a8%db%8c%d8%aa%db%8c" aria-label="تفاوت ODBC در ویندوزهای 32 و 64 بیتی">تفاوت ODBC در ویندوزهای 32 و 64 بیتی</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d9%85%d9%86%d8%a7%d8%a8%d8%b9" aria-label="منابع">منابع</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="تاریخچه">تاریخچه<a hidden class="anchor" aria-hidden="true" href="#تاریخچه">#</a></h2>
+<h3 id="زمینه-شکلگیری">زمینه شکل‌گیری<a hidden class="anchor" aria-hidden="true" href="#زمینه-شکلگیری">#</a></h3>
+<p><strong>روش‌های دسترسی به داده</strong> <br>
+با گسترش پایگاه‌های داده‌ی رابطه‌ای در دهه‌ی ۱۹۷۰، روش‌های مختلفی برای دسترسی برنامه‌ها به داده‌ها وجود داشت. هر سیستم ممکن بود از زبان یا رابط اختصاصی خود برای دسترسی به داده‌ها استفاده کند. برای مثال:</p>
+<ul>
+<li>استفاده از زبان SQL که در پروژه‌ی <a href="https://en.wikipedia.org/wiki/IBM_System_R" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> System R</a>
+
+
+ شرکت IBM توسعه یافت.</li>
+<li>استفاده از زبان <a href="https://en.wikipedia.org/wiki/QUEL_query_languages" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> QUEL</a>
+
+
+ در پروژه‌ی Ingres.</li>
+<li>استفاده از دستورات و کتابخانه‌های اختصاصی در <a href="https://ithistory.org/software/dbase" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> dBASE</a>
+
+
+.</li>
+</ul>
+<p>در نتیجه، برنامه‌ای که مثلا برای dBASE نوشته می‌شد، برای کار با یک پایگاه‌داده‌ی دیگر به تغییرات و پیاده‌سازی مجدد نیاز داشت.
+زبان SQL هم با هدف استانداردسازی زبان پرس‌وجو معرفی شد، اما با این حال، تفاوت‌های قابل توجهی در پیاده‌سازی آن میان DBMSهای مختلف باقی ماند.</p>
+<p><strong>ظهور Embedded SQL</strong><br>
+از آنجا که SQL یک زبان مستقل از زبان‌های برنامه‌نویسی بود،
+برای استفاده از دستورات SQL در برنامه‌هایی که با زبان‌هایی مانند C و FORTRAN نوشته می‌شدند،
+روشی به نام <a href="https://en.wikipedia.org/wiki/Embedded_SQL" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> <strong>Embedded SQL</strong></a>
+
+
+ شکل گرفت و در سال 1989 استاندارد شد.
+در این روش، دستورات SQL مستقیما در کد منبع برنامه قرار می‌گرفتند.</p>
+<p>از آنجا که کامپایلر دستورات Embedded SQL را نمی‌شناخت،
+ابزاری به نام <a href="https://learn.microsoft.com/en-us/sql/odbc/reference/compiling-an-embedded-sql-program" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> <strong>Precompiler</strong></a>
+
+
+ پیش از کامپایل اصلی اجرا می‌شد. این ابزار دستورات SQL را شناسایی و کد لازم برای فراخوانی توابع کتابخانه‌ی DBMS را تولید می‌کرد.
+سپس کد تبدیل‌شده در اختیار کامپایلر زبان برنامه‌نویسی قرار می‌گرفت تا کامپایل شود.</p>
+<p>در روش <strong>Static SQL</strong>، دستورات SQL از پیش در کد منبع برنامه تعریف می‌شدند.
+بنابراین، اگر نیاز به تغییر ساختار این دستورات وجود داشت،
+باید کد منبع تغییر می‌کرد و فرایند کامپایل مجددا انجام می‌شد.
+برای رفع این محدودیت، مفهوم <strong>Dynamic SQL</strong> توسعه یافت.
+در این روش، دستورات SQL می‌توانستند به‌صورت متن در زمان اجرای برنامه ساخته و برای اجرا به DBMS ارسال شوند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> اما همچنان مشکل پابرجا بود.
+روش پیاده‌سازی و رابط‌های برنامه‌نویسی DBMSهای مختلف همچنان متفاوت بود. در نتیجه، برنامه‌ای که برای ارتباط با یک DBMS نوشته می‌شد، لزوما نمی‌توانست بدون تغییر با DBMS دیگری کار کند.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p><strong>ناهمگونی در محیط Client-Server</strong> <br></p>
+<p>برخلاف محیط Mainframe که معمولا سخت‌افزارها و نرم‌افزارهای یک تولیدکننده را به کار می‌گرفتند،
+در محیط ریزکامپیوترها (Microcomputers) تنوع سیستم‌عامل‌ها، شبکه‌ها و پایگاه‌های داده بیشتر بود.
+این تنوع باعث شد مشکلاتی که پیش‌تر به آن‌ها اشاره کردم، در محیط Client-Server ابعاد گسترده‌تری پیدا کند.
+برنامه‌ها علاوه بر وابستگی به رابط اختصاصی DBMS، با تفاوت‌های محیط اجرایی و زیرساخت ارتباطی نیز مواجه بودند.</p>
+<p>این شرایط نیاز به روشی استاندارد برای دسترسی برنامه‌ها به منابع داده‌ی مختلف، مستقل از DBMS و محیط اجرایی آن‌ها را، بیش از پیش آشکار کرد.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> مساله این بود که چگونه یک برنامه بدون وابستگی شدید به یک DBMS خاص، بتواند با منابع داده‌ی مختلف کار کند.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h3 id="روند-تاریخی">روند تاریخی<a hidden class="anchor" aria-hidden="true" href="#روند-تاریخی">#</a></h3>
+<p>در همین راستا، شرکت‌هایی مانند Microsoft و <a href="https://en.wikipedia.org/wiki/Lotus_Development" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Lotus</a>
+
+
+ تلاش‌هایی را برای یکپارچه‌سازی روش‌های دسترسی به داده آغاز کردند.
+مایکروسافت نیز فناوری <a href="https://en.wikipedia.org/wiki/Access_Database_Engine" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Jet</a>
+
+
+ را به‌عنوان یک موتور پایگاه‌داده‌ی مشترک توسعه داد که امکان دسترسی به منابع داده‌ی مختلف را از طریق یک رابط یکپارچه فراهم می‌کرد.
+این تلاش‌ها در ادامه و با مشارکت شرکت‌های مختلف، زمینه‌ساز شکل‌گیری استانداردهایی مانند CLI و ODBC شدند.</p>
+<ul>
+<li><strong>اواخر دهه‌ی 80:</strong> گروه <a href="https://en.wikipedia.org/wiki/SQL_Access_Group" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> SQL Access Group (SAG)</a>
+
+
+ با هدف استانداردسازی دسترسی به پایگاه‌های داده و بهبود قابلیت همکاری میان سیستم‌های مختلف شکل گرفت.</li>
+<li><strong>1990:</strong> طرحی با عنوان SQL Connectivity که توسط Microsoft، Lotus، DEC و <a href="https://en.wikipedia.org/wiki/Sybase" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Sybase</a>
+
+
+ توسعه یافته بود، به این گروه ارائه شد و مبنایی برای توسعه‌ی رابط استاندارد <a href="https://en.wikipedia.org/wiki/Call_Level_Interface" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Call Level Interface (CLI)</a>
+
+
+ قرار گرفت؛
+رابطی که دسترسی به پایگاه داده را از طریق فراخوانی توابع استاندارد میسر می‌کرد.</li>
+<li><strong>1992:</strong> مایکروسافت نسخه‌ی 1.0 از ODBC را منتشر کرد. ODBC با تلاش‌های SQL Access Group در زمینه‌ی CLI ارتباط داشت، اما مشخصات و قابلیت‌های اختصاصی خود را نیز داشت.</li>
+<li><strong>1993:</strong> فرایند استانداردسازی CLI در چارچوب استاندارد <code>ISO/IEC 9075-3</code> آغاز شد.</li>
+<li><strong>1994:</strong> نسخه‌ی 2.0 از ODBC منتشر شد و پس از آن نسخه‌ی 2.5 عرضه شد.</li>
+<li><strong>1995:</strong> نسخه‌ی 3.0 از ODBC منتشر شد. همچنین استاندارد <a href="https://www.iso.org/standard/24357.html" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> SQL/CLI</a>
+
+
+ با شناسه‌ی <a href="https://www.iso.org/standard/24357.html" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> <code>ISO/IEC 9075-3:1995</code></a>
+
+
+ به‌عنوان بخشی از استاندارد بین‌المللی SQL منتشر شد.</li>
+<li><strong>1997</strong>: نسخه 3.5 با پشتیبانی از Unicode عرضه شد.</li>
+<li><strong>2009</strong>: نسخه‌ی ODBC 3.8 با قابلیت‌هایی مانند اجرای ناهمگام عملیات اتصال و پشتیبانی از پارامترهای خروجی جریانی معرفی شد.</li>
+<li><strong>2016:</strong> مایکروسافت توسعه‌ی مشخصات ODBC 4.0 را با هدف گسترش پشتیبانی از منابع داده‌ی مدرن، از جمله پایگاه‌های داده‌ی سندگرا (Document-oriented) و سایر منابع غیررابطه‌ای (NoSQL) <a href="https://techcommunity.microsoft.com/blog/sqlserversupport/a-new-release-of-odbc-for-modern-data-stores/318797/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> مطرح</a>
+
+
+ کرد.
+(<a href="https://github.com/Microsoft/ODBC-Specification" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> github</a>
+
+
+)</li>
+</ul>
+<hr>
+<h2 id="تعریف-odbc">تعریف ODBC<a hidden class="anchor" aria-hidden="true" href="#تعریف-odbc">#</a></h2>
+<p>ODBC مخفف Open Database Connectivity  و به معنای <strong>اتصال باز (آزاد) به دیتابیس</strong> است.
+ODBC یک استاندارد و API<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> مبتنی بر <a href="https://www.c-language.org/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> زبان C</a>
+
+
+ است
+که به برنامه‌ها اجازه می‌دهد بدون نیاز به استفاده از <em><strong>روش اتصال اختصاصی هر منبع داده</strong></em>، بدون کامپایل مجدد برنامه و
+از طریق Driver مربوطه، به آن‌ها متصل شوند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> هدف اصلی‌ ODBC اتصال به پایگاه‌های داده رابطه‌ای بوده و همچنان هم هست.
+با این حال برخلاف نام آن که به Database اشاره می‌کند،
+ODBC امکان دسترسی به منابع داده‌ی دیگری مانند فایل‌های Excel و CSV را نیز فراهم می‌کند
+منابعی که لزوما از نظر فنی پایگاه داده محسوب نمی‌شوند.
+به همین دلیل، من از اصطلاح <strong>منبع داده (Data Source)</strong> استفاده می‌کنم.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h3 id="مزایای-odbc">مزایای ODBC<a hidden class="anchor" aria-hidden="true" href="#مزایای-odbc">#</a></h3>
+<ol>
+<li>
+<p>قابلیت اتصال به DBMSهای مختلف:
+امکان استفاده از یک برنامه برای اتصال به سیستم‌های مدیریت پایگاه‌داده‌ی متفاوت، بدون نیاز به پیاده‌سازی مجزای رابط اتصال برای هر DBMS.</p>
+</li>
+<li>
+<p>دسترسی هم‌زمان به چند منبع داده:
+امکان برقراری ارتباط با چند منبع داده، حتی از DBMSهای متفاوت، در یک برنامه.</p>
+</li>
+<li>
+<p>قابلیت توسعه‌پذیری:
+امکان افزودن درایورهای جدید برای پشتیبانی از منابع داده‌ی بیشتر، بدون نیاز به تغییر یا کامپایل مجدد برنامه؛ مشروط بر اینکه برنامه از قابلیت‌های موردنیاز پشتیبانی کند.</p>
+</li>
+</ol>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-warning">
+
+   
+    <p class="alert-heading"> 
+      ⚠️
+      استفاده از ODBC به معنای سازگاری کامل با تمام DBMSها نیست!
+    </p>
+    
+    <p>ODBC رابط دسترسی به داده را استاندارد می‌کند، اما تفاوت‌های میان DBMSها در زبان SQL، انواع داده و قابلیت‌های اختصاصی همچنان باقی می‌مانند. بنابراین، ممکن است برای انتقال یک برنامه از یک DBMS به DBMS دیگر، تغییراتی در کد برنامه لازم باشد.</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<hr>
+<h3 id="کاربردهای-odbc">کاربردهای ODBC<a hidden class="anchor" aria-hidden="true" href="#کاربردهای-odbc">#</a></h3>
+<p>برخی از کاربردهای رایج ODBC عبارت‌اند از:</p>
+<ul>
+<li><strong>Excel:</strong> اتصال به پایگاه‌داده‌هایی مانند SQL Server، Oracle و MySQL.</li>
+<li><strong>گزارش‌گیری و هوش تجاری:</strong> اتصال ابزارهایی مانند Power BI و Tableau به منابع داده.</li>
+<li><strong>برنامه‌نویسی:</strong> دسترسی برنامه‌های نوشته‌شده با زبان‌هایی مانند C، Python و R به پایگاه‌داده‌ها.</li>
+<li><strong>ارتباط بین پایگاه‌داده‌ها:</strong> اتصال سیستم‌هایی مانند SQL Server و Oracle از طریق ODBC و قابلیت‌هایی مانند Linked Server.</li>
+<li><strong>پایگاه‌داده‌های میزبانی‌شده:</strong> اتصال نرم‌افزارهای محلی به پایگاه‌داده‌های موجود روی هاست، مانند MySQL.</li>
+</ul>
+<p>به‌طور کلی، هر نرم‌افزاری که از رابط ODBC پشتیبانی کند، می‌تواند با استفاده از درایور مناسب به منابع داده‌ی سازگار متصل شود.</p>
+<hr>
+<h3 id="توابع-استاندارد-api-functions">توابع استاندارد (API Functions)<a hidden class="anchor" aria-hidden="true" href="#توابع-استاندارد-api-functions">#</a></h3>
+<p>توابع استاندارد ODBC (ODBC API Functions) مجموعه‌ای از توابع هستند که به برنامه‌ها امکان می‌دهند عملیات مختلفی مانند برقراری ارتباط با Data Source، اجرای دستورات SQL، دریافت نتایج و مدیریت تراکنش‌ها را انجام دهند.</p>
+<p>این توابع به‌صورت یک API مبتنی بر زبان C تعریف شده‌اند و به برنامه‌ها اجازه می‌دهند بدون نیاز به استفاده از API اختصاصی هر DBMS، از طریق یک رابط استاندارد با منابع داده ارتباط برقرار کنند.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> تمام توابع ODBC الزاما در هر برنامه‌ای استفاده نمی‌شوند.
+انتخاب توابع به نوع عملیات موردنیاز برنامه بستگی دارد.
+همچنین میزان پشتیبانی از قابلیت‌های ODBC ممکن است در Driverهای مختلف متفاوت باشد.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p>نام بیشتر این توابع با پیشوند <code>SQL</code> شروع می‌شود و
+بر اساس کاربرد، شامل گروه‌های زیر هستند:</p>
+<table>
+	<thead>
+			<tr>
+					<th>گروه</th>
+					<th></th>
+					<th>نمونه توابع</th>
+					<th>کاربرد</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>مدیریت اتصال</td>
+					<td>Connection Management</td>
+					<td><code>SQLConnect</code>، <code>SQLDisconnect</code></td>
+					<td>برقراری و قطع ارتباط</td>
+			</tr>
+			<tr>
+					<td>مدیریت منابع</td>
+					<td>Handle Management</td>
+					<td><code>SQLAllocHandle</code>، <code>SQLFreeHandle</code></td>
+					<td>ایجاد و آزادسازی Handle</td>
+			</tr>
+			<tr>
+					<td>اجرای دستورات SQL</td>
+					<td>Statement Execution</td>
+					<td><code>SQLPrepare</code>، <code>SQLExecute</code>، <code>SQLExecDirect</code></td>
+					<td>آماده‌سازی و اجرای دستورات</td>
+			</tr>
+			<tr>
+					<td>دریافت نتایج</td>
+					<td>Result Retrieval</td>
+					<td><code>SQLFetch</code>، <code>SQLGetData</code></td>
+					<td>دریافت اطلاعات حاصل از Query</td>
+			</tr>
+			<tr>
+					<td>اطلاعات ساختاری</td>
+					<td>Metadata</td>
+					<td><code>SQLTables</code>، <code>SQLColumns</code></td>
+					<td>دریافت اطلاعات ساختار Data Source</td>
+			</tr>
+			<tr>
+					<td>مدیریت تراکنش</td>
+					<td>Transaction Management</td>
+					<td><code>SQLEndTran</code></td>
+					<td>اجرای Commit و Rollback</td>
+			</tr>
+			<tr>
+					<td>مدیریت خطا</td>
+					<td>Diagnostics</td>
+					<td><code>SQLGetDiagRec</code></td>
+					<td>دریافت اطلاعات خطا و هشدارها</td>
+			</tr>
+	</tbody>
+</table>
+<p>مستندات رسمی مایکروسافت شامل دسته‌بندی توابع، شرح عملکرد، پارامترها و مثال‌های برنامه‌نویسی است:
+<a href="https://learn.microsoft.com/en-us/sql/odbc/reference/syntax/odbc-api-reference" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> ODBC API Reference</a>
+
+
+</p>
+<hr>
+<h3 id="معماری">معماری<a hidden class="anchor" aria-hidden="true" href="#معماری">#</a></h3>
+
+<div class="mermaid" style="text-align: center; background: transparent;">
+    
+flowchart TD
+    A[Application] <-->|ODBC API| B["⚙️ ODBC Driver Manager"]
+
+    B <-->| | C["🔌 Oracle Driver"]
+    B <-->| | D["🔌 SQL Server Driver"]
+    B <-->| | E["🔌 MySQL Driver"]
+    B <-->| | I["🔌 Excel Driver"]
+
+    C <-->|SQL / Results| F[(Oracle Database)]
+    D <-->|SQL / Results| G[(SQL Server Database)]
+    E <-->|SQL / Results| H[(MySQL Database)]
+    I <-->|Read / Write| J@{ shape: doc, label: "📄 Excel File (.xlsx)" }
+
+    style F fill:#fddd26,stroke:#333,color:#000
+    style G fill:#fddd26,stroke:#333,color:#000
+    style H fill:#fddd26,stroke:#333,color:#000
+
+</div>
+
+
+    
+    <script src="/js/mermaid.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                          document.body.classList.contains('dark');
+            
+            const mermaidTheme = isDark ? 'base' : 'base';
+            
+           
+            
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: mermaidTheme,
+                themeVariables: themeVariables,
+                securityLevel: 'loose',
+                flowchart: { useMaxWidth: true }
+            });
+        });
+    </script>
+
+<p>معماری ODBC از چهار جز اصلی تشکیل شده است:</p>
+<h4 id="application"><u>Application </u><a hidden class="anchor" aria-hidden="true" href="#application">#</a></h4>
+<p>برنامه‌ای که با استفاده از توابع استاندارد ODBC، عملیات موردنیاز خود را روی منبع داده انجام می‌دهد و نتایج را دریافت می‌کند.
+این برنامه می‌تواند نرم‌افزاری مانند Excel،
+برنامه‌ای نوشته‌شده با زبان C#،
+ابزارهای گزارش‌گیری و تحلیل داده و &hellip; باشد.
+<br></p>
+<h4 id="driver-manager"><u>Driver Manager </u><a hidden class="anchor" aria-hidden="true" href="#driver-manager">#</a></h4>
+<p>لایه‌ای واسط میان برنامه‌ی کاربردی و درایورهای ODBC که وظایف زیر را بر عهده دارد:</p>
+<ul>
+<li>بارگذاری و مدیریت درایورهای ODBC.</li>
+<li>دریافت فراخوانی‌های ODBC از برنامه و هدایت آن‌ها به درایور مناسب.</li>
+<li>استفاده از اطلاعات DSN برای شناسایی منبع داده و درایور مربوطه.
+<br></li>
+</ul>
+<h4 id="odbc-driver"><u>ODBC Driver </u><a hidden class="anchor" aria-hidden="true" href="#odbc-driver">#</a></h4>
+<p>ماژول نرم‌افزاری اختصاصی هر منبع داده که رابط استاندارد ODBC را برای آن منبع فراهم می‌کند.
+درایور درخواست‌های ODBC را دریافت می‌کند،
+آن‌ها را به شیوه‌ی قابل فهم برای منبع داده اجرا می‌کند و نتایج را در قالب مورد انتظار ODBC به برنامه بازمی‌گرداند.</p>
+<p>درایورها به‌صورت کتابخانه‌های نرم‌افزاری در سیستم‌عامل نصب می‌شوند و Driver Manager در زمان اجرا آن‌ها را بارگذاری می‌کند.
+برای مثال، در ویندوز این کتابخانه‌ها معمولا از نوع DLL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> هستند.</p>
+<p>از نظر نحوه‌ی پردازش داده، درایورها را می‌توان به دو گروه اصلی تقسیم کرد:</p>
+<ul>
+<li><strong>File-Based Driver:</strong> درایور علاوه بر فراهم کردن رابط ODBC، خودش وظیفه‌ی پردازش و مدیریت داده‌ها را نیز بر عهده دارد؛ مانند برخی درایورهای dBASE.</li>
+<li><strong>DBMS-Based Driver:</strong> درایور درخواست‌ها را به سیستم مدیریت پایگاه‌داده (DBMS) منتقل می‌کند تا توسط موتور آن پردازش شوند؛ مانند درایورهای Oracle و SQL Server.</li>
+</ul>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> استاندارد ODBC مشخص می‌کند درایورها باید چه APIها و قراردادهایی را برای ارتباط با برنامه‌های کاربردی فراهم کنند.
+شرکت‌های مختلف براساس این استاندارد، درایورهای مخصوص منابع داده‌ی خود را توسعه می‌دهند. <br>
+معمولا تولیدکنندگان DBMS نیز ODBC Driver مخصوص محصول خود را ارائه می‌کنند.
+برای مثال جهت اتصال به SQL Server از طریق ODBC باید <a href="https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> ODBC Driver for SQL Server</a>
+
+
+ نصب شود. <br>
+<br></p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h4 id="data-source"><u>Data Source</u><a hidden class="anchor" aria-hidden="true" href="#data-source">#</a></h4>
+<p>منبعی است که برنامه‌ی کاربردی قصد دسترسی به آن را دارد. این منبع می‌تواند یک فایل داده یا یک پایگاه‌داده‌ی مبتنی بر DBMS باشد.
+در حالت مبتنی بر DBMS، اجزای زیر ممکن است در دسترسی به منبع داده نقش داشته باشند:</p>
+<ul>
+<li>سیستم مدیریت پایگاه‌داده (DBMS)</li>
+<li>سیستم‌عامل میزبان</li>
+<li>شبکه و پروتکل ارتباطی (در صورت وجود)</li>
+<li>داده‌های ذخیره‌شده</li>
+</ul>
+<h2 id="ارتباط-sql-با-توابع-odbc">ارتباط SQL با توابع ODBC<a hidden class="anchor" aria-hidden="true" href="#ارتباط-sql-با-توابع-odbc">#</a></h2>
+<p>در ODBC، دستورات SQL و توابع API دو نقش متفاوت دارند:</p>
+<ul>
+<li>دستورات SQL به‌صورت متن (String) نوشته می‌شوند و مشخص می‌کنند چه عملیاتی باید روی Data Source انجام شود.</li>
+<li>در مقابل، توابع ODBC وظیفه‌ی مدیریت ارتباط، ارسال دستورات SQL، دریافت نتایج و آزادسازی منابع را بر عهده دارند.</li>
+</ul>
+<p>بنابراین هر برنامه‌ای که بخواهد از ODBC استفاده کند، باید بخشی داشته باشد که توابع و APIهای ODBC را فراخوانی کند.
+این بخش بسته به نوع برنامه می‌تواند متفاوت باشد. به عنوان نمونه:</p>
+<ul>
+<li>برنامه‌ی نوشته‌شده با C/C++: مستقیما توابع ODBC را فراخوانی می‌کند.</li>
+<li>برنامه‌های .NET: می‌توانند از کلاس‌های <a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.o" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> System.Data.Odbc</a>
+
+
+ استفاده کنند که در نهایت با ODBC ارتباط برقرار می‌کنند.</li>
+<li>SQL Server: خودش مستقیما ODBC را فراخوانی نمی‌کند.
+هنگام استفاده از Linked Server مبتنی بر ODBC، توابع ODBC در لایه‌ی ارتباطی SQL Server و در پشت صحنه فراخوانی می‌شوند.
+این کار از طریق MSDASQL و با تبدیل درخواست‌های OLE DB به ODBC انجام می‌شود و کاربر فقط با محیط نرم‌افزار یا دستورات SQL سروکار دارد.</li>
+</ul>
+<h2 id="odbc-در-سیستمعاملها">ODBC در سیستم‌عامل‌ها<a hidden class="anchor" aria-hidden="true" href="#odbc-در-سیستمعاملها">#</a></h2>
+<p>برخلاف ویندوز که ODBC Driver Manager به‌صورت داخلی در سیستم‌عامل وجود دارد، در Linux و سایر سیستم‌های Unix معمولا باید یک Driver Manager جداگانه نصب شود.</p>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>Windows: Microsoft ODBC Driver Manager</li>
+<li>Linux: <a href="https://www.unixodbc.org/" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> unixODBC</a>
+
+
+ ، <a href="iodbc.org"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> iODBC</a>
+
+
+</li>
+<li>macOS: unixODBC ، iODBC</li>
+</ul>
+
+  
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> ODBC یک استاندارد مستقل از سیستم‌عامل است.
+با این حال، باید Driver Manager و درایور متناسب با سیستم‌عامل و معماری برنامه نصب شده باشند.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h2 id="odbc-در-windows">ODBC در Windows<a hidden class="anchor" aria-hidden="true" href="#odbc-در-windows">#</a></h2>
+<p>در ویندوز، ابزاری به نام <strong>ODBC Data Source Administrator</strong> برای مدیریت تنظیمات ODBC در اختیار کاربران قرار دارد.
+این ابزار امکان مشاهده و مدیریت درایورهای ODBC نصب شده، تعریف و پیکربندی منابع داده (<span style="color:blue"><strong>DSN</strong><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></span>) و
+دسترسی به برخی تنظیمات مرتبط با ODBC را فراهم می‌کند.
+<figure class="align-center ">
+    <img loading="lazy" src="images/odbc-windows.png#center"
+         alt="ODBC Data Source Administrator"/> <figcaption>
+            <p>ODBC Data Source Administrator</p>
+        </figcaption>
+</figure>
+</p>
+<p>فرض کنید برنامه‌ای قرار است به یک پایگاه‌داده‌ی SQL Server متصل شود.
+ابتدا باید درایور ODBC مربوط به SQL Server روی سیستم نصب شده باشد.
+سپس می‌توان با استفاده از این ابزار، تنظیمات اتصال به پایگاه‌داده را تعریف کرد تا برنامه بتواند از طریق ODBC به آن دسترسی پیدا کند.
+بدین‌سان، به‌جای اینکه اطلاعات اتصال به هر منبع داده در برنامه تعریف شود، می‌توان بخشی از تنظیمات را در سطح سیستم‌عامل مدیریت کرد.</p>
+<h3 id="آشنایی-با-زبانهها">آشنایی با زبانه‌ها<a hidden class="anchor" aria-hidden="true" href="#آشنایی-با-زبانهها">#</a></h3>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>زبانه</th>
+					<th>کاربرد</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>User DSN</td>
+					<td>تعریف منبع داده برای کاربر فعلی</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>System DSN</td>
+					<td>تعریف منبع داده در سطح سیستم</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>File DSN</td>
+					<td>ذخیره‌ی تنظیمات منبع داده در فایل</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Drivers</td>
+					<td>مشاهده‌ی درایورهای نصب‌شده</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Tracing</td>
+					<td>ثبت فراخوانی‌های ODBC برای عیب‌یابی</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Connection Pooling</td>
+					<td>استفاده‌ی مجدد از اتصال‌ها</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>About</td>
+					<td>نمایش اطلاعات نسخه و اجزای ODBC</td>
+			</tr>
+	</tbody>
+</table>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> برای دسترسی به این ابزار، کافی است عبارت <strong>ODBC Data Sources</strong> را در منوی Start ویندوز جست‌وجو کنید.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p><em><strong>User DSN</strong></em><br>
+اطلاعات اتصال در محدوده‌ی حساب کاربری فعلی ویندوز ثبت می‌شود و فقط همان کاربر می‌تواند از آن استفاده کند
+و سایر کاربران ویندوز به آن دسترسی نخواهند داشت.
+محل ثبت:</p>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    Registry | HKEY_CURRENT_USER
+  
+</div>
+
+<p><em><strong>System DSN</strong></em> <br>
+اطلاعات اتصال در سطح سیستم‌عامل ثبت می‌شود و محدود به یک کاربر خاص نیست.
+کاربران و سرویس‌هایی که مجوزهای لازم را داشته باشند، می‌توانند از آن استفاده کنند.
+محل ثبت:
+
+
+
+
+
+
+<div dir="ltr">
+  
+    Registry | HKEY_LOCAL_MACHINE
+  
+</div>
+</p>
+<p><em><strong>File DSN</strong></em> <br>
+اطلاعات اتصال به‌جای ثبت در تنظیمات ویندوز، در یک فایل با پسوند .dsn ذخیره می‌شود.
+این فایل را می‌توان به سیستم دیگری منتقل کرد یا در اختیار کاربران دیگر قرار داد.
+البته سیستم مقصد باید درایور مربوطه را نصب و به منبع داده دسترسی داشته باشد.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> اعطای مجوز دسترسی به پایگاه‌داده باید به صورت جداگانه انجام شود. <br>
+یعنی تعریف DSN (نام منبع داده) به‌معنای ایجاد دسترسی به پایگاه‌داده نیست.
+DSN صرفا اطلاعات مورد نیاز برای شناسایی منبع داده و نحوه‌ی اتصال به آن را فراهم می‌کند.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+   
+    <p class="alert-heading"> 
+      🔔
+      اتصال بدون DSN
+    </p>
+    
+    <p>استفاده از DSN الزامی نیست.<br>
+در این حالت (DSN-less Connection) نیازی به تعریف منبع داده در ODBC Data Source نیست.
+برنامه می‌تواند اطلاعات اتصال، مانند نام درایور، سرور و پایگاه‌داده را مستقیما در قالب یک <a href="https://learn.microsoft.com/en-us/sql/odbc/reference/odbc-programmer-s-reference" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Connection String</a>
+
+
+ به Driver Manager ارسال کند.</p>
+  
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<p><em><strong>Drivers</strong></em> <br>
+نصب درایور جدید معمولا از طریق اجرای بسته‌ی نصب (Installer) مربوط به آن انجام می‌شود.
+پس از نصب، در این زبانه فهرست درایورهای ODBC نصب شده روی سیستم به همراه مشخصات آن‌ها (نام، نسخه و &hellip;) نمایش داده می‌شود.</p>
+<figure class="align-center ">
+    <img loading="lazy" src="images/odbc-windows-drivers.png#center"
+         alt="ODBC Data Source Administrator | Drivers"/> <figcaption>
+            <p>ODBC Data Source Administrator | Drivers</p>
+        </figcaption>
+</figure>
+
+<p><em><strong>Tracing</strong></em> <br>
+برای ثبت و ضبط فراخوانی‌های ODBC در یک فایل گزارش (Log) استفاده می‌شود.
+این قابلیت هنگام عیب‌یابی مشکلات ارتباطی و بررسی نحوه‌ی تعامل برنامه با درایورهای ODBC کاربرد دارد.</p>
+<figure class="align-center ">
+    <img loading="lazy" src="images/odbc-windows-Tracing.png#center"
+         alt="ODBC Data Source Administrator | Tracing"/> <figcaption>
+            <p>ODBC Data Source Administrator | Tracing</p>
+        </figcaption>
+</figure>
+
+<p><em><strong>Connection Pooling</strong></em> <br>
+این زبانه برای تنظیم و مدیریت قابلیت استفاده‌ی مجدد از اتصال‌های پایگاه‌داده (Connection Pooling) به کار می‌رود.
+با استفاده از این قابلیت، اتصال‌های برقرار شده می‌توانند پس از پایان استفاده،
+به جای بسته‌شدن، برای درخواست‌های بعدی نگهداری و مجددا استفاده شوند.
+این کار هزینه‌ی برقراری اتصال‌های جدید را کاهش می‌دهد.</p>
+<figure class="align-center ">
+    <img loading="lazy" src="images/odbc-windows-cnn%20pooling.png#center"
+         alt="ODBC Data Source Administrator | Connection Pooling"/> <figcaption>
+            <p>ODBC Data Source Administrator | Connection Pooling</p>
+        </figcaption>
+</figure>
+
+<p><em><strong>About</strong></em> <br>
+این زبانه اطلاعاتی درباره‌ی نسخه و اجزای ODBC نصب‌شده روی سیستم نمایش می‌دهد.
+<figure class="align-center ">
+    <img loading="lazy" src="images/odbc-windows-about.png#center"
+         alt="ODBC Data Source Administrator | About"/> <figcaption>
+            <p>ODBC Data Source Administrator | About</p>
+        </figcaption>
+</figure>
+</p>
+<h3 id="تفاوت-odbc-در-ویندوزهای-32-و-64-بیتی">تفاوت ODBC در ویندوزهای 32 و 64 بیتی<a hidden class="anchor" aria-hidden="true" href="#تفاوت-odbc-در-ویندوزهای-32-و-64-بیتی">#</a></h3>
+<p>در ویندوز 64 بیتی، دو نسخه‌ی 32 و 64 بیتی از ODBC Data Source Administrator وجود دارد.
+<strong>معماری برنامه</strong> تعیین می‌کند که از کدام نسخه و درایور استفاده کند.</p>
+<ul>
+<li>برنامه‌ی 32 بیتی به درایور 32 بیتی نیاز دارد.</li>
+<li>برنامه‌ی 64 بیتی به درایور 64 بیتی نیاز دارد.</li>
+</ul>
+<p>مسیر دسترسی به نسخه‌ها:
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <ul>
+<li>64-bit: <code>C:\Windows\System32\</code></li>
+<li>32-bit: <code>C:\Windows\SysWOW64\</code></li>
+</ul>
+
+  
+</div>
+</p>
+<p>نام پوشه‌ها گیج‌کننده است!!!
+پوشه‌ی <code>System32</code> مربوط به نسخه‌ی 64 بیتی
+و پوشه‌ی <code>SysWOW64</code> مربوط به نسخه‌ی 32 بیتی است.</p>
+ 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+<blockquote class="alert alert-note">
+
+  <p><span class="alert-icon">🔔</span> هنگام نصب درایور و تعریف DSN باید معماری برنامه‌ی مصرف‌کننده را در نظر گرفت.</p>
+
+
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+<h2 id="منابع">منابع<a hidden class="anchor" aria-hidden="true" href="#منابع">#</a></h2>
+
+
+
+
+
+
+<div dir="ltr">
+  
+    <a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Open Database Connectivity</a>
+
+
+<br>
+<a href="https://learn.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> Microsoft Open Database Connectivity (ODBC)</a>
+
+
+<br>
+<a href="https://www.odbc.org/blog/odbc-4-0.html" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> ODBC Version History</a>
+
+
+<br>
+<a href="https://learn.microsoft.com/en-us/sql/odbc/microsoft/history-of-the-desktop-database-drivers" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> History of the Desktop Database Drivers</a>
+
+
+<br>
+<a href="https://learn.microsoft.com/en-us/sql/odbc/admin/about-drivers-and-data-sources" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> About Drivers and Data Sources</a>
+
+
+<br>
+<a href="https://learn.microsoft.com/en-us/troubleshoot/sql/database-engine/install/windows/odbc-driver-install-checking" 
+target="_blank" rel="noopener"> <i class="fa-solid fa-external-link fa-xs" style="color:rgb(37, 153, 182)"></i> ODBC driver installation check</a>
+  
+</div>
+
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><strong>A</strong>pplication <strong>P</strong>rogramming <strong>I</strong>nterface - رابط برنامه‌نویسی نرم‌افزار (برنامه کاربردی)&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><strong>D</strong>ynamic <strong>L</strong>ink <strong>L</strong>ibrary&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><strong>D</strong>ata <strong>S</strong>ource <strong>N</strong>ame&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+
+  </div>
+
+  
+
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hr-abedini.github.io/tags/database/">Database</a></li>
+      <li><a href="https://hr-abedini.github.io/tags/db/">DB</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://hr-abedini.github.io/posts/oracle-apex/bpmn-%D8%AF%D8%B1-orale-apex/">
+    <span class="title">صفحه بعدی »</span>
+    <br>
+    <span>BPMN در Orale APEX</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ODBC چیست؟ on x"
+            href="https://x.com/intent/tweet/?text=ODBC%20%da%86%db%8c%d8%b3%d8%aa%d8%9f&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fdb%2fodbc-%25DA%2586%25DB%258C%25D8%25B3%25D8%25AA%2f&amp;hashtags=Database%2cDB">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ODBC چیست؟ on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fdb%2fodbc-%25DA%2586%25DB%258C%25D8%25B3%25D8%25AA%2f&amp;title=ODBC%20%da%86%db%8c%d8%b3%d8%aa%d8%9f&amp;summary=ODBC%20%da%86%db%8c%d8%b3%d8%aa%d8%9f&amp;source=https%3a%2f%2fhr-abedini.github.io%2fposts%2fdb%2fodbc-%25DA%2586%25DB%258C%25D8%25B3%25D8%25AA%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ODBC چیست؟ on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhr-abedini.github.io%2fposts%2fdb%2fodbc-%25DA%2586%25DB%258C%25D8%25B3%25D8%25AA%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ODBC چیست؟ on whatsapp"
+            href="https://api.whatsapp.com/send?text=ODBC%20%da%86%db%8c%d8%b3%d8%aa%d8%9f%20-%20https%3a%2f%2fhr-abedini.github.io%2fposts%2fdb%2fodbc-%25DA%2586%25DB%258C%25D8%25B3%25D8%25AA%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share ODBC چیست؟ on telegram"
+            href="https://telegram.me/share/url?text=ODBC%20%da%86%db%8c%d8%b3%d8%aa%d8%9f&amp;url=https%3a%2f%2fhr-abedini.github.io%2fposts%2fdb%2fodbc-%25DA%2586%25DB%258C%25D8%25B3%25D8%25AA%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+
+        
+
+
+<section class="related-posts">
+    <h3>نوشته‌های مرتبط</h3>
+    <ul>
+    
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/db/%D8%A7%D9%86%D9%88%D8%A7%D8%B9-%DA%A9%D9%84%DB%8C%D8%AF%D9%87%D8%A7-%D8%AF%D8%B1-%D9%BE%D8%A7%DB%8C%DA%AF%D8%A7%D9%87-%D8%AF%D8%A7%D8%AF%D9%87/">انواع کلیدها در پایگاه‌داده</a> </li>
+        
+    
+        
+        
+         <li><a href="https://hr-abedini.github.io/posts/db/%DA%86%D8%B1%D8%A7-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AA%D8%A7%D8%A8%DB%8C%D8%B3-null-null-%D9%86%DB%8C%D8%B3%D8%AA/">چرا در دیتابیس null = null نیست؟</a> </li>
+        
+    
+    </ul>
+</section>
+<script src="https://giscus.app/client.js"
+        data-repo="Hr-Abedini/site-comments"
+        data-repo-id="R_kgDOQwO4wA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQwO4wM4C0UmL"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="fa"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://hr-abedini.github.io/">حمیدرضا عابدینی</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script src="/js/jdate.js"></script>
+<script data-goatcounter="https://hr-abedini.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'کپی';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'کپی شد!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'کپی';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
